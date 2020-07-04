@@ -2,7 +2,7 @@ import React from 'react';
 import MonthDay from './MonthDay';
 
 const MonthTable = (props) => {
-    console.log(props.weeks);
+    console.log(props.fullMonth);
     return (
         <table>
             <thead>
@@ -18,10 +18,10 @@ const MonthTable = (props) => {
             </thead>
             <tbody>
                {
-                   props.weeks===null ? null : props.weeks.map((week) => (
+                  props.fullMonth === null ? null : props.fullMonth.map((week) => (
                     <tr>
                         {
-                            week.numWeek.map((day) => (
+                            week.week.map((day) => (
                                 <td>
                                     <MonthDay day={day}/>
                                 </td>
@@ -29,7 +29,7 @@ const MonthTable = (props) => {
                         }
                     </tr>
                ))
-               }
+            }
             </tbody>
         </table>
     );

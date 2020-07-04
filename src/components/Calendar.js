@@ -14,7 +14,7 @@ class Calendar extends React.Component {
                 <MonthTable
                     month={this.props.month}
                     year={this.props.year}
-                    weeks={this.props.weeks}
+                    fullMonth={this.props.fullMonth}
                 />
             </div>
         );
