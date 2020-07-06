@@ -2,9 +2,9 @@ import React from 'react';
 import MonthDay from './MonthDay';
 
 const MonthTable = (props) => {
-    console.log(props.fullMonth);
+    
     return (
-        <table>
+        <table className='container-short calendar-table'>
             <thead>
                 <tr>
                     <td>Sun</td>

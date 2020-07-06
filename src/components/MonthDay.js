@@ -6,7 +6,7 @@ class MonthDay extends React.Component {
     render() {
         return (
             <div>
-                {this.props.day}
+                <span>{this.props.day}</span>
             </div>
         );
     };

@@ -23,6 +23,39 @@ class App extends React.Component {
         fullMonth: null,
     }
 
+    prevMonth = () => {
+        const calendar = Object.assign({}, this.state);
+        let { currentMonth, currentYear } = calendar;
+        if(this.state.currentMonth === 0) {
+            currentMonth = 11
+            currentYear = currentYear - 1;
+        } else {
+            currentMonth = currentMonth - 1;
+        }
+        this.showCalendar(currentMonth, currentYear);
+        this.setState({
+            currentMonth: currentMonth,
+            currentYear: currentYear
+        });
+    }
+
+    nextMonth = () => {
+        const calendar = Object.assign({}, this.state);
+        let { currentMonth, currentYear } = calendar;
+        if(this.state.currentMonth === 11) {
+            currentMonth = 0
+            currentYear = currentYear + 1;
+        } else {
+            currentMonth = currentMonth + 1;
+        }
+        this.showCalendar(currentMonth, currentYear);
+        this.setState({
+            currentMonth: currentMonth,
+            currentYear: currentYear
+        });
+    }
+
+
     showCalendar = (month, year) => {
         let weeks=[];
         const firstDayIndexWeek = (new Date(year, month)).getDay();//3
@@ -83,13 +116,20 @@ class App extends React.Component {
 
     render() {
         return(
-            <div>
-                <Calendar 
-                    months={months}
-                    month={this.state.currentMonth}
-                    year={this.state.currentYear}
-                    fullMonth={this.state.fullMonth}
-                />
+            <div className='container'>
+                <header>
+                    <h1>Calendar App</h1>
+                </header>
+                <main className='main-container'>
+                    <Calendar 
+                        months={months}
+                        month={this.state.currentMonth}
+                        year={this.state.currentYear}
+                        fullMonth={this.state.fullMonth}
+                        prevMonth={this.prevMonth}
+                        nextMonth={this.nextMonth}
+                    />
+                </main>
             </div>
         );
     }

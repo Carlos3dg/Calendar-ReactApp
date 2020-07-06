@@ -5,11 +5,13 @@ import MonthTable from './MonthTable';
 class Calendar extends React.Component {
     render() {
         return(
-            <div>
+            <div className='calendar-container'>
                 <MonthHeader
                     months={this.props.months}
                     month={this.props.month}
                     year={this.props.year}
+                    prevMonth={this.props.prevMonth}
+                    nextMonth={this.props.nextMonth}
                 />
                 <MonthTable
                     month={this.props.month}
