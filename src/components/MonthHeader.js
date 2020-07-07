@@ -1,4 +1,5 @@
 import React from 'react';
+import DateSelect from './DateSelect';
 
 const MonthHeader = (props) => {
     return (
@@ -8,7 +9,11 @@ const MonthHeader = (props) => {
                     navigate_before
                 </span>
             </div>
-            <h2>{`${props.months[props.month]} ${props.year}`}</h2>
+           <DateSelect
+                month={props.month}
+                year={props.year}
+                showCalendar={props.showCalendar}
+           />
             <div className='arrow-month-container'>
                 <span className="material-icons month-arrow-icon" onClick={() => props.nextMonth()}>
                     navigate_next

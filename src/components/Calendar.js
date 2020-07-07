@@ -7,11 +7,11 @@ class Calendar extends React.Component {
         return(
             <div className='calendar-container'>
                 <MonthHeader
-                    months={this.props.months}
                     month={this.props.month}
                     year={this.props.year}
                     prevMonth={this.props.prevMonth}
                     nextMonth={this.props.nextMonth}
+                    showCalendar={this.props.showCalendar}
                 />
                 <MonthTable
                     month={this.props.month}

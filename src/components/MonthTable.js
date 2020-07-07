@@ -18,11 +18,11 @@ const MonthTable = (props) => {
             </thead>
             <tbody>
                {
-                  props.fullMonth === null ? null : props.fullMonth.map((week) => (
-                    <tr>
+                  props.fullMonth === null ? null : props.fullMonth.map((week, index) => (
+                    <tr key={index}>
                         {
-                            week.week.map((day) => (
-                                <td>
+                            week.week.map((day, index) => (
+                                <td key={index}>
                                     <MonthDay day={day}/>
                                 </td>
                             ))
