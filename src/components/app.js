@@ -88,8 +88,8 @@ class App extends React.Component {
         this.setState({
             currentMonth: month,
             currentYear: year,
-            fullMonth: fullMonth}
-        );
+            fullMonth: fullMonth
+        });
     }
 
     componentDidMount() {
@@ -110,6 +110,7 @@ class App extends React.Component {
                         prevMonth={this.prevMonth}
                         nextMonth={this.nextMonth}
                         showCalendar={this.showCalendar}
+                        date={this.props.date}
                     />
                 </main>
             </div>

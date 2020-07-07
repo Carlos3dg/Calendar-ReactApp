@@ -176,14 +176,35 @@ header h1 {
 .calendar-table {
     width: 100%;
     height: 90%;
+    border: 1px solid rgb(143, 143, 142);
+    border-collapse: collapse;
 }
 
-.calendar-table thead {
-    height: 9%;
+col.days-col {
+    width: calc(100% / 7);
+}
+
+.calendar-table th, .calendar-table td {
+    border: 1px solid rgb(143, 143, 142);
+}
+
+.calendar-table th {
+    padding: 12px 0;
     font-weight: 600;
     text-align: center;
 }
 
-.calendar-table tbody {
-    height: 91%;
+.day-box {
+    height: 100%;
+    width: 100%;
+}
+
+.day-box span {
+    display: inline-block;
+    width: 100%;
+    padding-left: 3px;
+}
+
+.today {
+    border: 2px solid green;
 }

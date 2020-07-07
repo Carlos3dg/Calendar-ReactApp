@@ -2,18 +2,26 @@ import React from 'react';
 import MonthDay from './MonthDay';
 
 const MonthTable = (props) => {
-    
-    return (
+    return(
         <table className='container-short calendar-table'>
+            <colgroup>
+                <col className='days-col'/>
+                <col className='days-col'/>
+                <col className='days-col'/>
+                <col className='days-col'/>
+                <col className='days-col'/>
+                <col className='days-col'/>
+                <col className='days-col'/>
+            </colgroup>
             <thead>
                 <tr>
-                    <td>Sun</td>
-                    <td>Mon</td>
-                    <td>Tue</td>
-                    <td>Wed</td>
-                    <td>Thu</td>
-                    <td>Fri</td>
-                    <td>Sat</td>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,9 +30,13 @@ const MonthTable = (props) => {
                     <tr key={index}>
                         {
                             week.week.map((day, index) => (
-                                <td key={index}>
-                                    <MonthDay day={day}/>
-                                </td>
+                                <MonthDay
+                                    month={props.month}
+                                    year={props.year}
+                                    day={day}
+                                    date={props.date}
+                                    key={index}
+                                />
                             ))
                         }
                     </tr>
@@ -33,6 +45,5 @@ const MonthTable = (props) => {
             </tbody>
         </table>
     );
-};
-
+}
 export default MonthTable;

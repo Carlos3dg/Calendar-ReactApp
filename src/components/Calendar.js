@@ -17,6 +17,7 @@ class Calendar extends React.Component {
                     month={this.props.month}
                     year={this.props.year}
                     fullMonth={this.props.fullMonth}
+                    date={this.props.date}
                 />
             </div>
         );
