@@ -201,10 +201,17 @@ col.days-col {
 
 .day-box span {
     display: inline-block;
-    width: 100%;
+    width: 20%;
     padding-left: 3px;
+    margin-right: 80%;
 }
 
-.today {
-    border: 2px solid green;
+span.today {
+    background-color: rgb(24, 173, 231);
+    color: white;
+    font-weight: 600;
+}
+
+td.active-day {
+    border: 2px solid rgb(24, 173, 231);
 }

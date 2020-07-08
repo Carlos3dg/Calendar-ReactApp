@@ -1,49 +1,78 @@
 import React from 'react';
-import MonthDay from './MonthDay';
 
-const MonthTable = (props) => {
-    return(
-        <table className='container-short calendar-table'>
-            <colgroup>
-                <col className='days-col'/>
-                <col className='days-col'/>
-                <col className='days-col'/>
-                <col className='days-col'/>
-                <col className='days-col'/>
-                <col className='days-col'/>
-                <col className='days-col'/>
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>Sun</th>
-                    <th>Mon</th>
-                    <th>Tue</th>
-                    <th>Wed</th>
-                    <th>Thu</th>
-                    <th>Fri</th>
-                    <th>Sat</th>
-                </tr>
-            </thead>
-            <tbody>
-               {
-                  props.fullMonth === null ? null : props.fullMonth.map((week, index) => (
-                    <tr key={index}>
-                        {
-                            week.week.map((day, index) => (
-                                <MonthDay
-                                    month={props.month}
-                                    year={props.year}
-                                    day={day}
-                                    date={props.date}
-                                    key={index}
-                                />
-                            ))
-                        }
+class MonthTable extends React.Component {
+    state = {
+        selectedDay: null,
+    }
+
+    onClickDay = (day) => {
+        if(day) {
+            const selectedDay = `${this.props.year}-${this.props.month}-${day}`;
+            this.setState({
+                selectedDay: selectedDay
+            });
+        }
+    }
+
+    getActualDay = () => {
+        const actualYear = this.props.date.getFullYear();
+        const actualMonth = this.props.date.getMonth();
+        const actualDay = this.props.date.getDate();
+        return `${actualYear}-${actualMonth}-${actualDay}`
+    }
+
+    componentDidMount() {
+        const actualDay = this.getActualDay();
+        this.setState({
+            selectedDay: actualDay
+        });
+    }
+
+    render() {
+        return(
+            <table className='container-short calendar-table'>
+                <colgroup>
+                    <col className='days-col'/>
+                    <col className='days-col'/>
+                    <col className='days-col'/>
+                    <col className='days-col'/>
+                    <col className='days-col'/>
+                    <col className='days-col'/>
+                    <col className='days-col'/>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Sun</th>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
                     </tr>
-               ))
-            }
-            </tbody>
-        </table>
-    );
+                </thead>
+                <tbody>
+                   {
+                      this.props.fullMonth === null ? null : this.props.fullMonth.map((week, index) => (
+                        <tr key={index}>
+                            {
+                                week.week.map((day, index) => {
+                                    const date = `${this.props.year}-${this.props.month}-${day}`;
+                                    return(
+                                        <td key={index} className={this.state.selectedDay === date ? 'active-day' : null} onClick={()=>this.onClickDay(day)}>
+                                            <div className='day-box'>
+                                                <span className={date===this.getActualDay() ? 'today' : null}>{day}</span>
+                                            </div>
+                                        </td>
+                                    )}
+                                )
+                            }
+                        </tr>
+                   ))
+                }
+                </tbody>
+            </table>
+        );
+    }
 }
 export default MonthTable;
