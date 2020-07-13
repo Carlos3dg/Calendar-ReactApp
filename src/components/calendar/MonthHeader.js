@@ -12,7 +12,7 @@ const MonthHeader = (props) => {
            <DateSelect
                 month={props.month}
                 year={props.year}
-                showCalendar={props.showCalendar}
+                jumpDate={props.jumpDate}
            />
             <div className='arrow-month-container'>
                 <span className="material-icons month-arrow-icon" onClick={() => props.nextMonth()}>

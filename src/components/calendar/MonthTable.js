@@ -11,7 +11,7 @@ class MonthTable extends React.Component {
             this.setState({
                 selectedDay: selectedDay
             });
-            this.props.selectedDay(day);
+            this.props.selectDay(day);
         }
     }
 
@@ -27,7 +27,7 @@ class MonthTable extends React.Component {
         this.setState({
             selectedDay: actualDay
         });
-        this.props.selectedDay(this.props.date.getDate());
+        this.props.selectDay(this.props.date.getDate());
     }
 
     render() {
