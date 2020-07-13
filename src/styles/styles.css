@@ -127,6 +127,7 @@ header h1 {
     width: 90%;
     height: calc(100vh - 70px - 70px);
     margin: 35px auto;
+    display: flex;
 }
 @media (max-width: 1020px) {
  .main-container {
@@ -214,4 +215,10 @@ span.today {
 
 td.active-day {
     border: 2px solid rgb(24, 173, 231);
+}
+
+/* TASK CONTAINER */
+.task-container {
+    width: 23%;
+    height: 100%;
 }

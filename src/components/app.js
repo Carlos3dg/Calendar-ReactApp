@@ -1,11 +1,14 @@
 import React from 'react';
-import Calendar from './Calendar';
+import Calendar from './calendar/Calendar';
+import Tasks from './tasks/Tasks';
 
 class App extends React.Component {
     state = {
         currentMonth: this.props.date.getMonth(),
         currentYear: this.props.date.getFullYear(),
+        currentDay: null,
         fullMonth: null,
+        taskList: []
     }
 
     prevMonth = () => {
@@ -92,6 +95,12 @@ class App extends React.Component {
         });
     }
 
+    selectedDay = (day) => {
+        this.setState({
+            currentDay: day
+        });
+    }
+
     componentDidMount() {
         this.showCalendar(this.state.currentMonth, this.state.currentYear);
     }
@@ -110,7 +119,14 @@ class App extends React.Component {
                         prevMonth={this.prevMonth}
                         nextMonth={this.nextMonth}
                         showCalendar={this.showCalendar}
+                        selectedDay={this.selectedDay}
                         date={this.props.date}
+                    />
+                    <Tasks
+                        month={this.state.currentMonth}
+                        year={this.state.currentYear}
+                        day={this.state.currentDay}
+                        taskList={this.state.taskList}
                     />
                 </main>
             </div>

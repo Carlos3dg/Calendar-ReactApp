@@ -1,6 +1,6 @@
 import React from 'react';
-import Months from '../api/months.json';
-import Years from '../api/years.json';
+import Months from '../../api/months.json';
+import Years from '../../api/years.json';
 
 class DateSelect extends React.Component {
     state = {
