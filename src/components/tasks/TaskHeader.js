@@ -1,9 +1,9 @@
 import React from 'react';
 
 const TaskHeader = (props) => (
-    <div>
+    <div className='task-header container-short'>
         <h4>Tasks</h4>
-        <h4>{`${props.month+1}/${props.day}/${props.year}`}</h4>
+        <h5>{`${props.month+1}/${props.day}/${props.year}`}</h5>
     </div>
 );
 

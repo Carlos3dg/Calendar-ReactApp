@@ -14,6 +14,7 @@ const App = (props) => {
                     <WrappedCalendar
                         date={props.date}
                     />
+                    <TaskDisplay/>
                 </main>
             </div>
         );
@@ -40,5 +41,20 @@ const WrappedCalendar = connect(
     mapStateToCalendarProps,
     mapDispatchToCalendarProps
 )(Calendar);
+
+const mapStateToTasksProps = (state) => {
+    return {
+        day: state.date.currentDay,
+        month: state.date.currentMonth,
+        year: state.date.currentYear,
+        fullMonth: state.date.fullMonth,
+        taskList: state.taskList
+    }
+};
+
+const TaskDisplay = connect(
+    mapStateToTasksProps,
+    {test: ()=>'hi'}
+)(Tasks);
 
 export default App;
