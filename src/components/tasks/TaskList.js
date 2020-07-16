@@ -29,7 +29,7 @@ class TaskList extends React.Component {
                                                 year={this.props.year}
                                                 day={this.props.day}
                                                 taskList={this.props.taskList}
-                                                /> : null
+                                              /> : null
                 }
             </div>
         );

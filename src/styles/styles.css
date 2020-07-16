@@ -283,3 +283,28 @@ td.active-day {
     height: 380px;
     background-color: white;
 }
+
+/* Mini Calendar */
+.min-calendar-container {
+    width: 60%;
+    height: 60%;
+    background-color: white;
+    padding: 5px 5px;
+    border: 1px solid black;
+}
+
+.taskform {
+    height: 100%;
+}
+
+div.mincalendar-container {
+    width: 100%;
+}
+
+.min-calendar-select select {
+    font-size: 14px
+}
+
+.min-calendar-header {
+    height: 14%;
+}

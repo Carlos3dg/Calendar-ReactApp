@@ -1,4 +1,5 @@
 import React from 'react';
+import WrappedCalendar from '../Containers/WrappedCalendar';
 
 const startHour = new Date().getHours();
 const startMinutes = new Date().getMinutes / 60;
@@ -16,23 +17,54 @@ class TaskForm extends React.Component {
             month: this.props.month,
             day: this.props.day,
             year: this.props.year,
-            startHour: !this.props.task ? '' : this.props.task.title,
-            endHour: !this.props.task ? '' : this.props.task.title,
-            repeat: !this.props.task ? '' : this.props.task.title
+            startHour: !this.props.task ? '' : this.props.task.startHour,
+            endHour: !this.props.task ? '' : this.props.task.endHour,
+            repeat: !this.props.task ? '' : this.props.task.repear
         }
     }
 
+    static getDerivedStateFromProps(nextProps) {
+        return {
+            task: {
+                month: nextProps.month,
+                day: nextProps.day,
+                year: nextProps.year
+            }
+        }
+    };
+
+
+    onClickDateInput = ()=> {
+        this.setState({openCalendar: true});
+    }
+
+    closeCalendar = ()=>{
+        this.setState({openCalendar: false});
+    }
+
     render() {
+        console.log(this.state.task)
         return (
             <div className='popup-container'>
                 <div className='taskform-container'>
-                    <form>
+                    <form className='taskform'>
                         <div>
                             <input type='text' placeholder='Add Title' value={this.state.task.title}/>
                         </div>
                         <div>
-                            <input type='text' value={`${this.state.task.month}/${this.state.task.day}/${this.state.task.year}`}/>
+                            <input type='text' value={`${this.state.task.month}/${this.state.task.day}/${this.state.task.year}`} onClick={this.onClickDateInput}/>
                         </div>
+                        {
+                            this.state.openCalendar 
+                            ? <div className='min-calendar-container'>
+                                <WrappedCalendar 
+                                    date={new Date()} 
+                                    mincalendar={true} 
+                                    closeCalendar={this.closeCalendar}
+                                />
+                              </div> 
+                            : null
+                        }
                     </form>
                 </div>
             </div>

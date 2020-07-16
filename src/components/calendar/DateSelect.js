@@ -53,7 +53,7 @@ class DateSelect extends React.Component {
 
     render() {
         return (
-                <div>
+                <div className={!this.props.mincalendar ? null : 'min-calendar-select'}>
                     {this.renderMonthSelect()}
                     {this.renderYearSelect()}
                 </div>

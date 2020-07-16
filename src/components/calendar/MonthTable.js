@@ -12,6 +12,7 @@ class MonthTable extends React.Component {
                 selectedDay: selectedDay
             });
             this.props.selectDay(day);
+            if(this.props.mincalendar) this.props.closeCalendar()
         }
     }
 
@@ -32,7 +33,7 @@ class MonthTable extends React.Component {
 
     render() {
         return(
-            <table className='container-short calendar-table'>
+            <table className='container-short calendar-table' style={this.props.mincalendar ? {height: '86%', fontSize: '10px'} : null}>
                 <colgroup>
                     <col className='days-col'/>
                     <col className='days-col'/>
@@ -63,7 +64,12 @@ class MonthTable extends React.Component {
                                     return(
                                         <td key={index} className={this.state.selectedDay === date ? 'active-day' : null} onClick={()=>this.onClickDay(day)}>
                                             <div className='day-box'>
-                                                <span className={date===this.getActualDay() ? 'today' : null}>{day}</span>
+                                                <span 
+                                                    className={date===this.getActualDay() ? 'today' : null} 
+                                                    style={this.props.mincalendar ? {width: '40%', marginRight: '60%'} : null}
+                                                >
+                                                    {day}
+                                                </span>
                                             </div>
                                         </td>
                                     )}
