@@ -25,6 +25,7 @@ class Calendar extends React.Component {
                     selectDay={this.props.selectDay}
                     date={this.props.date}
                     mincalendar={this.props.mincalendar}
+                    selectedDay={this.props.selectedDay}
                     closeCalendar={this.props.closeCalendar}
                 />
             </div>

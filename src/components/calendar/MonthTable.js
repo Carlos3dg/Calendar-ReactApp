@@ -12,7 +12,11 @@ class MonthTable extends React.Component {
                 selectedDay: selectedDay
             });
             this.props.selectDay(day);
-            if(this.props.mincalendar) this.props.closeCalendar()
+            if(this.props.mincalendar) {
+                setTimeout(()=>{
+                    this.props.closeCalendar('div#calendar')
+                }, 300);
+            }
         }
     }
 
@@ -25,10 +29,16 @@ class MonthTable extends React.Component {
 
     componentDidMount() {
         const actualDay = this.getActualDay();
-        this.setState({
-            selectedDay: actualDay
-        });
-        this.props.selectDay(this.props.date.getDate());
+        if(!this.props.mincalendar) {
+            this.props.selectDay(this.props.date.getDate());
+            this.setState({
+                selectedDay: actualDay
+            });
+        } else {
+            this.setState({
+                selectedDay: `${this.props.year}-${this.props.month}-${this.props.selectedDay}`
+            })
+        }
     }
 
     render() {

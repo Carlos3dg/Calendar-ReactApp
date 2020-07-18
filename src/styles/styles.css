@@ -205,6 +205,10 @@ col.days-col {
     width: 100%;
 }
 
+.day-box:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
 .day-box span {
     display: inline-block;
     width: 20%;

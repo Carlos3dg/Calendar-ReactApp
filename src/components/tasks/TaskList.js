@@ -10,6 +10,10 @@ class TaskList extends React.Component {
         this.setState({openTaskForm: true})
     }
 
+    closeTaskForm = ()=> {
+        this.setState({openTaskForm: false})
+    }
+
     render() {
         return(
             <div className='task-list-container container-short'>
@@ -29,6 +33,7 @@ class TaskList extends React.Component {
                                                 year={this.props.year}
                                                 day={this.props.day}
                                                 taskList={this.props.taskList}
+                                                closeTaskForm={this.closeTaskForm}
                                               /> : null
                 }
             </div>

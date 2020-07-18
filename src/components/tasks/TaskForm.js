@@ -7,6 +7,7 @@ const startTime = startHour + startMinutes;
 
 class TaskForm extends React.Component {
     state={
+        activeElement: null,
         openCalendar: false,
         displayStart: false,
         displayEnd: false,
@@ -23,9 +24,10 @@ class TaskForm extends React.Component {
         }
     }
 
-    static getDerivedStateFromProps(nextProps) {
+    static getDerivedStateFromProps(nextProps, state) {
         return {
             task: {
+                ...state.task,
                 month: nextProps.month,
                 day: nextProps.day,
                 year: nextProps.year
@@ -34,33 +36,64 @@ class TaskForm extends React.Component {
     };
 
 
-    onClickDateInput = ()=> {
-        this.setState({openCalendar: true});
+    openOnClickElement = (element)=> {
+        switch(element) {
+            case 'div#calendar': {
+                this.setState({
+                    activeElement: element,
+                    openCalendar: true
+                });
+            }
+        }
     }
 
-    closeCalendar = ()=>{
-        this.setState({openCalendar: false});
+    closeElement = (element)=>{
+        switch(element) {
+            case 'div#calendar': {
+                this.setState({
+                    activeElement: null,
+                    openCalendar: false
+                });
+            }
+        }
+    }
+
+    hideOnClickOutside = (e, activeElement) => {
+        const target = e.target.closest(activeElement);
+        if(!target) {
+            this.closeElement(activeElement);
+        }
+            
+    }
+
+    closeTaskForm = (e) => {
+        if(e.target.className.match('close-taskform')) {
+            this.props.closeTaskForm();
+        }
     }
 
     render() {
-        console.log(this.state.task)
         return (
-            <div className='popup-container'>
-                <div className='taskform-container'>
+            <div className='close-taskform popup-container' onClick={this.closeTaskForm}>
+                <div className='taskform-container' onClick={(e)=>this.hideOnClickOutside(e, this.state.activeElement)}>
                     <form className='taskform'>
+                        <span className="close-taskform material-icons close-icon">
+                            close
+                        </span>
                         <div>
                             <input type='text' placeholder='Add Title' value={this.state.task.title}/>
                         </div>
                         <div>
-                            <input type='text' value={`${this.state.task.month}/${this.state.task.day}/${this.state.task.year}`} onClick={this.onClickDateInput}/>
+                            <input type='text' value={`${this.state.task.month + 1}/${this.state.task.day}/${this.state.task.year}`} onClick={()=>this.openOnClickElement('div#calendar')}/>
                         </div>
                         {
                             this.state.openCalendar 
-                            ? <div className='min-calendar-container'>
+                            ? <div className='min-calendar-container' id='calendar'>
                                 <WrappedCalendar 
                                     date={new Date()} 
-                                    mincalendar={true} 
-                                    closeCalendar={this.closeCalendar}
+                                    mincalendar={true}
+                                    selectedDay={this.state.task.day} 
+                                    closeCalendar={this.closeElement}
                                 />
                               </div> 
                             : null
