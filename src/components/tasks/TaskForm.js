@@ -40,6 +40,24 @@ class TaskForm extends React.Component {
                     activeElement: element,
                     openCalendar: true
                 });
+                break;
+            }
+            case 'div#start-select': {
+                this.setState({
+                    activeElement: element,
+                    displayStart: true
+                });
+                break;
+            }
+            case 'div#end-select': {
+                this.setState({
+                    activeElement: element,
+                    displayEnd: true
+                });
+                break;
+            }
+            default: {
+                break;
             }
         }
     }
@@ -51,6 +69,24 @@ class TaskForm extends React.Component {
                     activeElement: null,
                     openCalendar: false
                 });
+                break;
+            }
+            case 'div#start-select': {
+                this.setState({
+                    activeElement: null,
+                    displayStart: false
+                });
+                break;
+            }
+            case 'div#end-select': {
+                this.setState({
+                    activeElement: null,
+                    displayEnd: false
+                });
+                break;
+            }
+            default: {
+                break;
             }
         }
     }
@@ -67,6 +103,44 @@ class TaskForm extends React.Component {
         if(e.target.className.match('close-taskform')) {
             this.props.closeTaskForm();
         }
+    }
+
+    getStartSelect = () => {
+        return(
+            <div className='time-select' id='start-select'>
+                {
+                    time.map((time, index) => (
+                        <div className='start-time-option' id={time.jsTime} key={index}>
+                            <span>{time.time}</span>
+                        </div>
+                    ))
+                }
+            </div>
+        )
+    }
+
+    getEndSelect = () => {
+        const endTimeIndex = time.findIndex((time) => (
+            time === this.state.task.endTime
+        ));
+        
+        const times = time.filter((time, index) => {
+            if(index >= endTimeIndex){
+                return time
+            }      
+        });
+
+        return(
+            <div className='time-select' id='end-select'>
+                {   
+                    times.map((time, index) => (
+                        <div className='end-time-option' id={time.jsTime} key={index}>
+                            <span>{time.time}</span>
+                        </div>
+                    ))
+                }
+            </div>
+        )
     }
 
     getTime() {
@@ -127,10 +201,16 @@ class TaskForm extends React.Component {
                             : null
                         }
                         <div>
-                            <input type='text' value={this.state.task.startTime.time}/>
+                            <input type='text' value={this.state.task.startTime.time} onClick={()=>this.openOnClickElement('div#start-select')}/>
                             <span> - </span>
-                            <input type='text' value={this.state.task.endTime.time}/>
+                            <input type='text' value={this.state.task.endTime.time} onClick={()=>this.openOnClickElement('div#end-select')}/>
                         </div>
+                        {
+                            this.state.displayStart ? this.getStartSelect() : null
+                        }
+                        {
+                            this.state.displayEnd ? this.getEndSelect() : null
+                        }
                     </form>
                 </div>
             </div>

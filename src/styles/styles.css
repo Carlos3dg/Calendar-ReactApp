@@ -312,3 +312,13 @@ div.mincalendar-container {
 .min-calendar-header {
     height: 14%;
 }
+
+/* Time Select */
+.time-select {
+    font-size: 15px;
+    width: 45%;
+    background-color: white;
+    border: 1px solid black;
+    max-height: 45%;
+    overflow-y: scroll;
+}
