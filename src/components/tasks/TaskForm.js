@@ -1,9 +1,6 @@
 import React from 'react';
 import WrappedCalendar from '../Containers/WrappedCalendar';
-
-const startHour = new Date().getHours();
-const startMinutes = new Date().getMinutes / 60;
-const startTime = startHour + startMinutes;
+import time from '../../api/time.json';
 
 class TaskForm extends React.Component {
     state={
@@ -18,8 +15,8 @@ class TaskForm extends React.Component {
             month: this.props.month,
             day: this.props.day,
             year: this.props.year,
-            startHour: !this.props.task ? '' : this.props.task.startHour,
-            endHour: !this.props.task ? '' : this.props.task.endHour,
+            startTime: !this.props.task ? {jsTime: '', time: '' } : this.props.task.startTime,
+            endTime: !this.props.task ? {jsTime: '', time: ''} : this.props.task.endTime,
             repeat: !this.props.task ? '' : this.props.task.repear
         }
     }
@@ -72,6 +69,37 @@ class TaskForm extends React.Component {
         }
     }
 
+    getTime() {
+        const startHours = new Date().getHours();
+        let startMinutes = new Date().getMinutes() / 60;
+        if(startMinutes>0.5) {
+            startMinutes = Math.ceil(startMinutes);
+        } else {
+            startMinutes = 0.5;
+        }
+        let startTime = startHours + startMinutes;
+        if(startTime>23.5) startTime=0;
+        return startTime; 
+    }
+
+    componentDidMount() {
+        const jsStartTime = this.getTime();
+        //filter time.json api
+        const times = time.filter((time) => {
+            const jsEndTime = jsStartTime + 0.5;
+            if(jsStartTime === time.jsTime || jsEndTime === time.jsTime) {
+                return time;
+            }
+        });
+        const task = Object.assign({}, this.state.task);
+        task.startTime = times[0];
+        task.endTime = times[1];
+
+        this.setState({
+            task: task
+        });
+    }
+
     render() {
         return (
             <div className='close-taskform popup-container' onClick={this.closeTaskForm}>
@@ -98,6 +126,11 @@ class TaskForm extends React.Component {
                               </div> 
                             : null
                         }
+                        <div>
+                            <input type='text' value={this.state.task.startTime.time}/>
+                            <span> - </span>
+                            <input type='text' value={this.state.task.endTime.time}/>
+                        </div>
                     </form>
                 </div>
             </div>

@@ -1,0 +1,194 @@
+[
+    {
+        "jsTime": 0,
+        "time": "12:00am"
+    },
+    {
+        "jsTime": 0.5,
+        "time": "12:30am"
+    },
+    {
+        "jsTime": 1,
+        "time": "1:00am"
+    },
+    {
+        "jsTime": 1.5,
+        "time": "1:30am"
+    },
+    {
+        "jsTime": 2,
+        "time": "2:00am"
+    },
+    {
+        "jsTime": 2.5,
+        "time": "2:30am"
+    },
+    {
+        "jsTime": 3,
+        "time": "3:00am"
+    },
+    {
+        "jsTime": 3.5,
+        "time": "3:30am"
+    },
+    {
+        "jsTime": 4,
+        "time": "4:00am"
+    },
+    {
+        "jsTime": 4.5,
+        "time": "4:30am"
+    },
+    {
+        "jsTime": 5,
+        "time": "5:00am"
+    },
+    {
+        "jsTime": 5.5,
+        "time": "5:30am"
+    },
+    {
+        "jsTime": 6,
+        "time": "6:00am"
+    },
+    {
+        "jsTime": 6.5,
+        "time": "6:30am"
+    },
+    {
+        "jsTime": 7,
+        "time": "7:00am"
+    },
+    {
+        "jsTime": 7.5,
+        "time": "7:30am"
+    },
+    {
+        "jsTime": 8,
+        "time": "8:00am"
+    },
+    {
+        "jsTime": 8.5,
+        "time": "8:30am"
+    },
+    {
+        "jsTime": 9,
+        "time": "9:00am"
+    },
+    {
+        "jsTime": 9.5,
+        "time": "9:30am"
+    },
+    {
+        "jsTime": 10,
+        "time": "10:00am"
+    },
+    {
+        "jsTime": 10.5,
+        "time": "10:30am"
+    },
+    {
+        "jsTime": 11,
+        "time": "11:00am"
+    },
+    {
+        "jsTime": 11.5,
+        "time": "11:30am"
+    },
+    {
+        "jsTime": 12,
+        "time": "12:00pm"
+    },
+    {
+        "jsTime": 12.5,
+        "time": "12:30pm"
+    },
+    {
+        "jsTime": 13,
+        "time": "1:00pm"
+    },
+    {
+        "jsTime": 13.5,
+        "time": "1:30pm"
+    },
+    {
+        "jsTime": 14,
+        "time": "2:00pm"
+    },
+    {
+        "jsTime": 14.5,
+        "time": "2:30pm"
+    },
+    {
+        "jsTime": 15,
+        "time": "3:00pm"
+    },
+    {
+        "jsTime": 15.5,
+        "time": "3:30pm"
+    },
+    {
+        "jsTime": 16,
+        "time": "4:00pm"
+    },
+    {
+        "jsTime": 16.5,
+        "time": "4:30pm"
+    },
+    {
+        "jsTime": 17,
+        "time": "5:00pm"
+    },
+    {
+        "jsTime": 17.5,
+        "time": "5:30pm"
+    },
+    {
+        "jsTime": 18,
+        "time": "6:00pm"
+    },
+    {
+        "jsTime": 18.5,
+        "time": "6:30pm"
+    },
+    {
+        "jsTime": 19,
+        "time": "7:00pm"
+    },
+    {
+        "jsTime": 19.5,
+        "time": "7:30pm"
+    },
+    {
+        "jsTime": 20,
+        "time": "8:00pm"
+    },
+    {
+        "jsTime": 20.5,
+        "time": "8:30pm"
+    },
+    {
+        "jsTime": 21,
+        "time": "9:00pm"
+    },
+    {
+        "jsTime": 21.5,
+        "time": "9:30pm"
+    },
+    {
+        "jsTime": 22,
+        "time": "10:00pm"
+    },
+    {
+        "jsTime": 22.5,
+        "time": "10:30pm"
+    },
+    {
+        "jsTime": 23,
+        "time": "11:00pm"
+    },
+    {
+        "jsTime": 23.5,
+        "time": "11:30pm"
+    }
+]
