@@ -17,7 +17,7 @@ class TaskForm extends React.Component {
             year: this.props.year,
             startTime: !this.props.task ? {jsTime: '', time: '' } : this.props.task.startTime,
             endTime: !this.props.task ? {jsTime: '', time: ''} : this.props.task.endTime,
-            repeat: !this.props.task ? '' : this.props.task.repear
+            repeat: !this.props.task ? 'Does not repeat' : this.props.task.repeat
         }
     }
 
@@ -34,32 +34,41 @@ class TaskForm extends React.Component {
 
 
     openOnClickElement = (element)=> {
-        switch(element) {
-            case 'div#calendar': {
-                this.setState({
-                    activeElement: element,
-                    openCalendar: true
-                });
-                break;
+        setTimeout(()=>{
+            switch(element) {
+                case 'div#calendar': {
+                    this.setState({
+                        activeElement: element,
+                        openCalendar: true
+                    });
+                    break;
+                }
+                case 'div#start-select': {
+                    this.setState({
+                        activeElement: element,
+                        displayStart: true
+                    });
+                    break;
+                }
+                case 'div#end-select': {
+                    this.setState({
+                        activeElement: element,
+                        displayEnd: true
+                    });
+                    break;
+                }
+                case 'div#repeat-select': {
+                    this.setState({
+                        activeElement: element,
+                        displayRepeat: true
+                    });
+                    break;
+                }
+                default: {
+                    break;
+                }
             }
-            case 'div#start-select': {
-                this.setState({
-                    activeElement: element,
-                    displayStart: true
-                });
-                break;
-            }
-            case 'div#end-select': {
-                this.setState({
-                    activeElement: element,
-                    displayEnd: true
-                });
-                break;
-            }
-            default: {
-                break;
-            }
-        }
+        }, 200);
     }
 
     closeElement = (element)=>{
@@ -85,6 +94,13 @@ class TaskForm extends React.Component {
                 });
                 break;
             }
+            case 'div#repeat-select': {
+                this.setState({
+                    activeElement: null,
+                    displayRepeat: false
+                });
+                break;
+            }
             default: {
                 break;
             }
@@ -105,12 +121,17 @@ class TaskForm extends React.Component {
         }
     }
 
+    selectStartTime = (time, element) => {
+        this.getStartTimeAndEndTime(time.jsTime);
+        this.closeElement(element);
+    }
+
     getStartSelect = () => {
         return(
             <div className='time-select' id='start-select'>
                 {
                     time.map((time, index) => (
-                        <div className='start-time-option' id={time.jsTime} key={index}>
+                        <div className='start-time-option' id={time.jsTime} key={index} onClick={()=>this.selectStartTime(time, 'div#start-select')}>
                             <span>{time.time}</span>
                         </div>
                     ))
@@ -119,13 +140,20 @@ class TaskForm extends React.Component {
         )
     }
 
+    selectEndTime = (time, element) => {
+        const task = Object.assign({}, this.state.task);
+        task.endTime = time;
+        this.setState({task: task});
+        this.closeElement(element)
+    }
+
     getEndSelect = () => {
-        const endTimeIndex = time.findIndex((time) => (
-            time === this.state.task.endTime
+        const startTimeIndex = time.findIndex((time) => (
+            time === this.state.task.startTime
         ));
         
         const times = time.filter((time, index) => {
-            if(index >= endTimeIndex){
+            if(index > startTimeIndex){
                 return time
             }      
         });
@@ -134,8 +162,57 @@ class TaskForm extends React.Component {
             <div className='time-select' id='end-select'>
                 {   
                     times.map((time, index) => (
-                        <div className='end-time-option' id={time.jsTime} key={index}>
+                        <div className='end-time-option' id={time.jsTime} key={index} onClick={() => this.selectEndTime(time, 'div#end-select')}>
                             <span>{time.time}</span>
+                        </div>
+                    ))
+                }
+            </div>
+        )
+    }
+
+    getActualDayPosition = () => {
+        let indexDay;
+        this.props.fullMonth.findIndex((week)=>{
+           indexDay = week.week.findIndex((dayInWeek)=>{
+                return dayInWeek === this.props.day
+           });
+           return indexDay !== -1
+        });
+
+        return indexDay
+    }
+
+    selectRepeatValue = (option, element) => {
+        const task = Object.assign({}, this.state.task);
+        task.repeat = option;
+        this.setState({ task: task});
+        this.closeElement(element)
+    }
+
+    getRepeatSelect = () => {
+        let repeatValues = [
+            'Does not repeat',
+            'Daily',
+            'Weekly',
+            'Monthly',
+            'Anually'
+        ];
+
+        let indexDay = this.getActualDayPosition();
+        
+        if(indexDay === 0 || indexDay===6) {
+            repeatValues.push('Weekends');
+        } else {
+            repeatValues.push('Every weekday (Monday to Friday)')
+        }
+
+        return(
+            <div className='repeat-select-options' id='repeat-select'>
+                {
+                    repeatValues.map((option, index) => (
+                        <div className='repeat-option-value' key={index} onClick={() => this.selectRepeatValue(option, 'div#repeat-select')}>
+                            <span>{option}</span>
                         </div>
                     ))
                 }
@@ -156,8 +233,7 @@ class TaskForm extends React.Component {
         return startTime; 
     }
 
-    componentDidMount() {
-        const jsStartTime = this.getTime();
+    getStartTimeAndEndTime = (jsStartTime) => {
         //filter time.json api
         const times = time.filter((time) => {
             const jsEndTime = jsStartTime + 0.5;
@@ -172,6 +248,11 @@ class TaskForm extends React.Component {
         this.setState({
             task: task
         });
+    }
+
+    componentDidMount() {
+        const jsStartTime = this.getTime();
+        this.getStartTimeAndEndTime(jsStartTime);
     }
 
     render() {
@@ -211,6 +292,15 @@ class TaskForm extends React.Component {
                         {
                             this.state.displayEnd ? this.getEndSelect() : null
                         }
+                        <div className='repeat-select'>
+                            <div className='selected-value' onClick={()=>this.openOnClickElement('div#repeat-select')}>
+                                <span>{this.state.task.repeat}</span>
+                                <span className="material-icons">arrow_drop_down</span>
+                            </div>
+                            {
+                                this.state.displayRepeat ? this.getRepeatSelect() : null
+                            }
+                        </div>
                     </form>
                 </div>
             </div>

@@ -32,6 +32,7 @@ class TaskList extends React.Component {
                                                 month={this.props.month}
                                                 year={this.props.year}
                                                 day={this.props.day}
+                                                fullMonth={this.props.fullMonth}
                                                 taskList={this.props.taskList}
                                                 closeTaskForm={this.closeTaskForm}
                                               /> : null
