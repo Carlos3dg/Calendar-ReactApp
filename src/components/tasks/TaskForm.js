@@ -121,6 +121,12 @@ class TaskForm extends React.Component {
         }
     }
 
+    onChangeInputTitle = (e) => {
+        const task = Object.assign({}, this.state.task);
+        task.title = e.target.value;
+        this.setState({task: task});
+    }
+
     selectStartTime = (time, element) => {
         this.getStartTimeAndEndTime(time.jsTime);
         this.closeElement(element);
@@ -264,10 +270,10 @@ class TaskForm extends React.Component {
                             close
                         </span>
                         <div>
-                            <input type='text' placeholder='Add Title' value={this.state.task.title}/>
+                            <input type='text' placeholder='Add Title' value={this.state.task.title} onChange={this.onChangeInputTitle}/>
                         </div>
                         <div>
-                            <input type='text' value={`${this.state.task.month + 1}/${this.state.task.day}/${this.state.task.year}`} onClick={()=>this.openOnClickElement('div#calendar')}/>
+                            <input type='text' value={`${this.state.task.month + 1}/${this.state.task.day}/${this.state.task.year}`} readOnly onClick={()=>this.openOnClickElement('div#calendar')}/>
                         </div>
                         {
                             this.state.openCalendar 
@@ -282,9 +288,9 @@ class TaskForm extends React.Component {
                             : null
                         }
                         <div>
-                            <input type='text' value={this.state.task.startTime.time} onClick={()=>this.openOnClickElement('div#start-select')}/>
+                            <input type='text' value={this.state.task.startTime.time} readOnly onClick={()=>this.openOnClickElement('div#start-select')}/>
                             <span> - </span>
-                            <input type='text' value={this.state.task.endTime.time} onClick={()=>this.openOnClickElement('div#end-select')}/>
+                            <input type='text' value={this.state.task.endTime.time} readOnly onClick={()=>this.openOnClickElement('div#end-select')}/>
                         </div>
                         {
                             this.state.displayStart ? this.getStartSelect() : null
