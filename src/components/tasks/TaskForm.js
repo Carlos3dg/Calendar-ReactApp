@@ -1,6 +1,8 @@
 import React from 'react';
 import WrappedCalendar from '../Containers/WrappedCalendar';
 import time from '../../api/time.json';
+import HourSelect from './HourSelect';
+import RepeatSelect from './RepeatSelect';
 
 class TaskForm extends React.Component {
     state={
@@ -132,20 +134,6 @@ class TaskForm extends React.Component {
         this.closeElement(element);
     }
 
-    getStartSelect = () => {
-        return(
-            <div className='time-select' id='start-select'>
-                {
-                    time.map((time, index) => (
-                        <div className='start-time-option' id={time.jsTime} key={index} onClick={()=>this.selectStartTime(time, 'div#start-select')}>
-                            <span>{time.time}</span>
-                        </div>
-                    ))
-                }
-            </div>
-        )
-    }
-
     selectEndTime = (time, element) => {
         const task = Object.assign({}, this.state.task);
         task.endTime = time;
@@ -153,7 +141,7 @@ class TaskForm extends React.Component {
         this.closeElement(element)
     }
 
-    getEndSelect = () => {
+    getEndTimes = () => {
         const startTimeIndex = time.findIndex((time) => (
             time === this.state.task.startTime
         ));
@@ -164,17 +152,7 @@ class TaskForm extends React.Component {
             }      
         });
 
-        return(
-            <div className='time-select' id='end-select'>
-                {   
-                    times.map((time, index) => (
-                        <div className='end-time-option' id={time.jsTime} key={index} onClick={() => this.selectEndTime(time, 'div#end-select')}>
-                            <span>{time.time}</span>
-                        </div>
-                    ))
-                }
-            </div>
-        )
+        return times;
     }
 
     getActualDayPosition = () => {
@@ -196,7 +174,7 @@ class TaskForm extends React.Component {
         this.closeElement(element)
     }
 
-    getRepeatSelect = () => {
+    getRepeatValues = () => {
         let repeatValues = [
             'Does not repeat',
             'Daily',
@@ -213,17 +191,7 @@ class TaskForm extends React.Component {
             repeatValues.push('Every weekday (Monday to Friday)')
         }
 
-        return(
-            <div className='repeat-select-options' id='repeat-select'>
-                {
-                    repeatValues.map((option, index) => (
-                        <div className='repeat-option-value' key={index} onClick={() => this.selectRepeatValue(option, 'div#repeat-select')}>
-                            <span>{option}</span>
-                        </div>
-                    ))
-                }
-            </div>
-        )
+        return repeatValues;
     }
 
     getTime() {
@@ -247,6 +215,7 @@ class TaskForm extends React.Component {
                 return time;
             }
         });
+        console.log(time.length);
         const task = Object.assign({}, this.state.task);
         task.startTime = times[0];
         task.endTime = times[1];
@@ -293,10 +262,22 @@ class TaskForm extends React.Component {
                             <input type='text' value={this.state.task.endTime.time} readOnly onClick={()=>this.openOnClickElement('div#end-select')}/>
                         </div>
                         {
-                            this.state.displayStart ? this.getStartSelect() : null
+                            this.state.displayStart 
+                            ? <HourSelect 
+                                time={time} 
+                                timeLength={time.length}
+                                selectStartTime={this.selectStartTime}
+                                /> 
+                            : null
                         }
                         {
-                            this.state.displayEnd ? this.getEndSelect() : null
+                            this.state.displayEnd 
+                            ? <HourSelect 
+                                time={this.getEndTimes()} 
+                                timeLength={time.length}
+                                selectEndTime={this.selectEndTime}
+                                /> 
+                            : null
                         }
                         <div className='repeat-select'>
                             <div className='selected-value' onClick={()=>this.openOnClickElement('div#repeat-select')}>
@@ -304,7 +285,10 @@ class TaskForm extends React.Component {
                                 <span className="material-icons">arrow_drop_down</span>
                             </div>
                             {
-                                this.state.displayRepeat ? this.getRepeatSelect() : null
+                                this.state.displayRepeat ? <RepeatSelect 
+                                                            repeatValues={this.getRepeatValues()} 
+                                                            selectRepeatValue={this.selectRepeatValue}
+                                                            /> : null
                             }
                         </div>
                     </form>
