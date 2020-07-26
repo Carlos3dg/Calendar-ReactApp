@@ -3,6 +3,7 @@ import WrappedCalendar from '../Containers/WrappedCalendar';
 import time from '../../api/time.json';
 import HourSelect from './HourSelect';
 import RepeatSelect from './RepeatSelect';
+import {getIndexWeekAndDay} from '../../helpers/calendarHelpers';
 
 class TaskForm extends React.Component {
     state={
@@ -155,18 +156,6 @@ class TaskForm extends React.Component {
         return times;
     }
 
-    getActualDayPosition = () => {
-        let indexDay;
-        this.props.fullMonth.findIndex((week)=>{
-           indexDay = week.week.findIndex((dayInWeek)=>{
-                return dayInWeek === this.props.day
-           });
-           return indexDay !== -1
-        });
-
-        return indexDay
-    }
-
     selectRepeatValue = (option, element) => {
         const task = Object.assign({}, this.state.task);
         task.repeat = option;
@@ -183,9 +172,9 @@ class TaskForm extends React.Component {
             'Anually'
         ];
 
-        let indexDay = this.getActualDayPosition();
+        let {day} = getIndexWeekAndDay(this.props.fullMonth, this.props.day);
         
-        if(indexDay === 0 || indexDay===6) {
+        if(day === 0 || day===6) {
             repeatValues.push('Weekends');
         } else {
             repeatValues.push('Every weekday (Monday to Friday)')
@@ -208,18 +197,26 @@ class TaskForm extends React.Component {
     }
 
     getStartTimeAndEndTime = (jsStartTime) => {
+        let jsEndTime = jsStartTime + 0.5;
+        if(jsEndTime === 24) {
+            jsEndTime = 0;
+        }
         //filter time.json api
         const times = time.filter((time) => {
-            const jsEndTime = jsStartTime + 0.5;
             if(jsStartTime === time.jsTime || jsEndTime === time.jsTime) {
                 return time;
             }
         });
-        console.log(time.length);
+        
         const task = Object.assign({}, this.state.task);
-        task.startTime = times[0];
-        task.endTime = times[1];
-
+        if(times[0].time > times[1].time ) {
+            task.startTime = times[1];
+            task.endTime = times[0];
+        } else {
+            task.startTime = times[0];
+            task.endTime = times[1];
+        }
+        
         this.setState({
             task: task
         });
