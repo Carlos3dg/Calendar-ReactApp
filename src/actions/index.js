@@ -24,3 +24,11 @@ export function selectDay(day) {
         day: day
     }
 };
+
+export function addTask(task, fullMonth) {
+    return {
+        type: 'ADD_TASK',
+        task: task,
+        fullMonth: fullMonth
+    }
+};

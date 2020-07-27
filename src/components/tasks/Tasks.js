@@ -15,6 +15,7 @@ const Tasks = (props) => (
             day={props.day}
             fullMonth={props.fullMonth}
             taskList={props.taskList}
+            addTask={props.addTask}
         />
     </aside>
 );

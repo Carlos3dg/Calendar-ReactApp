@@ -35,6 +35,11 @@ class TaskForm extends React.Component {
         }
     };
 
+    onFormSubmit = (e) => {
+        e.preventDefault();
+        this.props.addTask(this.state.task, this.props.fullMonth);
+        this.props.closeTaskForm();
+    }
 
     openOnClickElement = (element)=> {
         setTimeout(()=>{
@@ -231,7 +236,7 @@ class TaskForm extends React.Component {
         return (
             <div className='close-taskform popup-container' onClick={this.closeTaskForm}>
                 <div className='taskform-container' onClick={(e)=>this.hideOnClickOutside(e, this.state.activeElement)}>
-                    <form className='taskform'>
+                    <form className='taskform' onSubmit={this.onFormSubmit}>
                         <span className="close-taskform material-icons close-icon">
                             close
                         </span>
@@ -287,6 +292,9 @@ class TaskForm extends React.Component {
                                                             selectRepeatValue={this.selectRepeatValue}
                                                             /> : null
                             }
+                        </div>
+                        <div>
+                            <input type='submit' value='Save'/>
                         </div>
                     </form>
                 </div>
