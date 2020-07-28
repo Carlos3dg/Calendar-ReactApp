@@ -55,7 +55,7 @@ export function getMonth(month, year) {
 }
 
 export function getIndexWeekAndDay(fullMonth, day) {
-    const index = {
+    let index = {
         week: null,
         day: null
     }

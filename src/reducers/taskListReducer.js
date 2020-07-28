@@ -1,4 +1,5 @@
 import {v4 as uuidv4} from 'uuid';
+import {getIndexWeekAndDay} from '../helpers/calendarHelpers';
 
 export default function taskListReducer(
     state=[],
@@ -15,15 +16,9 @@ export default function taskListReducer(
             };
 
             const oldState = [...state];
-            
-            const yearIndex = oldState.findIndex((task)=>(
-                task.year === action.task.year
-            ));
-
-            const newState = getYearTask(yearIndex, newTask, oldState, action);
+            const newState = getNewTask(newTask, oldState, action);
 
             return newState;
-            
         }
         default: {
             return state
@@ -31,16 +26,90 @@ export default function taskListReducer(
     }
 };
 
-function getYearTask(yearIndex, newTask, oldState, action) {
+function getNewTask(newTask, oldState, action) {
+    let taskDate = {
+        year: action.task.year,
+        month: action.task.month,
+        day: action.task.day
+    };
+
+    let newState = [...oldState];
+
+    switch(action.task.repeat) {
+        case 'Does not repeat': {
+            const newState = getYearTask(newTask, oldState, taskDate);
+            return newState;
+        }
+        case 'Daily': {
+            const dayPosition = getIndexWeekAndDay(action.fullMonth, action.task.day);
+            let days = []
+            action.fullMonth.forEach((element, index) => {
+                if(index >= dayPosition.week) {
+                    const newDays = element.week.filter((day) => (
+                        day >= taskDate.day
+                    ));
+                    days = [...days, ...newDays];
+                }
+            });
+
+            days.forEach((day) => {
+                taskDate.day = day;
+                newState = getYearTask(newTask, newState, taskDate);
+            });
+
+            return newState;
+        } 
+        case 'Weekly': {
+            const dayPosition = getIndexWeekAndDay(action.fullMonth, action.task.day);
+
+            let weeklyDay = taskDate.day;
+            let days = [];
+            action.fullMonth.forEach((element, index) => {
+                if(index >= dayPosition.week) {
+                    const day = element.week.filter((day) => (
+                        day === weeklyDay
+                    ));
+                    days = [...days, ...day];
+                    weeklyDay = weeklyDay + 7;
+                }
+            });
+            
+            days.forEach((day) => {
+                taskDate.day = day;
+                newState = getYearTask(newTask, newState, taskDate);
+            });
+
+            return newState;
+        }
+        case 'Monthly': {
+
+        }
+        case 'Anually': {
+
+        }
+        case 'Weekends': {
+
+        }
+        case 'Every weekday (Monday to Friday)': {
+
+        }
+    }
+}
+
+function getYearTask(newTask, oldState, taskDate) {
+    const yearIndex = oldState.findIndex((task)=>(
+        task.year === taskDate.year
+    ));
+
     if(yearIndex === -1) {
         const newYear = {
-            year: action.task.year,
+            year: taskDate.year,
             months: [
                 {
-                    month: action.task.month,
+                    month: taskDate.month,
                     days: [
                         {
-                            day: action.task.day,
+                            day: taskDate.day,
                             tasks: [
                                 newTask
                             ]
@@ -72,7 +141,7 @@ function getYearTask(yearIndex, newTask, oldState, action) {
     } else {
         const updatedYear = {
             ...oldState[yearIndex],
-            months: getMonthTask(newTask, oldState[yearIndex].months, action)
+            months: getMonthTask(newTask, oldState[yearIndex].months, taskDate)
         }
 
         return [
@@ -83,17 +152,17 @@ function getYearTask(yearIndex, newTask, oldState, action) {
     }
 }
 
-function getMonthTask(newTask, oldMonths, action) {
+function getMonthTask(newTask, oldMonths, taskDate) {
     const monthIndex = oldMonths.findIndex((task) => (
-        task.month === action.task.month
+        task.month === taskDate.month
     ));
 
     if(monthIndex === -1) {
         const newMonth = {
-            month: action.task.month,
+            month: taskDate.month,
             days: [
                 {
-                    day: action.task.day,
+                    day: taskDate.day,
                     tasks: [
                         newTask
                     ]
@@ -123,7 +192,7 @@ function getMonthTask(newTask, oldMonths, action) {
     } else {
         const updatedMonth = {
             ...oldMonths[monthIndex],
-            days: getDayTask(newTask, oldMonths[monthIndex].days, action)
+            days: getDayTask(newTask, oldMonths[monthIndex].days, taskDate)
         }
 
         return [
@@ -134,14 +203,14 @@ function getMonthTask(newTask, oldMonths, action) {
     }
 }
 
-function getDayTask(newTask, oldDays, action) {
+function getDayTask(newTask, oldDays, taskDate) {
     const dayIndex = oldDays.findIndex((task) => (
-        task.day === action.task.day
+        task.day === taskDate.day
     ));
 
     if(dayIndex === -1) {
         const newDay = {
-            day: action.task.day,
+            day: taskDate.day,
             tasks: [
                 newTask
             ]
