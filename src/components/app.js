@@ -1,13 +1,12 @@
 import React from 'react';
+import Header from './Header';
 import WrappedCalendar from './Containers/WrappedCalendar';
 import TaskDisplay from './Containers/TaskDisplay';
 
 const App = (props) => {
         return(
             <div className='container'>
-                <header>
-                    <h1>Calendar App</h1>
-                </header>
+                <Header/>
                 <main className='main-container'>
                     <WrappedCalendar
                         date={props.date}
