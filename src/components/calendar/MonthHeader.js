@@ -10,12 +10,11 @@ const MonthHeader = (props) => {
                 jumpDate={props.jumpDate}
                 mincalendar={props.mincalendar}
            />
-            <div className='arrow-month-container'>
+            <div className={`arrow-month-container ${!props.mincalendar ? null : 'arrow-min-month-container'}`}>
                 <span className="material-icons month-arrow-icon" onClick={() => props.prevMonth()}>
                     navigate_before
                 </span>
-            </div>
-            <div className='arrow-month-container'>
+
                 <span className="material-icons month-arrow-icon" onClick={() => props.nextMonth()}>
                     navigate_next
                 </span>

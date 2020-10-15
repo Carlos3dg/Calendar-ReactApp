@@ -139,7 +139,7 @@ header {
     width: 100%;
     height: 70px;
     text-align: center;
-    border-bottom: 1px solid var(--gray);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
     padding: 0 2.5%; /*Padding equal to the main margin container*/
     display: flex;
     align-items: center;
@@ -158,12 +158,20 @@ header h2 {
     color: white;
 }
 
+.container-log-button {
+    width: 9%;
+    height: 100%;
+    position: relative;
+}
+
 .log-button {
     background-color: white;
-    width: 9%;
-    height: 56%;
-    border-radius: calc((70px * 0.56)/2);
-    line-height: calc(70px*0.56);
+    width: 100%;
+    display: inline-block;
+    position: absolute;
+    top: calc((70px - 2em)/2);
+    left: 0;
+    line-height: 2em;
     color: var(--neonBlue);
 }
 
@@ -193,6 +201,7 @@ header h2 {
 }
 
 .calendar-header {
+    color: var(--neonBlue);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -202,8 +211,8 @@ header h2 {
 }
 
 .date-select {
-    border: 2px solid var(--neonBlue);
     color: var(--neonBlue);
+    border: 2px solid var(--neonBlue);
     font-weight: 600;
     height: 1.92em;
     border-radius: 0.96em;
@@ -216,11 +225,15 @@ header h2 {
 }
 
 .arrow-month-container {
-    width: 10%;
+    width: 8%;
     height: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+}
+
+.arrow-min-month-container {
+    width: auto;
 }
 
 .month-arrow-icon {
@@ -231,7 +244,7 @@ header h2 {
 }
 
 .month-arrow-icon:hover {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--alphaNeonBlue);
 }
 
 .calendar-table {
@@ -336,7 +349,7 @@ td.active-day {
         height: 39px;
         border-radius: 19.5px;
     }
-}
+}*/
 
 /* Task Form */
 .popup-container {
