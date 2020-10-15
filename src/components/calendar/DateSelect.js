@@ -29,7 +29,7 @@ class DateSelect extends React.Component {
 
     renderMonthSelect = () => {
         return(
-            <select value={this.state.month} onChange={this.onMonthChange}>
+            <select value={this.state.month} onChange={this.onMonthChange} className='date-select'>
                 {
                     Months.map((month, index) => (
                         <option value={index} key={index}>{month}</option>
@@ -41,7 +41,7 @@ class DateSelect extends React.Component {
 
     renderYearSelect = () => {
         return(
-            <select value={this.state.year} onChange={this.onYearChange}>
+            <select value={this.state.year} onChange={this.onYearChange} className='date-select'>
                 {
                     Years.map((year, index) => (
                     <option value={year} key={index}>{year}</option>

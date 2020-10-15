@@ -20,7 +20,7 @@ class TaskList extends React.Component {
                 <div className='task-list-overflow'>
                 </div>
                 <div className='task-button-container' onClick={this.openTaskForm}>
-                    <span className='button'>
+                    <span className='button-task button'>
                         <span className="material-icons icon">
                             add
                         </span>
