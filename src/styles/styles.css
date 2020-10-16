@@ -64,7 +64,7 @@ html, body {
 }
 
 :root {
-    --neonBlue: rgb(88, 99, 248);
+    --neonBlue: #5863f8;
     --alphaNeonBlue: rgba(88, 99, 248, 0.2);
     --dark: #171D1C;
     --gray: rgb(212, 206, 216);
@@ -368,6 +368,31 @@ td.active-day {
     width: 450px;
     height: 380px;
     background-color: white;
+    border-radius: 10px;
+    padding: 45px 0 15px 0;
+}
+
+.app-icon {
+    width: 90px;
+    height: 90px;
+    border-radius: 45px;
+    position: absolute;
+    top: -45px;
+    left: calc((450px - 90px)/2);
+    
+    /*background-image: url(../img/calendar-icon3.png),
+                      linear-gradient(135deg, var(--lightblue), var(--neonBlue));
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 70px auto,
+                     100% 100%;*/
+}
+
+.taskform .close-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
 }
 
 /* Mini Calendar */

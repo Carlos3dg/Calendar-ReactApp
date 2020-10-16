@@ -4,6 +4,7 @@ import time from '../../api/time.json';
 import HourSelect from './HourSelect';
 import RepeatSelect from './RepeatSelect';
 import {getIndexWeekAndDay} from '../../helpers/calendarHelpers';
+import logo from '../../img/app-icon/icon-150x150.png'
 
 class TaskForm extends React.Component {
     state={
@@ -237,6 +238,7 @@ class TaskForm extends React.Component {
             <div className='close-taskform popup-container' onClick={this.closeTaskForm}>
                 <div className='taskform-container' onClick={(e)=>this.hideOnClickOutside(e, this.state.activeElement)}>
                     <form className='taskform' onSubmit={this.onFormSubmit}>
+                        <img src={logo} className='app-icon' alt="Calendar App"/>
                         <span className="close-taskform material-icons close-icon">
                             close
                         </span>
