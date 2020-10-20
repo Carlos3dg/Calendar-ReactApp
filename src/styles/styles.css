@@ -351,7 +351,7 @@ td.active-day {
     }
 }*/
 
-/* Task Form */
+/* TASK FORM */
 .popup-container {
     position: fixed;
     width: 100%;
@@ -364,9 +364,9 @@ td.active-day {
 .taskform-container {
     position: absolute;
     left: calc(50% - (450px * .5));
-    top: calc(50% - (380px * .5));
+    top: calc(50% - (415px * .5));
     width: 450px;
-    height: 380px;
+    height: 415px;
     background-color: white;
     border-radius: 10px;
     padding: 45px 0 15px 0;
@@ -395,37 +395,126 @@ td.active-day {
     cursor: pointer;
 }
 
-/* Mini Calendar */
-.min-calendar-container {
-    width: 60%;
-    height: 60%;
-    background-color: white;
-    padding: 5px 5px;
-    border: 1px solid black;
-}
-
 .taskform {
     height: 100%;
+    margin: 0 15px;
+    padding: 1px 0;
 }
+
+.taskform .input-container {
+    margin: 12px 0;
+    display: flex;
+    align-items: center;
+}
+
+.input-container .add-title {
+    height: 32px;
+    font-size: 28px;
+}
+
+.input-icons {
+    font-size: 20px;
+    color: gray;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.input-box {
+    width: 30%;
+}
+
+.input-border {
+    width: 0px;
+    border-bottom: 2px solid var(--neonBlue);
+    transition: all 250ms linear;
+}
+
+.taskform input {
+    border: 0;
+    border-bottom: 1px solid var(--gray);
+    outline: none;
+    width: 100%;
+    font-size: 17px;
+    color: rgb(97 97 97);
+}
+
+.taskform input:focus {
+    border-bottom: 0;
+}
+
+.taskform input:focus + .input-border {
+    width: 100%;
+    border-bottom: 2px solid var(--neonBlue);
+}
+
+/* Mini Calendar */
+.min-calendar-container, .time-select {
+    position: absolute;
+    box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    left: 40px;
+}
+
+#end-select {
+    left: calc(40px + 30% + 10px); /* icon width + start input time width + line width */
+}
+
+.min-calendar-container {
+    width: 63%;
+    height: 57%;
+    background-color: white;
+    padding: 5px 5px;
+    position: absolute;
+    box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+}
+
 
 div.mincalendar-container {
     width: 100%;
 }
 
 .min-calendar-select select {
-    font-size: 14px
+    font-size: 14px;
+    padding-left: 5px;
+    border: 1px solid var(--neonBlue);
+}
+
+.min-calendar-select .date-select:first-child {
+    margin-right: 3px;
 }
 
 .min-calendar-header {
     height: 14%;
 }
 
+.min-calendar-header .month-arrow-icon {
+    font-size: 21px;
+}
+
+.min-calendar-container th {
+    padding: 8px 0;
+}
+
 /* Time Select */
 .time-select {
     font-size: 15px;
-    width: 45%;
+    width: 36%;
     background-color: white;
-    border: 1px solid black;
-    max-height: 45%;
+    max-height: 38%;
     overflow-y: scroll;
+    cursor: pointer;
+}
+
+.start-time-option  {
+    padding: 5px 0;
+}
+
+.start-time-option span {
+    font-size: 17px;
+    color: rgb(97 97 97);
+}
+
+.start-time-option:hover {
+    background-color: var(--alphaNeonBlue);
 }

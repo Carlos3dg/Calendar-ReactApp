@@ -236,17 +236,24 @@ class TaskForm extends React.Component {
     render() {
         return (
             <div className='close-taskform popup-container' onClick={this.closeTaskForm}>
-                <div className='taskform-container' onClick={(e)=>this.hideOnClickOutside(e, this.state.activeElement)}>
+                <div className='taskform-container container-short' onClick={(e)=>this.hideOnClickOutside(e, this.state.activeElement)}>
                     <form className='taskform' onSubmit={this.onFormSubmit}>
                         <img src={logo} className='app-icon' alt="Calendar App"/>
                         <span className="close-taskform material-icons close-icon">
                             close
                         </span>
-                        <div>
-                            <input type='text' placeholder='Add Title' value={this.state.task.title} onChange={this.onChangeInputTitle}/>
+                        <div className='input-container' style={{display: 'block'}}>
+                            <input type='text' placeholder='Add Title' className='add-title' value={this.state.task.title} onChange={this.onChangeInputTitle}/>
+                            <div className='input-border'></div>
                         </div>
-                        <div>
-                            <input type='text' value={`${this.state.task.month + 1}/${this.state.task.day}/${this.state.task.year}`} readOnly onClick={()=>this.openOnClickElement('div#calendar')}/>
+                        <div className='input-container'>
+                            <span className="material-icons input-icons">
+                                        calendar_today
+                            </span>
+                            <div className='input-box'>
+                                <input type='text' value={`${this.state.task.month + 1}/${this.state.task.day}/${this.state.task.year}`} readOnly onClick={()=>this.openOnClickElement('div#calendar')}/>
+                                <div className='input-border'></div>
+                            </div>
                         </div>
                         {
                             this.state.openCalendar 
@@ -260,10 +267,19 @@ class TaskForm extends React.Component {
                               </div> 
                             : null
                         }
-                        <div>
-                            <input type='text' value={this.state.task.startTime.time} readOnly onClick={()=>this.openOnClickElement('div#start-select')}/>
-                            <span> - </span>
-                            <input type='text' value={this.state.task.endTime.time} readOnly onClick={()=>this.openOnClickElement('div#end-select')}/>
+                        <div className='input-container'>
+                            <span className="material-icons input-icons">
+                                    query_builder
+                            </span>
+                            <div className="input-box">
+                                <input type='text' value={this.state.task.startTime.time} readOnly onClick={()=>this.openOnClickElement('div#start-select')}/>
+                                <div className='input-border'></div>
+                            </div>
+                            <span style={{margin: '0 5px'}}> - </span>
+                            <div className="input-box">
+                                <input type='text' value={this.state.task.endTime.time} readOnly onClick={()=>this.openOnClickElement('div#end-select')}/>
+                                <div className='input-border'></div>
+                            </div>         
                         </div>
                         {
                             this.state.displayStart 
@@ -283,17 +299,22 @@ class TaskForm extends React.Component {
                                 /> 
                             : null
                         }
-                        <div className='repeat-select'>
-                            <div className='selected-value' onClick={()=>this.openOnClickElement('div#repeat-select')}>
-                                <span>{this.state.task.repeat}</span>
-                                <span className="material-icons">arrow_drop_down</span>
+                        <div className='repeat-select' className='input-container'>
+                            <span className="material-icons input-icons">
+                                    repeat
+                            </span>
+                            <div>
+                                <div className='selected-value' onClick={()=>this.openOnClickElement('div#repeat-select')}>
+                                    <span>{this.state.task.repeat}</span>
+                                    <span className="material-icons">arrow_drop_down</span>
+                                </div>
+                                {
+                                    this.state.displayRepeat ? <RepeatSelect 
+                                                                repeatValues={this.getRepeatValues()} 
+                                                                selectRepeatValue={this.selectRepeatValue}
+                                                                /> : null
+                                }
                             </div>
-                            {
-                                this.state.displayRepeat ? <RepeatSelect 
-                                                            repeatValues={this.getRepeatValues()} 
-                                                            selectRepeatValue={this.selectRepeatValue}
-                                                            /> : null
-                            }
                         </div>
                         <div>
                             <input type='submit' value='Save'/>

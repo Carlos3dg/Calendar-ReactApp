@@ -1,7 +1,7 @@
 import React from 'react';
 
 const HourSelect = (props) => (
-    <div className='time-select' id={props.time.length===props.timeLength ? `start-select` : `end-select`}>
+    <div className={props.time.length ? 'time-select' : null} id={props.time.length===props.timeLength ? `start-select` : `end-select`}>
     {
         props.time.map((time, index) => (
             <div className='start-time-option' id={time.jsTime} key={index} onClick={()=>{
