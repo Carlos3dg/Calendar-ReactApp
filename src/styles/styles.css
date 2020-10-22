@@ -91,6 +91,7 @@ html, body {
     height: 2em;
     border-radius: 1em;
     transition: all 0.2s ease-out 0s; 
+    cursor: pointer;
 }
 
 .button:hover {
@@ -340,16 +341,7 @@ td.active-day {
     bottom: 0;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
 }
-/*@media(min-height: 700px) {
-    .button-task {
-        position: absolute;
-        bottom: 0;
-        height: 39px;
-        border-radius: 19.5px;
-    }
-}*/
 
 /* TASK FORM */
 .popup-container {
@@ -429,7 +421,7 @@ td.active-day {
     transition: all 250ms linear;
 }
 
-.taskform input {
+.taskform-input {
     border: 0;
     border-bottom: 1px solid var(--gray);
     outline: none;
@@ -448,11 +440,12 @@ td.active-day {
 }
 
 /* Mini Calendar */
-.min-calendar-container, .time-select {
+.min-calendar-container, .time-select, .repeat-select-options {
     position: absolute;
     box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.4);
     border-radius: 5px;
     left: 40px;
+    z-index: 1;
 }
 
 #end-select {
@@ -497,16 +490,17 @@ div.mincalendar-container {
 }
 
 /* Time Select */
-.time-select {
-    font-size: 15px;
+.time-select, .repeat-select-options {
+    font-size: 15.5px;
     width: 36%;
     background-color: white;
     max-height: 38%;
     overflow-y: scroll;
     cursor: pointer;
+    color: rgb(97 97 97);
 }
 
-.start-time-option  {
+.start-time-option, .repeat-option-value {
     padding: 5px 0;
 }
 
@@ -515,6 +509,58 @@ div.mincalendar-container {
     color: rgb(97 97 97);
 }
 
-.start-time-option:hover {
+.start-time-option:hover, .repeat-option-value:hover {
     background-color: var(--alphaNeonBlue);
+}
+
+/* Repeat select */
+.selected-value {
+    font-size: 17px;
+    color: rgb(97 97 97);
+    display: flex;
+    align-items: center;
+    border-radius: 1em;
+    height: 2em;
+    padding: 0 8px;
+    transition: all 250ms cubic-bezier(1, 0.62, 0.62, 0.65);;
+    cursor: pointer;
+}
+
+.selected-value:hover {
+    background-color: var(--alphaNeonBlue);
+    color: var(--neonBlue);
+}
+
+.onclick-select {
+    background-color: var(--alphaNeonBlue);
+    color: var(--neonBlue);
+}
+
+.repeat-select-options {
+    width: 57%;
+    max-height: 32%;
+    bottom: 11.5%;
+}
+
+/* Buttons */
+.button-container {
+    position: absolute;
+    bottom: 15px;
+    display: flex;
+    justify-content: flex-end;
+    width: calc(100% - 30px);;
+}
+
+.save-button, .cancel-button {
+    width: 25%;
+    color: white;
+    border-bottom: 0;
+}
+
+.save-button {
+    margin-right: 10px;
+}
+
+.cancel-button {
+    background-color: var(--lightblue);
 }

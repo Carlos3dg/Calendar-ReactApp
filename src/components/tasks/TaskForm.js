@@ -243,7 +243,7 @@ class TaskForm extends React.Component {
                             close
                         </span>
                         <div className='input-container' style={{display: 'block'}}>
-                            <input type='text' placeholder='Add Title' className='add-title' value={this.state.task.title} onChange={this.onChangeInputTitle}/>
+                            <input type='text' placeholder='Add Title' className='taskform-input add-title' value={this.state.task.title} onChange={this.onChangeInputTitle}/>
                             <div className='input-border'></div>
                         </div>
                         <div className='input-container'>
@@ -251,7 +251,7 @@ class TaskForm extends React.Component {
                                         calendar_today
                             </span>
                             <div className='input-box'>
-                                <input type='text' value={`${this.state.task.month + 1}/${this.state.task.day}/${this.state.task.year}`} readOnly onClick={()=>this.openOnClickElement('div#calendar')}/>
+                                <input className='taskform-input' type='text' value={`${this.state.task.month + 1}/${this.state.task.day}/${this.state.task.year}`} readOnly onClick={()=>this.openOnClickElement('div#calendar')}/>
                                 <div className='input-border'></div>
                             </div>
                         </div>
@@ -272,12 +272,12 @@ class TaskForm extends React.Component {
                                     query_builder
                             </span>
                             <div className="input-box">
-                                <input type='text' value={this.state.task.startTime.time} readOnly onClick={()=>this.openOnClickElement('div#start-select')}/>
+                                <input className='taskform-input' type='text' value={this.state.task.startTime.time} readOnly onClick={()=>this.openOnClickElement('div#start-select')}/>
                                 <div className='input-border'></div>
                             </div>
                             <span style={{margin: '0 5px'}}> - </span>
                             <div className="input-box">
-                                <input type='text' value={this.state.task.endTime.time} readOnly onClick={()=>this.openOnClickElement('div#end-select')}/>
+                                <input className='taskform-input' type='text' value={this.state.task.endTime.time} readOnly onClick={()=>this.openOnClickElement('div#end-select')}/>
                                 <div className='input-border'></div>
                             </div>         
                         </div>
@@ -303,8 +303,8 @@ class TaskForm extends React.Component {
                             <span className="material-icons input-icons">
                                     repeat
                             </span>
-                            <div>
-                                <div className='selected-value' onClick={()=>this.openOnClickElement('div#repeat-select')}>
+                            <div className='repeat-select-container'>
+                                <div className={`selected-value ${this.state.displayRepeat ? 'onclick-select' : ''}`} onClick={()=>this.openOnClickElement('div#repeat-select')}>
                                     <span>{this.state.task.repeat}</span>
                                     <span className="material-icons">arrow_drop_down</span>
                                 </div>
@@ -316,8 +316,9 @@ class TaskForm extends React.Component {
                                 }
                             </div>
                         </div>
-                        <div>
-                            <input type='submit' value='Save'/>
+                        <div className='button-container'>
+                            <input type='submit' value='Save' className='taskform-input save-button button'/>
+                            <input type='button' value='Cancel' className='taskform-input cancel-button button close-taskform'/>
                         </div>
                     </form>
                 </div>
