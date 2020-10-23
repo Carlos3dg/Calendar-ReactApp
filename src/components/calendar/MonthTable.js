@@ -4,14 +4,14 @@ class MonthTable extends React.Component {
     state = {
         selectedDay: null,
     }
-
+    //Select a day in the month and change the state value according with that day
     onClickDay = (day) => {
         if(day) {
             const selectedDay = `${this.props.year}-${this.props.month}-${day}`;
             this.setState({
                 selectedDay: selectedDay
             });
-            this.props.selectDay(day);
+            this.props.selectDay(day); //Call dispatch function passing the selected day to the SELECT_DAY action and then invoke reducer with that action as an argument 
             if(this.props.mincalendar) {
                 setTimeout(()=>{
                     this.props.closeCalendar('div#calendar')
@@ -21,6 +21,7 @@ class MonthTable extends React.Component {
     }
 
     getActualDay = () => {
+        //props.date is just the Date javascript object
         const actualYear = this.props.date.getFullYear();
         const actualMonth = this.props.date.getMonth();
         const actualDay = this.props.date.getDate();
@@ -29,6 +30,7 @@ class MonthTable extends React.Component {
 
     componentDidMount() {
         const actualDay = this.getActualDay();
+        //Condition to open the mini calendar with the selected day active and not with the actual day as Calendar component does
         if(!this.props.mincalendar) {
             this.props.selectDay(this.props.date.getDate());
             this.setState({
@@ -70,6 +72,7 @@ class MonthTable extends React.Component {
                         <tr key={index}>
                             {
                                 week.week.map((day, index) => {
+                                    //Variable to compare every date in a month with the selected day state value and the actual day value
                                     const date = `${this.props.year}-${this.props.month}-${day}`;
                                     return(
                                         <td key={index} className={this.state.selectedDay === date ? 'active-day' : null} onClick={()=>this.onClickDay(day)}>

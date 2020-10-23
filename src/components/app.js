@@ -9,7 +9,7 @@ const App = (props) => {
                 <Header/>
                 <main className='main-container'>
                     <WrappedCalendar
-                        date={props.date}
+                        date={props.date} /* Date Object */
                     />
                     <TaskDisplay/>
                 </main>

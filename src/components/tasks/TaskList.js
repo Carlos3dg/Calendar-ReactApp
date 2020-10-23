@@ -1,5 +1,6 @@
 import React from 'react';
 import TaskForm from './TaskForm';
+import Task from './Task';
 
 class TaskList extends React.Component {
     state = {
@@ -18,6 +19,13 @@ class TaskList extends React.Component {
         return(
             <div className='task-list-container container-short'>
                 <div className='task-list-overflow'>
+                    {
+                        !this.props.taskList ? null : this.props.taskList.map(task => (
+                            <Task
+                                task={task}
+                            />
+                        ))
+                    }
                 </div>
                 <div className='task-button-container' onClick={this.openTaskForm}>
                     <span className='button-task button'>
@@ -33,7 +41,6 @@ class TaskList extends React.Component {
                                                 year={this.props.year}
                                                 day={this.props.day}
                                                 fullMonth={this.props.fullMonth}
-                                                taskList={this.props.taskList}
                                                 closeTaskForm={this.closeTaskForm}
                                                 addTask={this.props.addTask}
                                               /> : null
