@@ -68,7 +68,7 @@ html, body {
     --alphaNeonBlue: rgba(88, 99, 248, 0.2);
     --dark: #171D1C;
     --gray: rgb(212, 206, 216);
-    --lightGray: #f3f3f3;
+    --hardGray: rgb(186, 182, 189);
     --lightblue: #00c4cc;
 } 
 
@@ -121,7 +121,7 @@ h4 {
 }
 
 h5 {
-    font-size: 1.1em;
+    font-size: 1.2em;
 }
 
 p, span, label, a, select {
@@ -183,6 +183,7 @@ header h2 {
     height: calc(100vh - 70px - 70px);
     margin: 35px auto;
     display: flex;
+    max-height: 829px;
 }
 @media (max-width: 1020px) {
     header {
@@ -300,7 +301,7 @@ td.active-day {
     border: 2px solid var(--neonBlue);
 }
 
-/* TASK CONTAINER */
+/* TASK LIST CONTAINER */
 .task-container {
     width: 23%;
     height: 100%;
@@ -313,7 +314,7 @@ td.active-day {
     justify-content: space-between;
     align-items: flex-end;
     padding: 0 8px;
-    border-bottom: 1px solid rgb(143, 143, 142);
+    border-bottom: 1px solid var(--gray);
 }
 
 .task-list-container {
@@ -324,6 +325,72 @@ td.active-day {
 .task-list-overflow {
     height: 90%;
     overflow: auto;
+}
+
+/* Task Container */
+.task-description-container {
+    margin: 0 8px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--gray);
+    display: flex;
+    align-items: flex-start;
+}
+
+.task-description-container:last-child {
+    border-bottom: 0;
+}
+
+.dot-container {
+    width: 12px;
+    padding-right: 6px;
+    height: 1.2em;
+}
+
+.dot-icon {
+    width: 6px;
+    height: 6px;
+    border-radius: 6px;
+    background-color: var(--neonBlue);
+    display: inline-block;
+}
+
+.task-details-container {
+    width: calc(100% - 12px);
+}
+
+.task-details-container span {
+    color: var(--hardGray);
+    font-size: 14px;
+}
+
+.edit-delete-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.edit-delete-buttons span {
+    font-size: 19px;
+    color: white;
+    padding: 5px;
+    border-radius: 28px;
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease-out 0s; 
+    cursor: pointer;
+}
+
+.edit-delete-buttons span:hover {
+    transform: translateY(-3px);
+}
+
+.edit-button {
+    background-color: var(--neonBlue);
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.delete-button {
+    background-color: var(--lightblue);
 }
 
 .task-button-container {

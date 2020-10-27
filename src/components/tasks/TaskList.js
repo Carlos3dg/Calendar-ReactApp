@@ -20,10 +20,9 @@ class TaskList extends React.Component {
             <div className='task-list-container container-short'>
                 <div className='task-list-overflow'>
                     {
-                        !this.props.taskList ? null : this.props.taskList.map(task => (
-                            <Task
-                                task={task}
-                            />
+                        !this.props.taskList ? null : this.props.taskList.map((task, index) => (
+                            index%2 !== 0 ? <Task task={task} key={task.id} dotLightColor={true} />
+                                : <Task task={task} key={task.id} />
                         ))
                     }
                 </div>
