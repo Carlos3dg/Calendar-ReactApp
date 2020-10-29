@@ -22,6 +22,7 @@ class Calendar extends React.Component {
                     month={this.props.month}
                     year={this.props.year}
                     fullMonth={this.props.fullMonth}
+                    tasksInMonth={this.props.tasksInMonth}
                     selectDay={this.props.selectDay}
                     date={this.props.date}
                     mincalendar={this.props.mincalendar}

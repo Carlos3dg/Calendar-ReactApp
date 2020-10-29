@@ -6,16 +6,17 @@ const mapStateToTasksProps = (state) => {
     const tasksInYear = state.taskList.find(task => (
         task.year === state.date.currentYear
     ));
-    let tasksInMonth;
-    let tasksInDay;
-    let taskList;
+
+    let taskList; //Variable to store the tasks inside the current day
 
     if(tasksInYear) {
+        let tasksInMonth;
         tasksInMonth = tasksInYear.months.find(task => (
             task.month === state.date.currentMonth
         ));
 
         if(tasksInMonth) {
+            let tasksInDay;
             tasksInDay = tasksInMonth.days.find(task => (
                 task.day === state.date.currentDay
             ));

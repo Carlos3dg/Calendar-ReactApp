@@ -277,17 +277,45 @@ col.days-col {
 .day-box {
     height: 100%;
     width: 100%;
+    position: relative;
 }
 
 .day-box:hover {
     background-color: var(--alphaNeonBlue);
 }
 
-.day-box span {
+.day-num {
     display: inline-block;
     width: 20%;
     padding-left: 3px;
     margin-right: 80%;
+}
+
+.day-task-container {
+    margin: 3px 2px;
+    border-radius: 4px;
+    color: white;
+    padding-left: 2px;
+}
+
+.lightblue-task {
+    background-color: var(--lightblue);
+}
+
+.neonblue-task {
+    background-color: var(--neonBlue);
+}
+
+.day-task-title {
+    font-size: 1em;
+}
+
+.plus-remaining-tasks {
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    font-size: 0.9em;
+    color: var(--neonBlue);
 }
 
 span.today {
