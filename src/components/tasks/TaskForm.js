@@ -38,8 +38,24 @@ class TaskForm extends React.Component {
 
     onFormSubmit = (e) => {
         e.preventDefault();
+        const task = Object.assign({}, this.state.task);
+        //Get errors from validate function
+        const fieldErrors = this.validateForm(task);
+        this.setState({fieldErrors});
+        //If there's any error, stop the submition
+        if(Object.keys(fieldErrors).length) return;
+        //If not then execute the addTask prop function
         this.props.addTask(this.state.task, this.props.fullMonth);
         this.props.closeTaskForm();
+    }
+
+    validateForm = (task) => {
+        const errors = {};
+        if(!task.title) errors.title = '*Please type a title';
+        if(!task.startTime) errors.startTime = '*Start time required';
+        if(!task.endTime) errors.endTime = '*End time required';
+        if(!task.repeat) errors.repeat = '*Repeat option required';
+        return errors;
     }
 
     openOnClickElement = (element)=> {
@@ -245,6 +261,7 @@ class TaskForm extends React.Component {
                         <div className='input-container' style={{display: 'block'}}>
                             <input type='text' placeholder='Add Title' className='taskform-input add-title' value={this.state.task.title} onChange={this.onChangeInputTitle}/>
                             <div className='input-border'></div>
+                            <span style={{color: 'red', fontSize: '16px'}}>{this.state.fieldErrors.title}</span>
                         </div>
                         <div className='input-container'>
                             <span className="material-icons input-icons">
