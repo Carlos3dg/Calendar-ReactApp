@@ -7,6 +7,10 @@ export default function taskListReducer(
     action
 ) {
     switch(action.type) {
+        case 'FETCH_TASK_SUCCESS': {
+            const newState = action.taskList;
+            return newState;
+        }
         case 'ADD_TASK': {
             const newTask = {
                 id: uuidv4(),

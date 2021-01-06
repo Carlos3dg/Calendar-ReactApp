@@ -32,3 +32,46 @@ export function addTask(task, fullMonth) {
         fullMonth: fullMonth
     }
 };
+
+export function fetchTaskPending(status) {
+    return {
+        type: 'FETCH_TASK_PENDING',
+        taskStatus: status
+    }
+}
+
+export function fetchTaskSuccess(taskList) {
+    return {
+        type: 'FETCH_TASK_SUCCESS',
+        taskStatus: 'SUCCESS',
+        taskList: taskList
+    }
+}
+
+export function fetchTaskFailure(status) {
+    return {
+        type: 'FETCH_TASK_FAILURE',
+        taskStatus: status,
+    }
+}
+
+export function fetchTaskRequest() {
+    return function(dispatch, getState) {
+        dispatch(fetchTaskPending('PENDING'));
+        apiClient.loadTasks()
+            .then((resp) => dispatch(fetchTaskSuccess(resp)))
+            .catch((resp) => dispatch(fetchTaskFailure(resp)))
+    }
+}
+
+const apiClient = {
+    loadTasks: function() {
+        const success = true;
+        return new Promise(function(resolve, reject) {
+            setTimeout(() => {
+                if(!success) return reject('FAILURE');
+                resolve(JSON.parse(localStorage.taskList || '[]'));
+            }, 1500);
+        })
+    }
+}
