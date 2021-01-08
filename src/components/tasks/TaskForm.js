@@ -45,8 +45,9 @@ class TaskForm extends React.Component {
         //If there's any error, stop the submition
         if(Object.keys(fieldErrors).length) return;
         //If not then execute the addTask prop function
-        this.props.addTask(this.state.task, this.props.fullMonth);
-        this.props.closeTaskForm();
+        this.props.saveTask(this.state.task, this.props.fullMonth);
+        const {title, startTime, endTime, repeat} = task;
+        this.props.closeTaskForm({title, startTime, endTime, repeat});
     }
 
     validateForm = (task) => {
@@ -245,8 +246,10 @@ class TaskForm extends React.Component {
     }
 
     componentDidMount() {
-        const jsStartTime = this.getTime();
-        this.getStartTimeAndEndTime(jsStartTime);
+        if(!this.props.task) {
+            const jsStartTime = this.getTime();
+            this.getStartTimeAndEndTime(jsStartTime);
+        }
     }
 
     render() {

@@ -15,7 +15,9 @@ const Tasks = (props) => (
             day={props.day}
             fullMonth={props.fullMonth}
             taskList={props.taskList}
-            addTask={props.addTask}
+            saveTask={props.saveTask}
+            taskStatus={props.taskStatus}
+            closeWarning={props.closeWarning}
         />
     </aside>
 );

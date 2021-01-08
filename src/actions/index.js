@@ -1,3 +1,5 @@
+import apiClient from '../api/Client';
+
 export function prevMonth() {
     return {
         type: 'PREV_MONTH'
@@ -64,14 +66,45 @@ export function fetchTaskRequest() {
     }
 }
 
-const apiClient = {
-    loadTasks: function() {
-        const success = true;
-        return new Promise(function(resolve, reject) {
-            setTimeout(() => {
-                if(!success) return reject('FAILURE');
-                resolve(JSON.parse(localStorage.taskList || '[]'));
-            }, 1500);
-        })
+export function saveTaskPending(status) {
+    return {
+        type: 'SAVE_TASK_PENDING',
+        taskStatus: status
+    }
+}
+
+export function saveTaskSuccess(status) {
+    return {
+        type: 'SAVE_TASK_SUCCESS',
+        taskStatus: status
+    }
+}
+
+export function saveTaskFailure(taskList) {
+    return {
+        type: 'SAVE_TASK_FAILURE',
+        taskStatus: 'FAILURE',
+        taskList: taskList
+    }
+}
+
+export function closeTaskWarning(status, warningType) {
+    return {
+        type: 'CLOSE_TASK_WARNING',
+        taskStatus: status,
+        warningType: warningType,
+    }
+}
+
+export function saveTaskRequest(newTask, fullMonth) {
+    return async function(dispatch, getState) {
+        dispatch(saveTaskPending('PENDING'));
+
+        await dispatch(addTask(newTask, fullMonth));
+        const newState = getState().taskList;
+        
+        apiClient.saveTask(newState)
+            .then((resp) => dispatch(saveTaskSuccess(resp)))
+            .catch((resp) => dispatch(saveTaskFailure(resp)))
     }
 }

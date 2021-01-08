@@ -135,6 +135,13 @@ span.icon {
     font-weight: 300;
 }
 
+span.close-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
 /* HEADER */
 header {
     width: 100%;
@@ -183,7 +190,7 @@ header h2 {
     align-items: center;
     margin: 0 auto;
     width: 100px;
-    text-align: center;
+    justify-content: center;
   }
   
   .spinner > div {
@@ -223,25 +230,45 @@ header h2 {
   }
 
   /* ERROR MESSAGES */
-  .error-message-container {
+  .warning-container {
+      position: absolute;
       width: 350px;
-      padding: 8px 6px;
-      text-align: center;
-      border: 2px solid rgb(173, 5, 5);
+      height: 200px;
+      top: calc(50% - (200px * .5));
+      left: calc(50% - (350px * .5));
+      background-color: white;
+      padding: 25px 0 15px;
       border-radius: 8px;
-      color: rgb(173, 5, 5);
-      /*background-color: rgb(245, 116, 116);*/
+      z-index: 1;
+  }
+
+  .warning-message-container {
       display: flex;
-      position: absolute; 
+      justify-content: space-between;
+      margin: 0 12px;
+      color: rgb(173, 5, 5);
   }
 
-  .error-load-message {
-      top: 85px;
-      left: calc((100vw - 350px)/2);
+  span.icon-error {
+      font-size: 34px;
   }
 
- span.icon-error, .message-text {
-    font-size: 16px;
+  .warning-text {
+      font-size: 23px;
+  }
+
+  .warning-button {
+      position: absolute;
+      bottom: 15px;
+      right: 12px;
+      width: 25%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      color: gray;
+      background-color: white;
+      border: 1px solid var(--hardGray);
   }
 
 /* MAIN CONTAINER */
@@ -514,6 +541,7 @@ td.active-day {
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.2);
+    z-index: 1;
 }
 
 .taskform-container {
@@ -541,13 +569,6 @@ td.active-day {
     background-position: center center;
     background-size: 70px auto,
                      100% 100%;*/
-}
-
-.taskform .close-icon {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    cursor: pointer;
 }
 
 .taskform {

@@ -1,5 +1,6 @@
 import dateReducer from './dateReducer';
 import taskListReducer from './taskListReducer';
+import statusReducer from './statusReducer';
 
 export default function reducer(state={}, action) {
     return {
@@ -8,33 +9,3 @@ export default function reducer(state={}, action) {
         taskStatus: statusReducer(state.taskStatus, action)
     }
 };
-
-function statusReducer(
-    state={
-        loadTasks: null,
-        saveTask: null
-    }, action) {
-    switch(action.type) {
-        case 'FETCH_TASK_PENDING': {
-            return {
-                ...state,
-                loadTasks: action.taskStatus
-            };
-        }
-        case 'FETCH_TASK_SUCCESS': {
-            return {
-                ...state,
-                loadTasks: action.taskStatus
-            };
-        }
-        case 'FETCH_TASK_FAILURE': {
-            return {
-                ...state,
-                loadTasks: action.taskStatus
-            };
-        }
-        default:{
-            return state;
-        }
-    }
-}

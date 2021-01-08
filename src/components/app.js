@@ -4,9 +4,15 @@ import ErrorMessage from './ServerErrors/ErrorMessage';
 import WrappedCalendar from './Containers/WrappedCalendar';
 import TaskDisplay from './Containers/TaskDisplay';
 import {connect} from 'react-redux';
-import {fetchTaskRequest} from '../actions/index';
+import {fetchTaskRequest, closeTaskWarning} from '../actions/index';
 
 class App extends React.Component {
+
+    closeErrorWarning = (e) => {
+        if(e.target.className.match('close-warning')) {
+            this.props.closeWarning(null, 'loadTasks');
+        }
+    }
 
     componentDidMount() {
         this.props.fetchTaskRequest()
@@ -17,37 +23,41 @@ class App extends React.Component {
             <div className='container'>
                 <Header/>
                 {
-                    {
-                        PENDING: (
-                            <div className="spinner">
-                                <div className="bounce1"></div>
-                                <div className="bounce2"></div>
-                                <div className="bounce3"></div>
-                            </div>                  
-                        ),
-                        FAILURE: (
-                            <div>
-                                <ErrorMessage
-                                    text={`Failed to load tasks: the server couldn't find the resource. Try to load later`}
-                                    class='error-load-message'
-                                />
+                    ((status) => {
+                        if(status === 'PENDING') {
+                            return (
+                                <div className="spinner">
+                                    <div className="bounce1"></div>
+                                    <div className="bounce2"></div>
+                                    <div className="bounce3"></div>
+                                </div>                               
+                            );
+                        } else if(status === 'FAILURE') {
+                            return (
+                                <div>
+                                    <ErrorMessage
+                                        errorMessage={`Failed to load tasks: the server couldn't find the resource. Try to load later`}
+                                        closeError={this.closeErrorWarning}
+                                    />
+                                    <main className='main-container'>
+                                        <WrappedCalendar
+                                            date={this.props.date} /* Date Object */
+                                        />
+                                        <TaskDisplay/>
+                                    </main>
+                                </div>
+                            )
+                        } else {
+                            return (
                                 <main className='main-container'>
                                     <WrappedCalendar
                                         date={this.props.date} /* Date Object */
                                     />
                                     <TaskDisplay/>
-                                </main>
-                            </div>
-                        ),
-                        SUCCESS: (
-                            <main className='main-container'>
-                                <WrappedCalendar
-                                    date={this.props.date} /* Date Object */
-                                />
-                                <TaskDisplay/>
-                            </main>
-                        ),
-                    }[this.props.taskStatus]
+                                </main>                            
+                            )
+                        }
+                    })(this.props.taskStatus)    
                 }
             </div>
         );
@@ -60,8 +70,14 @@ const mapStateToAppProps = (state, ownProps) => {
         date: ownProps.date,
     }
 }
+const mapDispatchToAppProps = (dispatch) => {
+    return {
+        fetchTaskRequest: () => dispatch(fetchTaskRequest()),
+        closeWarning: (status, warningType) => dispatch(closeTaskWarning(status, warningType))
+    }
+}
 
 export default connect(
     mapStateToAppProps,
-    {fetchTaskRequest}
+    mapDispatchToAppProps
 )(App);

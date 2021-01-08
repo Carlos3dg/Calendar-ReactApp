@@ -25,6 +25,10 @@ export default function taskListReducer(
 
             return newState;
         }
+        case 'SAVE_TASK_FAILURE': {
+            const newState = action.taskList;
+            return newState;
+        }
         default: {
             return state
         }

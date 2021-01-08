@@ -1,6 +1,6 @@
 import Tasks from '../tasks/Tasks';
 import {connect} from 'react-redux';
-import {addTask} from '../../actions/index';
+import {saveTaskRequest, closeTaskWarning} from '../../actions/index';
 
 const mapStateToTasksProps = (state) => {
     const tasksInYear = state.taskList.find(task => (
@@ -32,13 +32,15 @@ const mapStateToTasksProps = (state) => {
         month: state.date.currentMonth,
         year: state.date.currentYear,
         fullMonth: state.date.fullMonth,
-        taskList: taskList
+        taskList: taskList,
+        taskStatus: state.taskStatus.saveTask,
     }
 };
 
 const mapDispatchToTaskProps = (dispatch) => {
     return {
-        addTask: (task, fullMonth) => dispatch(addTask(task, fullMonth))
+        saveTask: (task, fullMonth) => dispatch(saveTaskRequest(task, fullMonth)),
+        closeWarning: (status, warningType) => dispatch(closeTaskWarning(status, warningType)),
     }
 };
 

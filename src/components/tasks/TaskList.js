@@ -1,18 +1,40 @@
 import React from 'react';
 import TaskForm from './TaskForm';
 import Task from './Task';
+import ErrorMessage from '../ServerErrors/ErrorMessage';
 
 class TaskList extends React.Component {
     state = {
         openTaskForm: false,
+        task: null,
     }
 
     openTaskForm = () => {
-        this.setState({openTaskForm: true})
+        this.setState({
+            openTaskForm: true, 
+            task: null
+        })
     }
 
-    closeTaskForm = ()=> {
-        this.setState({openTaskForm: false})
+    closeTaskForm = (task)=> {
+        this.setState({
+            openTaskForm: false,
+            task: task
+        })
+    }
+
+    editTaskForm = (task) => {
+        this.setState({
+            openTaskForm: true,
+            task: task,
+        });
+    }
+
+    closeErrorWarning = (e) => {
+        if(e.target.className.match('close-warning')) {
+            this.setState({openTaskForm: true});
+            this.props.closeWarning(null, 'saveTask');
+        }
     }
 
     render() {
@@ -42,8 +64,27 @@ class TaskList extends React.Component {
                                                 day={this.props.day}
                                                 fullMonth={this.props.fullMonth}
                                                 closeTaskForm={this.closeTaskForm}
-                                                addTask={this.props.addTask}
+                                                saveTask={this.props.saveTask}
+                                                task= {this.state.task}
                                               /> : null
+                }
+                {
+                    {
+                        PENDING: (
+                            <div className="spinner popup-container">
+                                <div className="bounce1"></div>
+                                <div className="bounce2"></div>
+                                <div className="bounce3"></div>
+                            </div> 
+                        ),
+                        SUCCESS: null,
+                        FAILURE: (
+                            <ErrorMessage
+                                closeError={this.closeErrorWarning}
+                                errorMessage={`Failed to save task: server is not working. Please save again or try it later.`}
+                            />
+                        )
+                    }[this.props.taskStatus]
                 }
             </div>
         );
