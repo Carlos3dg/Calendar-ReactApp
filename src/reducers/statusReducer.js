@@ -1,7 +1,9 @@
 export default function statusReducer(
     state={
         loadTasks: null,
-        saveTask: null
+        saveTask: null,
+        loadToken: null,
+        setToken: null,
     }, action) {
     switch(action.type) {
         case 'FETCH_TASK_PENDING': {
@@ -40,7 +42,43 @@ export default function statusReducer(
                 saveTask: action.taskStatus
             }
         }
-        case 'CLOSE_TASK_WARNING': {
+        case 'FETCH_TOKEN_PENDING': {
+            return {
+                ...state,
+                loadToken: action.tokenStatus
+            }
+        }
+        case 'FETCH_TOKEN_FAILURE': {
+            return {
+                ...state,
+                loadToken: action.tokenStatus
+            }
+        }
+        case 'FETCH_TOKEN_SUCCESS': {
+            return {
+                ...state,
+                loadToken: action.tokenStatus
+            }
+        }
+        case 'SET_TOKEN_PENDING': {
+            return {
+                ...state,
+                setToken: action.tokenStatus
+            }
+        }
+        case 'SET_TOKEN_FAILURE': {
+            return {
+                ...state,
+                setToken: action.tokenStatus
+            }
+        }
+        case 'SET_TOKEN_SUCCESS': {
+            return {
+                ...state,
+                setToken: action.tokenStatus
+            }
+        }
+        case 'CLOSE_STATUS_WARNING': {
             const newState = Object.assign({}, state);
             newState[action.warningType] = action.taskStatus;
             return newState;

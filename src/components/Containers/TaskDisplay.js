@@ -33,7 +33,7 @@ const mapStateToTasksProps = (state) => {
         year: state.date.currentYear,
         fullMonth: state.date.fullMonth,
         taskList: taskList,
-        taskStatus: state.taskStatus.saveTask,
+        taskStatus: state.appStatus.saveTask,
     }
 };
 

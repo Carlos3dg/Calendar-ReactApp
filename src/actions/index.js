@@ -1,5 +1,5 @@
 import apiClient from '../api/Client';
-
+//DATE ACTIONS
 export function prevMonth() {
     return {
         type: 'PREV_MONTH'
@@ -27,6 +27,7 @@ export function selectDay(day) {
     }
 };
 
+//TASK ACTIONS
 export function addTask(task, fullMonth) {
     return {
         type: 'ADD_TASK',
@@ -35,6 +36,8 @@ export function addTask(task, fullMonth) {
     }
 };
 
+//FETCH TASK ACTIONS (used by an async action)
+  //Actions used to get the tasks from the server and to know the actual status of that request
 export function fetchTaskPending(status) {
     return {
         type: 'FETCH_TASK_PENDING',
@@ -66,6 +69,8 @@ export function fetchTaskRequest() {
     }
 }
 
+//SAVE TASK ACTIONS (used by an async action)
+  //Actions used to save tasks and to know the status of a task when is being saved by the server
 export function saveTaskPending(status) {
     return {
         type: 'SAVE_TASK_PENDING',
@@ -88,14 +93,6 @@ export function saveTaskFailure(taskList) {
     }
 }
 
-export function closeTaskWarning(status, warningType) {
-    return {
-        type: 'CLOSE_TASK_WARNING',
-        taskStatus: status,
-        warningType: warningType,
-    }
-}
-
 export function saveTaskRequest(newTask, fullMonth) {
     return async function(dispatch, getState) {
         dispatch(saveTaskPending('PENDING'));
@@ -106,5 +103,105 @@ export function saveTaskRequest(newTask, fullMonth) {
         apiClient.saveTask(newState)
             .then((resp) => dispatch(saveTaskSuccess(resp)))
             .catch((resp) => dispatch(saveTaskFailure(resp)))
+    }
+}
+
+//Action used to close the warning status messages that the server throws
+export function closeTaskWarning(status, warningType) {
+    return {
+        type: 'CLOSE_STATUS_WARNING',
+        taskStatus: status,
+        warningType: warningType,
+    }
+}
+
+//FETCH TOKEN ACTIONS (used by an async action)
+  //Actions used to get the token from local storage and compare it with the real token from the server and also know the actual status of that request
+export function fetchTokenPending(status) {
+    return {
+        type: 'FETCH_TOKEN_PENDING',
+        tokenStatus: status
+    }
+}
+
+export function fetchTokenFailure(status) {
+    return {
+        type: 'FETCH_TOKEN_FAILURE',
+        tokenStatus: status,
+    }
+}
+
+export function fetchTokenSuccess(calendarFakeAuth) {
+    return {
+        type: 'FETCH_TOKEN_SUCCESS',
+        token: calendarFakeAuth.token,
+        user: calendarFakeAuth.user,
+        tokenStatus: 'SUCCESS',
+    }
+}
+
+//Used in App component
+export function fetchTokenRequest() {
+    return function(dispatch, getState) {
+        dispatch(fetchTokenPending('PENDING'));
+        const calendarFakeAuth = apiClient.loadToken();
+        const {error} = calendarFakeAuth;
+        if(error) {
+            dispatch(fetchTokenFailure('FAILURE'));
+        } else {
+            dispatch(fetchTokenSuccess(calendarFakeAuth));
+        }
+    }
+}
+
+//SET TOKEN ACTIONS (used by an async action)
+  //Actions used to get the token from the server and to know the actual status of that request
+export function setTokenPending(status) {
+    return {
+        type: 'SET_TOKEN_PENDING',
+        tokenStatus: status,
+    }
+}
+
+export function setTokenFailure(calendarFakeAuth, status) {
+    return {
+        type: 'SET_TOKEN_FAILURE',
+        token: calendarFakeAuth.token,
+        user: calendarFakeAuth.user,
+        tokenStatus: status,
+    }
+}
+
+export function setTokenSuccess(calendarFakeAuth, status) {
+    return {
+        type: 'SET_TOKEN_SUCCESS',
+        token: calendarFakeAuth.token,
+        user: calendarFakeAuth.user,
+        tokenStatus: status,
+    }    
+}
+
+//Used in Login component
+export function setTokenRequest(user) {
+    return function(dispatch, getState) {
+        dispatch(setTokenPending('PENDING'));
+        const calendarFakeAuth = apiClient.login(user);
+        const {error} = calendarFakeAuth;
+        if(error) {
+            dispatch(setTokenFailure(calendarFakeAuth, 'FAILURE'));
+        } else {
+            dispatch(setTokenSuccess(calendarFakeAuth, 'SUCCESS'));
+        }
+    }
+}
+
+//Action used to remove the token from local storage and set the token value to null in our reducer
+export function removeToken() {
+    const calendarFakeAuth = apiClient.logout();
+
+    return {
+        type: 'REMOVE_TOKEN',
+        token: calendarFakeAuth.token,
+        user: calendarFakeAuth.user
     }
 }

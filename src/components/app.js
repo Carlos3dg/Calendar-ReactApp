@@ -66,7 +66,7 @@ class App extends React.Component {
 
 const mapStateToAppProps = (state, ownProps) => {
     return {
-        taskStatus: state.taskStatus.loadTasks,
+        taskStatus: state.appStatus.loadTasks,
         date: ownProps.date,
     }
 }
