@@ -11,7 +11,9 @@ const ErrorMessage = (props) => (
                 error
             </span>
             <span className='warning-text'>
-                {props.errorMessage}    
+                {props.errorMessage.split('. ').map((text, index) => (
+                    <p key={index} className='warning-text'>{text}</p>
+                ))}    
             </span>                                        
         </div>
         <span className='close-warning warning-button button'>

@@ -25,12 +25,12 @@ const apiClient = {
         })
     },
     //Get the token at the beggining of the app mount
-    loadToken: function() {
+    loadToken: async function() {
         //See if we have the token save in storage ()
-        let calendarFakeAuth = localStorage.getItem(LOCAL_STORAGE_KEY);
+        let calendarFakeAuth = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || null);
         //If we do, proceed to valid the token that is saved.
         if(calendarFakeAuth) {
-            this.validToken(calendarFakeAuth.token) //Here we compare the saved token with the real one that the server has.
+            await this.validToken(calendarFakeAuth.token) //Here we compare the saved token with the real one that the server has.
                 .then((resp) => {
                     //If they are different, change values of the saved token to null and also set a user property to null
                     if(!resp) {
@@ -65,17 +65,17 @@ const apiClient = {
                 } else {
                     resolve(false)
                 }
-            }, 1000);
+            }, 700);
         })
     },
     //Set token in localStorage
-    login: function(user) {
+    login: async function(user) {
         //Get the user email
         const calendarFakeAuth = {
             user
         }
         //Here we return the token if the user has assigned one
-        this.setToken()
+        await this.setToken()
             .then((resp) => { //Suppose that the user has a token so our request is resolved and return the token 
                 calendarFakeAuth.token = resp; //Add the second property to our variable to be equal to the token
                 localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(calendarFakeAuth)); //Set the variable in Storage
@@ -86,7 +86,6 @@ const apiClient = {
                 calendarFakeAuth.token = null;
                 calendarFakeAuth.error = resp;
             });
-        
         return calendarFakeAuth;
     },
     //Return the token
@@ -99,7 +98,7 @@ const apiClient = {
                 }
 
                 resolve(API_TOKEN); 
-            }, 1000);
+            }, 1200);
         });
     },
     //Remove the token from localStorage and set our variable properties to null, to pass them in a moment to our respective reducer propeties

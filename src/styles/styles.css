@@ -69,6 +69,7 @@ html, body {
     --dark: #171D1C;
     --gray: rgb(212, 206, 216);
     --hardGray: rgb(186, 182, 189);
+    --blue: #229fdd;
     --lightblue: #00c4cc;
 } 
 
@@ -269,6 +270,19 @@ header h2 {
       color: gray;
       background-color: white;
       border: 1px solid var(--hardGray);
+  }
+
+  /* LOGIN CONTAINER */
+  .login-container {
+      width: 100%;
+      height: calc(100vh - 70px);
+  }
+
+  .login-form {
+      width: 390px;
+      height: 280px;
+      margin: 35px auto;
+      margin-bottom: calc(100vh - 70px - 280px - 35px); /* all height screen - header - login height - margin */
   }
 
 /* MAIN CONTAINER */

@@ -2,8 +2,7 @@ import React from 'react';
 import Page404 from '../layout/Page404';
 import {Route, Switch, Redirect} from 'react-router-dom';
 
-const PrivateRoute = ({component, path, token}) => {
-    console.log('hi there!');
+const PrivateRoute = ({component, path, token, setToken}) => {
     let condition;
     let redirectTo;
     if(path === '/calendar') {
@@ -13,8 +12,10 @@ const PrivateRoute = ({component, path, token}) => {
         condition = !token
         redirectTo='/calendar'
     }
+
     return (
         <Route path={path} render={(props) => {
+            console.log(props.location.pathname);
             if(condition) {
                 return (
                     <Switch>
@@ -28,6 +29,18 @@ const PrivateRoute = ({component, path, token}) => {
                     </Switch>
                 )
             } else {
+                if(setToken) {
+                    return setToken === 'SUCCESS' ? (
+                        <Route exact path={path} component={component}/>
+                    ) : (
+                        <Redirect 
+                            to={{
+                                pathname: redirectTo,
+                                state: {from: props.location.pathname}
+                            }}
+                    />
+                    )
+                }
                 return (
                     <Redirect 
                         to={{

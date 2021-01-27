@@ -65,7 +65,10 @@ export function fetchTaskRequest() {
         dispatch(fetchTaskPending('PENDING'));
         apiClient.loadTasks()
             .then((resp) => dispatch(fetchTaskSuccess(resp)))
-            .catch((resp) => dispatch(fetchTaskFailure(resp)))
+            .catch((resp) => {
+                console.error('Bad Request: the server couldn\'t find the resource.')
+                dispatch(fetchTaskFailure(resp))
+            })
     }
 }
 
@@ -142,9 +145,9 @@ export function fetchTokenSuccess(calendarFakeAuth) {
 
 //Used in App component
 export function fetchTokenRequest() {
-    return function(dispatch, getState) {
+    return async function(dispatch, getState) {
         dispatch(fetchTokenPending('PENDING'));
-        const calendarFakeAuth = apiClient.loadToken();
+        const calendarFakeAuth = await apiClient.loadToken();
         const {error} = calendarFakeAuth;
         if(error) {
             dispatch(fetchTokenFailure('FAILURE'));
@@ -183,9 +186,9 @@ export function setTokenSuccess(calendarFakeAuth, status) {
 
 //Used in Login component
 export function setTokenRequest(user) {
-    return function(dispatch, getState) {
+    return async function(dispatch, getState) {
         dispatch(setTokenPending('PENDING'));
-        const calendarFakeAuth = apiClient.login(user);
+        const calendarFakeAuth = await apiClient.login(user);
         const {error} = calendarFakeAuth;
         if(error) {
             dispatch(setTokenFailure(calendarFakeAuth, 'FAILURE'));

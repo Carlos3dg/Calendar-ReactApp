@@ -56,13 +56,13 @@ class Main extends React.Component {
     }
 }
 
-const mapStateToAppProps = (state) => {
+const mapStateToMainProps = (state) => {
     return {
         taskStatus: state.appStatus.loadTasks,
         date: new Date(),
     }
 }
-const mapDispatchToAppProps = (dispatch) => {
+const mapDispatchToMainProps = (dispatch) => {
     return {
         fetchTaskRequest: () => dispatch(fetchTaskRequest()),
         closeWarning: (status, warningType) => dispatch(closeTaskWarning(status, warningType))
@@ -70,6 +70,6 @@ const mapDispatchToAppProps = (dispatch) => {
 }
 
 export default connect(
-    mapStateToAppProps,
-    mapDispatchToAppProps
+    mapStateToMainProps,
+    mapDispatchToMainProps
 )(Main);
