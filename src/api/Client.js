@@ -1,5 +1,5 @@
 const LOCAL_STORAGE_KEY = 'calendarFakeAuth';
-const API_TOKEN = 'D3VC4L3nd4R4pp';
+const API_TOKEN = 'D3vC4L3nd4R4pp';
 
 const apiClient = {
     loadTasks: function() {
@@ -94,11 +94,11 @@ const apiClient = {
         return new Promise(function(resolve, reject) {
             setTimeout(() => {
                 if(!success) {
-                    return reject('Fail to get token. There was an error when interfacing with the server');
+                    return reject('Fail to access token. There was an error when interfacing with the server');
                 }
 
                 resolve(API_TOKEN); 
-            }, 1200);
+            }, 1500);
         });
     },
     //Remove the token from localStorage and set our variable properties to null, to pass them in a moment to our respective reducer propeties

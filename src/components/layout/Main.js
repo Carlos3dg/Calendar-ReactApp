@@ -3,13 +3,16 @@ import ErrorMessage from '../ServerErrors/ErrorMessage';
 import WrappedCalendar from '../Containers/WrappedCalendar';
 import TaskDisplay from '../Containers/TaskDisplay';
 import {connect} from 'react-redux';
-import {fetchTaskRequest, closeTaskWarning} from '../../actions/index';
+import {fetchTaskRequest} from '../../actions/index';
 
 class Main extends React.Component {
+    state = {
+        showMessage: true,
+    }
 
     closeErrorWarning = (e) => {
         if(e.target.className.match('close-warning')) {
-            this.props.closeWarning(null, 'loadTasks');
+            this.setState({showMessage: false});
         }
     }
 
@@ -30,10 +33,16 @@ class Main extends React.Component {
             } else if(status === 'FAILURE') {
                 return (
                     <div>
-                        <ErrorMessage
-                            errorMessage={`Failed to load tasks: the server couldn't find the resource. Try to load later`}
-                            closeError={this.closeErrorWarning}
-                        />
+                        {
+                            this.state.showMessage ? (
+                                <ErrorMessage
+                                    errorMessage={`Failed to load tasks: the server couldn't find the resource. Please try to load again at a later time`}
+                                    closeError={this.closeErrorWarning}
+                                />
+                            ) : (
+                                null
+                            )
+                        }
                         <main className='main-container'>
                             <WrappedCalendar
                                 date={this.props.date} /* Date Object */
@@ -42,7 +51,7 @@ class Main extends React.Component {
                         </main>
                     </div>
                 )
-            } else {
+            } else if(status === 'SUCCESS') {
                 return (
                      <main className='main-container'>
                         <WrappedCalendar
@@ -51,6 +60,8 @@ class Main extends React.Component {
                         <TaskDisplay/>
                     </main>                            
                 )
+            } else {
+                return null
             }
         })(this.props.taskStatus)    
     }
@@ -65,7 +76,6 @@ const mapStateToMainProps = (state) => {
 const mapDispatchToMainProps = (dispatch) => {
     return {
         fetchTaskRequest: () => dispatch(fetchTaskRequest()),
-        closeWarning: (status, warningType) => dispatch(closeTaskWarning(status, warningType))
     }
 }
 

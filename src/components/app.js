@@ -5,15 +5,18 @@ import Login from './layout/Login';
 import ErrorMessage from './ServerErrors/ErrorMessage';
 import Landing from './layout/Landing';
 import PrivateRoute from './Routes/PrivateRoute';
-import {fetchTokenRequest, removeToken, closeTaskWarning} from '../actions/index';
+import {fetchTokenRequest, removeToken} from '../actions/index';
 import {connect} from 'react-redux';
 import {Route, Redirect, Switch} from 'react-router-dom';
 
 class App extends React.Component {
-
+    state = {
+        showMessage: true,
+    }
+    //Change this to a state
     closeErrorWarning = (e) => {
         if(e.target.className.match('close-warning')) {
-            this.props.closeWarning(null, 'loadToken');
+            this.setState({showMessage: false});
         }
     }
 
@@ -61,10 +64,16 @@ class App extends React.Component {
             } else if(tokenStatus === 'FAILURE') {
                 return(
                     <div className='container'>
-                        <ErrorMessage
-                            closeError={this.closeErrorWarning}
-                            errorMessage='400: Bad Request. Token could not be verified, the site is going to be only in read mode.'
-                        />
+                        {
+                            this.state.showMessage ? (
+                                <ErrorMessage
+                                    closeError={this.closeErrorWarning}
+                                    errorMessage='400: Bad Request. Token could not be verified, the site is going to be only in read mode.'
+                                />
+                            ) : (
+                                null
+                            )
+                        }
                         {this.getHeader(token)}
                         {this.getRoutes(token)}
                     </div> 
@@ -96,7 +105,6 @@ const mapDispatchToAppProps = (dispatch) => {
     return {
         fetchTokenRequest: () => dispatch(fetchTokenRequest()),
         removeToken: () => dispatch(removeToken()),
-        closeWarning: (status, warningType) => dispatch(closeTaskWarning(status, warningType)),
     }
 }
 

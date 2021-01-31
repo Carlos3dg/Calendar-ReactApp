@@ -17,7 +17,6 @@ const Tasks = (props) => (
             taskList={props.taskList}
             saveTask={props.saveTask}
             taskStatus={props.taskStatus}
-            closeWarning={props.closeWarning}
         />
     </aside>
 );

@@ -109,15 +109,6 @@ export function saveTaskRequest(newTask, fullMonth) {
     }
 }
 
-//Action used to close the warning status messages that the server throws
-export function closeTaskWarning(status, warningType) {
-    return {
-        type: 'CLOSE_STATUS_WARNING',
-        taskStatus: status,
-        warningType: warningType,
-    }
-}
-
 //FETCH TOKEN ACTIONS (used by an async action)
   //Actions used to get the token from local storage and compare it with the real token from the server and also know the actual status of that request
 export function fetchTokenPending(status) {

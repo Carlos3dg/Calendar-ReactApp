@@ -1,6 +1,6 @@
 import Tasks from '../tasks/Tasks';
 import {connect} from 'react-redux';
-import {saveTaskRequest, closeTaskWarning} from '../../actions/index';
+import {saveTaskRequest} from '../../actions/index';
 
 const mapStateToTasksProps = (state) => {
     const tasksInYear = state.taskList.find(task => (
@@ -40,7 +40,6 @@ const mapStateToTasksProps = (state) => {
 const mapDispatchToTaskProps = (dispatch) => {
     return {
         saveTask: (task, fullMonth) => dispatch(saveTaskRequest(task, fullMonth)),
-        closeWarning: (status, warningType) => dispatch(closeTaskWarning(status, warningType)),
     }
 };
 

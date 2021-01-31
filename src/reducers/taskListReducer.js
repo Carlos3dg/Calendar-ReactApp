@@ -170,6 +170,9 @@ function getNewTask(newTask, oldState, action) {
 
             return newState;
         }
+        default: {
+            return newState;
+        }
     }
 }
 

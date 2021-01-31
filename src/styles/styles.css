@@ -67,8 +67,10 @@ html, body {
     --neonBlue: #5863f8;
     --alphaNeonBlue: rgba(88, 99, 248, 0.2);
     --dark: #171D1C;
+    --black: #303030;
     --gray: rgb(212, 206, 216);
-    --hardGray: rgb(186, 182, 189);
+    --mediumGray: rgb(186, 182, 189);
+    --hardGray: #676767;
     --blue: #229fdd;
     --lightblue: #00c4cc;
 } 
@@ -101,7 +103,7 @@ html, body {
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
-    color: var(--dark);
+    color: var(--black);
 }
 
 h1 {
@@ -129,6 +131,15 @@ p, span, label, a, select {
     font-family: "Mukta", Helvetica, Arial, sans-serif;
     font-size: 1.1em;
     font-weight: 300;
+    color: var(--hardGray);
+}
+
+input {
+    color: var(--hardGray);
+}
+
+input:focus {
+    outline: none;
 }
 
 span.icon {
@@ -230,6 +241,37 @@ header h2 {
     }
   }
 
+/* LOADER */
+.loader {
+    width: 35px;
+    height: 35px;
+    margin: 0 auto;
+    border: 6px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 6px solid var(--neonBlue);
+    border-bottom: 6px solid var(--blue);
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100%{
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+      0% {
+          transform: rotate(0deg);
+      }
+      100%{
+          transform: rotate(360deg);
+      }
+}
+
   /* ERROR MESSAGES */
   .warning-container {
       position: absolute;
@@ -247,15 +289,18 @@ header h2 {
       display: flex;
       justify-content: space-between;
       margin: 0 12px;
-      color: rgb(173, 5, 5);
   }
 
   span.icon-error {
       font-size: 34px;
   }
 
+  .warning-text, span.icon-error {
+      color: rgb(173, 5, 5);
+  }
+
   .warning-text {
-      font-size: 23px;
+    font-size: 23px;
   }
 
   .warning-button {
@@ -269,20 +314,71 @@ header h2 {
       font-size: 17px;
       color: gray;
       background-color: white;
-      border: 1px solid var(--hardGray);
+      border: 1px solid var(--mediumGray);
   }
 
   /* LOGIN CONTAINER */
   .login-container {
       width: 100%;
       height: calc(100vh - 70px);
+      padding-top: 35px;
   }
 
   .login-form {
       width: 390px;
       height: 280px;
-      margin: 35px auto;
-      margin-bottom: calc(100vh - 70px - 280px - 35px); /* all height screen - header - login height - margin */
+      margin: 0 auto;
+      margin-bottom: calc(100vh - 70px - 280px - 35px); /* all height screen - header - login height - padding */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .login-form > * {
+      margin-bottom: 14px;
+  }
+
+  .login-form div:last-child {
+      margin-bottom: 0; 
+  }
+
+  .title-login-form {
+      font-size: 37px;
+  }
+
+  .login-form div.login-input-container {
+      width: 80%;
+  }
+
+  .login-input-container > span {
+      display: block;
+  }
+
+  .login-input-container > span:first-child {
+      font-size: 20px;
+  }
+
+  .login-input-container > span:last-child {
+      font-size: 16px;
+      color: red;
+  }
+
+  .login-input-container input {
+      width: 100%;
+      font-size: 20px;
+  }
+
+  .login-input-container:not(:last-child) input {
+      border: 1px solid var(--mediumGray);
+      border-radius: 4px;
+  }
+
+  .login-input-container:not(:last-child) input:focus {
+      border: 1px solid var(--neonBlue);
+  }
+
+  .login-input-container input.button {
+      border: none;
   }
 
 /* MAIN CONTAINER */
@@ -352,6 +448,7 @@ header h2 {
     border-radius: 50%;
     cursor: pointer;
     transition: all ease-in 200ms;
+    color: var(--neonBlue);
 }
 
 .month-arrow-icon:hover {
@@ -381,6 +478,7 @@ col.days-col {
     padding: 12px 0;
     font-weight: 600;
     text-align: center;
+    color: var(--black);
 }
 
 .day-box {
@@ -403,7 +501,6 @@ col.days-col {
 .day-task-container {
     margin: 3px 2px;
     border-radius: 4px;
-    color: white;
     padding-left: 2px;
 }
 
@@ -417,6 +514,7 @@ col.days-col {
 
 .day-task-title {
     font-size: 1em;
+    color: white;
 }
 
 .plus-remaining-tasks {
@@ -496,7 +594,7 @@ td.active-day {
 }
 
 .task-details-container span {
-    color: var(--hardGray);
+    color: var(--mediumGray);
     font-size: 14px;
 }
 
@@ -545,6 +643,10 @@ td.active-day {
     bottom: 0;
     justify-content: center;
     align-items: center;
+}
+
+.button-task span {
+    color: white;
 }
 
 /* TASK FORM */
@@ -726,11 +828,17 @@ div.mincalendar-container {
 
 .selected-value:hover {
     background-color: var(--alphaNeonBlue);
+}
+
+.selected-value:hover span {
     color: var(--neonBlue);
 }
 
 .onclick-select {
     background-color: var(--alphaNeonBlue);
+}
+
+.onclick-select span {
     color: var(--neonBlue);
 }
 

@@ -70,5 +70,8 @@ function prevAndNext(state, action) {
                 currentYear
             }
         }
+        default: {
+            return state
+        }
     }
 }

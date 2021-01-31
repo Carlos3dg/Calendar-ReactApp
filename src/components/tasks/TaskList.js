@@ -7,6 +7,7 @@ class TaskList extends React.Component {
     state = {
         openTaskForm: false,
         task: null,
+        showErrorMessage: false,
     }
 
     openTaskForm = () => {
@@ -17,9 +18,11 @@ class TaskList extends React.Component {
     }
 
     closeTaskForm = (task)=> {
+        const showErrorMessage = !task ? false : true;
         this.setState({
             openTaskForm: false,
-            task: task
+            task: task,
+            showErrorMessage,
         })
     }
 
@@ -32,8 +35,10 @@ class TaskList extends React.Component {
 
     closeErrorWarning = (e) => {
         if(e.target.className.match('close-warning')) {
-            this.setState({openTaskForm: true});
-            this.props.closeWarning(null, 'saveTask');
+            this.setState({
+                openTaskForm: true,
+                showErrorMessage: false
+            });
         }
     }
 
@@ -79,10 +84,14 @@ class TaskList extends React.Component {
                         ),
                         SUCCESS: null,
                         FAILURE: (
-                            <ErrorMessage
-                                closeError={this.closeErrorWarning}
-                                errorMessage={`Failed to save task: server is not working. Please save again or try it later.`}
-                            />
+                            this.state.showErrorMessage ? (
+                                <ErrorMessage
+                                    closeError={this.closeErrorWarning}
+                                    errorMessage={`Failed to save task: server is not working. Please save again or try it later.`}
+                                />
+                            ) : (
+                                null
+                            )
                         )
                     }[this.props.taskStatus]
                 }

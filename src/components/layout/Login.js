@@ -1,4 +1,5 @@
 import React from 'react';
+import ErrorMessage from '../ServerErrors/ErrorMessage';
 import {setTokenRequest} from '../../actions/index';
 import {Redirect} from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -9,7 +10,14 @@ class Login extends React.Component {
         fields: {
             email: ''
         },
-        fieldErrors: {}
+        fieldErrors: {},
+        showErrorMessage: false, //In case that our setTokenStatus property is equal to FAILURE, we want to not display the failure message at the first mount.
+    }
+
+    closeErrorWarning = (e) => {
+        if(e.target.className.match('close-warning')) {
+            this.setState({showErrorMessage: false});
+        }
     }
 
     onInputChange = (e) => {
@@ -32,6 +40,7 @@ class Login extends React.Component {
             fields: {
                 email: '',
             },
+            showErrorMessage: true, //Just used if the setTokenStatus property is equal to failure, to enable the display message
         });
         this.props.setTokenRequest(user);
     }
@@ -55,8 +64,8 @@ class Login extends React.Component {
         return(
             <div className='login-container'>
                 <form className='login-form' onSubmit={this.onFormSubmit}>
-                    <h3>Log in to your account</h3>
-                    <div>
+                    <h3 className='title-login-form'>Log in to your account</h3>
+                    <div className='login-input-container'>
                         <span>Enter your email address</span>
                         <input type="text" name='email' value={this.state.fields.email} placeholder='example@email.com' onChange={this.onInputChange}/>
                         <span>{this.state.fieldErrors.email}</span>
@@ -64,10 +73,17 @@ class Login extends React.Component {
                     {  
                         {
                             PENDING: (
-                            <span>Loading...</span>
+                                <div className ='loader'></div>
                             ),
                             FAILURE: (
-                                <span>Fail to get token</span>
+                                this.state.showErrorMessage ? (
+                                    <ErrorMessage
+                                        closeError={this.closeErrorWarning}
+                                        errorMessage='Fail to access token. There was an error when interfacing with the server'
+                                    />
+                                ) : (
+                                    null
+                                )
                             ),
                             SUCCESS: (
                                 <Redirect
@@ -77,8 +93,8 @@ class Login extends React.Component {
 
                         }[this.props.setTokenStatus]
                     }
-                    <div>
-                        <button className='button' type='submit' disabled={this.props.setTokenStatus === 'PENDING'}>Sign in</button>
+                    <div className='login-input-container'>
+                        <input className='button' type='submit' value='Sign in' disabled={this.props.setTokenStatus === 'PENDING'}/>
                     </div>
                 </form>
             </div>

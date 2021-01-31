@@ -78,11 +78,6 @@ export default function statusReducer(
                 setToken: action.tokenStatus
             }
         }
-        case 'CLOSE_STATUS_WARNING': {
-            const newState = Object.assign({}, state);
-            newState[action.warningType] = action.taskStatus;
-            return newState;
-        }
         default:{
             return state;
         }

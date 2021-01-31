@@ -15,7 +15,6 @@ const PrivateRoute = ({component, path, token, setToken}) => {
 
     return (
         <Route path={path} render={(props) => {
-            console.log(props.location.pathname);
             if(condition) {
                 return (
                     <Switch>
@@ -30,7 +29,7 @@ const PrivateRoute = ({component, path, token, setToken}) => {
                 )
             } else {
                 if(setToken) {
-                    return setToken === 'SUCCESS' ? (
+                    return setToken === 'SUCCESS' ? ( //Remember to remove setToken property in reducer when the user log out
                         <Route exact path={path} component={component}/>
                     ) : (
                         <Redirect 
