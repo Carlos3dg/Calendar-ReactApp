@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './layout/Header';
 import Main from './layout/Main';
 import Login from './layout/Login';
+import Logout from './layout/Logout';
 import ErrorMessage from './ServerErrors/ErrorMessage';
 import Landing from './layout/Landing';
 import PrivateRoute from './Routes/PrivateRoute';
@@ -23,7 +24,6 @@ class App extends React.Component {
     getHeader = (token) => (
         <Header
             token={token}
-            removeToken={this.props.removeToken}
         />
     )
 
@@ -41,6 +41,12 @@ class App extends React.Component {
                     token={token}
                     setToken={this.props.setTokenStatus}
                 />
+                <Route exact path='/logout' render={() => (
+                    <Logout
+                        token={token}
+                        removeToken={this.props.removeToken}
+                    />
+                )}/>
                 <Route exact path='/' render={() => {
                     if(token) return <Redirect to='/calendar'/>
                     return <Route path='/' component={Landing} />

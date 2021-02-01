@@ -78,6 +78,12 @@ export default function statusReducer(
                 setToken: action.tokenStatus
             }
         }
+        case 'REMOVE_TOKEN': {
+            return {
+                ...state,
+                setToken: null
+            }
+        }
         default:{
             return state;
         }
