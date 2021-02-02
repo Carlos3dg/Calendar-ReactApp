@@ -1,10 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import logo from '../../img/app-icon/icon-70x70.png';
 
 const Header = ({ token }) => {
     return (
         <header>
-            <h2>Calendar App</h2>
+            <Link to='/' className='home-link'>
+                {!token ? <img src={logo} alt="Calendar App" /> : null}
+                <h2>Calendar App</h2>
+            </Link>
             <div className='container-short container-log-button'>
                 {
                     token ? (
@@ -19,7 +23,7 @@ const Header = ({ token }) => {
                                 to='/login'
                                 className='log-button button'
                             >
-                                Log in
+                                Login
                             </Link>
                         )
                 }

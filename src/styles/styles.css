@@ -65,13 +65,14 @@ html, body {
 
 :root {
     --neonBlue: #5863f8;
+    --hardNeon: #373eac;
     --alphaNeonBlue: rgba(88, 99, 248, 0.2);
     --dark: #171D1C;
     --black: #303030;
     --gray: rgb(212, 206, 216);
     --mediumGray: rgb(186, 182, 189);
     --hardGray: #676767;
-    --blue: #229fdd;
+    --blue: #02a7fa;
     --lightblue: #00c4cc;
 } 
 
@@ -317,6 +318,60 @@ header h2 {
       border: 1px solid var(--mediumGray);
   }
 
+/* LANDING CONTAINER */
+.landing-container {
+    max-width: 1700px;
+    width: 95%;
+    height: calc(100vh - 70px);
+    max-height: 900px;
+    margin: 0 auto;
+    display: flex;
+}
+
+.landing-container h1 {
+    color: var(--hardNeon);
+}
+
+.landing-container>div {
+    flex: 1 0 0;
+    height: 100%;
+    display: flex;
+}
+
+.landing-entry-text-container {
+    align-items: center;
+    /*justify-content: center;*/
+}
+
+.landing-entry-text-container>div {
+    width: 70%;
+    margin-left: 70px;
+}
+
+.landing-text-subcontainer > * {
+    margin-bottom: 10px;
+}
+
+.landing-text-subcontainer > *:last-child {
+    margin: 0;
+}
+
+.landing-entry-button {
+    display: inline-block;
+    line-height: 2em;
+    width: 35%;
+    text-align: center;
+}
+
+.isometric-landing-container {
+    justify-content: flex-end;
+}
+
+.isometric-landing-image {
+    width: auto;
+    height: 100%;
+}
+
   /* LOGIN CONTAINER */
   .login-container {
       width: 100%;
@@ -393,6 +448,10 @@ header h2 {
 @media (max-width: 1020px) {
     header {
         padding: 0 35px;
+    }
+
+    .landing-container {
+        width: calc(100% - (35px*2));
     }
 
     .main-container {
