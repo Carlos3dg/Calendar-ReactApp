@@ -160,13 +160,10 @@ header {
     width: 100%;
     height: 70px;
     text-align: center;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
     padding: 0 2.5%; /*Padding equal to the main margin container*/
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--neonBlue);
-    background-image: linear-gradient(90deg, var(--lightblue), var(--neonBlue));
 }
 @media (min-width: 1789.5px) {
     header {
@@ -174,9 +171,19 @@ header {
     }
 }
 
+.home-link {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+.home-link img {
+    height: 60%;
+    margin-right: 5px;
+}
+
 header h2 {
     line-height: 70px;
-    color: white;
 }
 
 .container-log-button {
@@ -195,6 +202,31 @@ header h2 {
     line-height: 2em;
     color: var(--neonBlue);
 }
+
+/* If user is log out */
+.white-header {
+    background-color: white;
+}
+
+.white-header h2 {
+    color: var(--neonBlue);
+}
+
+.white-header .log-button {
+    border: 2px solid var(--neonBlue);
+}
+
+/* If user is log in */
+.gradient-header {
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    background-color: var(--neonBlue);
+    background-image: linear-gradient(90deg, var(--lightblue), var(--neonBlue)); 
+}
+
+.gradient-header h2 {
+    color: white;
+}
+
 
 /* SPINNER */
 .spinner {
@@ -345,7 +377,7 @@ header h2 {
 
 .landing-entry-text-container>div {
     width: 70%;
-    margin-left: 70px;
+    margin-left: 50px;
 }
 
 .landing-text-subcontainer > * {

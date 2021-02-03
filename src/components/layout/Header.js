@@ -4,7 +4,7 @@ import logo from '../../img/app-icon/icon-70x70.png';
 
 const Header = ({ token }) => {
     return (
-        <header>
+        <header className={!token ? 'white-header' : 'gradient-header'}>
             <Link to='/' className='home-link'>
                 {!token ? <img src={logo} alt="Calendar App" /> : null}
                 <h2>Calendar App</h2>

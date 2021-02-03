@@ -7,7 +7,7 @@ const Landing = () => (
         <div className='landing-entry-text-container'>
             <div className='landing-text-subcontainer'>
                 <h1>Calendar Schedule</h1>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptate hic explicabo autem magni cum eum!</p>
+                <p>Plan and schedule your tasks, of your work, school or house, for one week, one month or the entire year!</p>
                 <Link className='button landing-entry-button' to='/login'>
                     Get started
                 </Link>
