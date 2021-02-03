@@ -5,7 +5,8 @@ import Login from './layout/Login';
 import Logout from './layout/Logout';
 import ErrorMessage from './ServerErrors/ErrorMessage';
 import Landing from './layout/Landing';
-import PrivateRoute from './Routes/PrivateRoute';
+import PrivateLogin from './Routes/PrivateLogin';
+import PrivateCalendar from './Routes/PrivateCalendar';
 import {fetchTokenRequest, removeToken} from '../actions/index';
 import {connect} from 'react-redux';
 import {Route, Redirect, Switch} from 'react-router-dom';
@@ -30,12 +31,12 @@ class App extends React.Component {
     getRoutes = (token) => {
         return(
             <Switch>
-                <PrivateRoute
+                <PrivateCalendar
                     path='/calendar'
                     component={Main}
                     token={token}
                 />
-                <PrivateRoute
+                <PrivateLogin
                     path='/login'
                     component={Login}
                     token={token}
