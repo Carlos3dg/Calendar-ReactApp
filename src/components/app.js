@@ -5,6 +5,7 @@ import Login from './layout/Login';
 import Logout from './layout/Logout';
 import ErrorMessage from './ServerErrors/ErrorMessage';
 import Landing from './layout/Landing';
+import Page404 from './layout/Page404';
 import PrivateLogin from './Routes/PrivateLogin';
 import PrivateCalendar from './Routes/PrivateCalendar';
 import {fetchTokenRequest, removeToken} from '../actions/index';
@@ -52,6 +53,11 @@ class App extends React.Component {
                     if(token) return <Redirect to='/calendar'/>
                     return <Route path='/' component={Landing} />
                 }}/>
+                <Route render={(props) => (
+                    <Page404
+                        location={props.location.pathname}
+                    />
+                )}/>
             </Switch>
         )
     }

@@ -12,7 +12,6 @@ const PrivateCalendar = ({component, path, token}) => {
                         <Route render={() => (
                             <Page404
                                 location={props.location.pathname}
-                                correctLocation={path}
                             />
                         )}/>
                     </Switch>

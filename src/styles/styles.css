@@ -306,6 +306,7 @@ header h2 {
 }
 
   /* ERROR MESSAGES */
+  /* Server Errors */
   .warning-container {
       position: absolute;
       width: 350px;
@@ -349,6 +350,54 @@ header h2 {
       background-color: white;
       border: 1px solid var(--mediumGray);
   }
+
+/* Page Not Found */
+.center-items-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -1;
+}
+
+.error404-container {
+    max-width: 650px;
+    width: 70%;
+    min-width: 390px;
+    /*margin: 100px auto 0;*/
+}
+
+.error404-container div {
+    width: 100%;
+}
+
+.error404-header-text {
+    text-align: center;
+}
+
+.error404-header-text h1 {
+    font-size: 4em;
+    color: var(--mediumGray);
+}
+
+.error404-main-text > div {
+    margin-bottom: 15px;
+}
+
+.error404-main-text > div:last-of-type {
+    margin-bottom: 0;
+}
+
+.error404-main-text a {
+    color: var(--neonBlue);
+}
+
+.error404-main-text a:hover {
+    color: var(--hardNeon);
+}
 
 /* LANDING CONTAINER */
 .landing-container {

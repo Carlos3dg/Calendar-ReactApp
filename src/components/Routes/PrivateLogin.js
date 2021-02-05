@@ -12,7 +12,6 @@ const PrivateLogin = ({ component, path, token, setToken }) => {
                         <Route render={() => (
                             <Page404
                                 location={props.location.pathname}
-                                correctLocation={path}
                             />
                         )} />
                     </Switch>
@@ -32,7 +31,6 @@ const PrivateLogin = ({ component, path, token, setToken }) => {
                         <Route render={() => (
                             <Page404
                                 location={props.location.pathname}
-                                correctLocation={path}
                             />
                         )} />
                     </Switch>
