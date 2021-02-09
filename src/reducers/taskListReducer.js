@@ -175,13 +175,15 @@ function getNewTask(newTask, oldState, action) {
         }
     }
 }
-
+//Get the year object where our task is going to be
 function getYearTask(newTask, oldState, taskDate) {
+    //See if the year of our task already exist in the state of our reducer
     const yearIndex = oldState.findIndex((task)=>(
         task.year === taskDate.year
-    ));
-
+    )); //If it does, returns the index value that year has in the state, if not, returns -1,
+    //If year of the new task does not exist in state
     if(yearIndex === -1) {
+        //Create the entire object due to if it does not exist the year in the state, then doesn't exist any month, any day and finally any task.
         const newYear = {
             year: taskDate.year,
             months: [
@@ -198,40 +200,43 @@ function getYearTask(newTask, oldState, taskDate) {
                 }
             ]
         };
-        
+        //See if the state doesn't have other different years in it.
         if(oldState.length === 0) {
+            //if it doesn't have, then just add the new year object to a new array based in oldState, and set that new array to newYears. 
             const newYears = oldState.concat(newYear);
             return newYears;
-        } else {
+        } else { //If it has other years...
             let newYears = [];
+            //Check inside the oldState the years that are in.
             oldState.forEach((task, index) => {
+                //If one of the years from state is smaller than the year from our task, 
                 if(task.year < newYear.year) {
-                    newYears[index] = task;
-                    newYears[index+1] = newYear;
-                } else {
-                    if(newYears.length === 0) {
+                    newYears[index] = task; //then add that year before the task year, in the newYears array
+                    newYears[index+1] = newYear; //And add the task year after it.
+                } else { //But if one of them is greater...
+                    if(newYears.length === 0) { //Just add the task year, as first element, in case that there's not any year from state smaller than it, 
                         newYears[index] = newYear;
                     }
-                    newYears[index+1] = task;
+                    newYears[index+1] = task; //And add the greater years to the next position in newYears array
                 }
             });
             return newYears;
         }
-
+      //Now, if the year from the new task does exist...  
     } else {
         const updatedYear = {
-            ...oldState[yearIndex],
-            months: getMonthTask(newTask, oldState[yearIndex].months, taskDate)
+            ...oldState[yearIndex], //Get the year object from oldState
+            months: getMonthTask(newTask, oldState[yearIndex].months, taskDate) //Modify the months property
         }
 
         return [
-            ...oldState.slice(0, yearIndex),
+            ...oldState.slice(0, yearIndex), 
             updatedYear,
             ...oldState.slice(yearIndex+1, oldState.length)
         ];
     }
 }
-
+//Repeat the same code from getYearTask but apply to Months array in a year
 function getMonthTask(newTask, oldMonths, taskDate) {
     const monthIndex = oldMonths.findIndex((task) => (
         task.month === taskDate.month

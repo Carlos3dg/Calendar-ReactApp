@@ -45,7 +45,7 @@ class TaskForm extends React.Component {
         //If there's any error, stop the submition
         if(Object.keys(fieldErrors).length) return;
         //If not then execute the addTask prop function
-        this.props.saveTask(this.state.task, this.props.fullMonth);
+        this.props.saveTask(this.state.task, this.props.fullMonth); //Call action
         const {title, startTime, endTime, repeat} = task;
         this.props.closeTaskForm({title, startTime, endTime, repeat});
     }
