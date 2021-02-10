@@ -1,6 +1,7 @@
 import Tasks from '../tasks/Tasks';
 import {connect} from 'react-redux';
 import {saveTaskRequest} from '../../actions/index';
+import {removeCurrentTask} from '../../actions/index';
 
 const mapStateToTasksProps = (state) => {
     const tasksInYear = state.taskList.find(task => (
@@ -40,6 +41,7 @@ const mapStateToTasksProps = (state) => {
 const mapDispatchToTaskProps = (dispatch) => {
     return {
         saveTask: (task, fullMonth) => dispatch(saveTaskRequest(task, fullMonth)),
+        removeCurrentTask: (taskDate, task) => dispatch(removeCurrentTask(taskDate, task)),
     }
 };
 

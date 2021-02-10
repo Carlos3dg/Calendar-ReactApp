@@ -16,6 +16,7 @@ const Tasks = (props) => (
             fullMonth={props.fullMonth}
             taskList={props.taskList}
             saveTask={props.saveTask}
+            removeCurrentTask={props.removeCurrentTask}
             taskStatus={props.taskStatus}
         />
     </aside>

@@ -49,8 +49,26 @@ class TaskList extends React.Component {
                     {
                         !this.props.taskList ? null : this.props.taskList.map((task, index) => (
                             //Determine if the task has a mod different from 0 to add a different dot color
-                            index%2 !== 0 ? <Task task={task} key={task.id} dotLightColor={true} />
-                                : <Task task={task} key={task.id} />
+                            index%2 !== 0 ? (
+                                <Task
+                                    month={this.props.month}
+                                    year={this.props.year}
+                                    day={this.props.day} 
+                                    task={task} 
+                                    key={task.id}
+                                    removeCurrentTask={this.props.removeCurrentTask} 
+                                    dotLightColor={true} 
+                                />
+                                ) : (
+                                    <Task
+                                        month={this.props.month}
+                                        year={this.props.year}
+                                        day={this.props.day} 
+                                        task={task}
+                                        removeCurrentTask={this.props.removeCurrentTask}  
+                                        key={task.id} 
+                                    />
+                                )
                         ))
                     }
                 </div>

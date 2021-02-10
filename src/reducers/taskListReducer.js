@@ -29,6 +29,11 @@ export default function taskListReducer(
             const newState = action.taskList;
             return newState;
         }
+        case 'REMOVE_CURRENT_TASK': {
+            const oldState = [...state];
+            const newState = updateTaskList(oldState, action);
+            return newState;
+        }
         default: {
             return state
         }
@@ -353,6 +358,57 @@ function getTaskList(newTask, oldTasks) {
         });
         return newTasks;
     }
+}
+
+
+function updateTaskList(oldState, {taskDate, task}) {
+    const getIndexYear = oldState.findIndex((task) => (
+        task.year === taskDate.year
+    ));
+
+    const updatedYear = updateYear(oldState[getIndexYear], taskDate, task);
+
+    return [
+        ...oldState.slice(0, getIndexYear),
+        updatedYear,
+        ...oldState.slice(getIndexYear+1, oldState.length)
+    ];
+}
+
+function updateYear(yearObject, taskDate, task) {
+    return {
+        ...yearObject,
+        months: yearObject.months.map((month) => {
+            if(month.month === taskDate.month) {
+                const taskMonth = updateMonth(month, taskDate, task)
+                return taskMonth;
+            } else {
+                return month;
+            }
+        })
+    }
+}
+
+function updateMonth(monthObject, taskDate, task) {
+    return {
+        ...monthObject,
+        days: monthObject.days.map((day) => {
+            if(day.day === taskDate.day) {
+                const dayTask = updateDayInRemoveTask(day, task);
+                return dayTask;
+            } else {
+                return day;
+            }
+        })
+    }
+}
+
+function updateDayInRemoveTask(dayObject, task) {
+    const id = task.id;
+    return {
+        ...dayObject,
+        tasks: dayObject.tasks.filter((task) => (task.id !== id))
+    };
 }
 
 
