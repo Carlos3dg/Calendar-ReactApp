@@ -3,13 +3,13 @@ import {connect} from 'react-redux';
 import {saveTaskRequest} from '../../actions/index';
 
 const mapStateToTasksProps = (state) => {
-    const tasksInYear = state.taskList.find(task => (
+    /*const tasksInYear = state.taskList.find(task => (
         task.year === state.date.currentYear
-    ));
+    ));*/
 
     let taskList; //Variable to store the tasks inside the current day
 
-    if(tasksInYear) {
+    /*if(tasksInYear) {
         let tasksInMonth;
         tasksInMonth = tasksInYear.months.find(task => (
             task.month === state.date.currentMonth
@@ -25,7 +25,7 @@ const mapStateToTasksProps = (state) => {
                 taskList = tasksInDay.tasks;
             }
         }
-    }
+    }*/
 
     return {
         day: state.date.currentDay,

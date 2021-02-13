@@ -5,7 +5,7 @@ import {prevMonth, nextMonth, jumpDate, selectDay} from '../../actions/index';
 const mapStateToCalendarProps = (state, ownProps) => {
     let tasksInMonth;
     //if mincalendar prop is undefined, proceed to get all the tasks inside the current month
-    if(!ownProps.mincalendar) {
+    /*if(!ownProps.mincalendar) {
         const taskInYear = state.taskList.find(task => (
             task.year === state.date.currentYear
         ));
@@ -15,7 +15,7 @@ const mapStateToCalendarProps = (state, ownProps) => {
                 task.month === state.date.currentMonth
             ))
         }
-    }
+    }*/
 
     return {
         month: state.date.currentMonth,
