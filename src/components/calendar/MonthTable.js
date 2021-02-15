@@ -104,13 +104,14 @@ class MonthTable extends React.Component {
                             {
                                 week.week.map((day, index) => {
                                     let taskList = []; //tasks in a day
+                                    let orderTasks = []
                                     //If we have tasks in the month, we proceed to get the tasks of the day that we are iterating
                                     if(this.props.tasksInMonth.length) {
                                         this.props.tasksInMonth.forEach((task) => {
                                             const itemInDay = task.items.find((item, index, arr) => {
                                                 return item.day === day
                                             })
-                                            //console.log(itemInDay);
+
                                             if(itemInDay) {
                                                 const taskInDay = {
                                                     ...itemInDay,
@@ -120,7 +121,19 @@ class MonthTable extends React.Component {
                                                 taskList = [...taskList, taskInDay];
                                             }
                                         })
-                                        //console.log(taskList);
+                                        if(taskList.length) {
+                                            //Order tasks by hour
+                                            let aux;
+                                            for(let i=0; i<taskList.length; i++) {
+                                                for(let j=i+1; j<taskList.length; j++) {
+                                                    if(taskList[i].startTime.jsTime >= taskList[j].startTime.jsTime) {
+                                                        aux = taskList[i];
+                                                        taskList[i] = taskList[j];
+                                                        taskList[j] = aux;
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                     //Variable to compare every date in a month with the selected day state value and the actual day value
                                     const date = `${this.props.year}-${this.props.month}-${day}`;
