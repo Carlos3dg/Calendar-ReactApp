@@ -1,30 +1,41 @@
 import Tasks from '../tasks/Tasks';
-import {connect} from 'react-redux';
-import {saveTaskRequest} from '../../actions/index';
+import { connect } from 'react-redux';
+import { saveTaskRequest } from '../../actions/index';
 
 const mapStateToTasksProps = (state) => {
-    const tasksInYear = state.taskList.find(task => (
-        task.year === state.date.currentYear
-    ));
+    let taskList = []; //Variable to store the tasks inside the current day
 
-    let taskList; //Variable to store the tasks inside the current day
-
-    if(tasksInYear) {
-        let tasksInMonth;
-        tasksInMonth = tasksInYear.months.find(task => (
-            task.month === state.date.currentMonth
+    state.taskList.forEach((task) => {
+        //Get item task if the codition fullfil
+        const item = task.items.find((item) => (
+            (item.year === state.date.currentYear) && (item.month === state.date.currentMonth) && (item.day === state.date.currentDay)
         ));
 
-        if(tasksInMonth) {
-            let tasksInDay;
-            tasksInDay = tasksInMonth.days.find(task => (
-                task.day === state.date.currentDay
-            ));
-            
-            if(tasksInDay) {
-                taskList = tasksInDay.tasks;
+        if (item) {
+            const itemWithId = {
+                ...item,
+                id: task.id,
+            }
+
+            taskList = [...taskList, itemWithId];
+        }
+        //console.log(taskList)
+    });
+    //console.log(taskList)
+
+    if (taskList.length) {
+        //Order tasks by hour
+        let aux;
+        for (let i = 0; i < taskList.length; i++) {
+            for (let j = i + 1; j < taskList.length; j++) {
+                if (taskList[i].startTime.jsTime >= taskList[j].startTime.jsTime) {
+                    aux = taskList[i];
+                    taskList[i] = taskList[j];
+                    taskList[j] = aux;
+                }
             }
         }
+        console.log(taskList);
     }
 
     return {

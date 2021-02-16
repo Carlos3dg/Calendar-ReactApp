@@ -47,7 +47,7 @@ class TaskList extends React.Component {
             <div className='task-list-container container-short'>
                 <div className='task-list-overflow'>
                     {
-                        !this.props.taskList ? null : this.props.taskList.map((task, index) => (
+                        !this.props.taskList.length ? null : this.props.taskList.map((task, index) => (
                             //Determine if the task has a mod different from 0 to add a different dot color
                             index%2 !== 0 ? <Task task={task} key={task.id} dotLightColor={true} />
                                 : <Task task={task} key={task.id} />
