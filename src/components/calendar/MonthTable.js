@@ -30,7 +30,7 @@ class MonthTable extends React.Component {
     }
 
     //Function to know the number of tasks and according to that number determine if they can display inside day-box or they can just display the first one and the rest put it as a '+' icon
-    getTasksInDay = ({tasks}) => {
+    getTasksInDay = (tasks) => {
         if(tasks.length < 3) {
             return tasks.map((task, index) => (
                 <MonthDayTask
@@ -103,12 +103,37 @@ class MonthTable extends React.Component {
                         <tr key={index} style={{height: `${100/array.length}%`}}> 
                             {
                                 week.week.map((day, index) => {
-                                    let taskList //tasks in a day
+                                    let taskList = []; //tasks in a day
+                                    let orderTasks = []
                                     //If we have tasks in the month, we proceed to get the tasks of the day that we are iterating
-                                    if(this.props.tasksInMonth) {
-                                        taskList = this.props.tasksInMonth.days.find(task => (
-                                            task.day === day
-                                        ));
+                                    if(this.props.tasksInMonth.length) {
+                                        this.props.tasksInMonth.forEach((task) => {
+                                            const itemInDay = task.items.find((item, index, arr) => {
+                                                return item.day === day
+                                            })
+
+                                            if(itemInDay) {
+                                                const taskInDay = {
+                                                    ...itemInDay,
+                                                    id: task.id
+                                                }
+
+                                                taskList = [...taskList, taskInDay];
+                                            }
+                                        })
+                                        if(taskList.length) {
+                                            //Order tasks by hour
+                                            let aux;
+                                            for(let i=0; i<taskList.length; i++) {
+                                                for(let j=i+1; j<taskList.length; j++) {
+                                                    if(taskList[i].startTime.jsTime >= taskList[j].startTime.jsTime) {
+                                                        aux = taskList[i];
+                                                        taskList[i] = taskList[j];
+                                                        taskList[j] = aux;
+                                                    }
+                                                }
+                                            }
+                                        }
                                     }
                                     //Variable to compare every date in a month with the selected day state value and the actual day value
                                     const date = `${this.props.year}-${this.props.month}-${day}`;
@@ -122,7 +147,7 @@ class MonthTable extends React.Component {
                                                     {day}
                                                 </span>
                                                 {//If we don't have any task in the day that we are iterating, we return nothing, if we not we call a function
-                                                    !taskList ? null : this.getTasksInDay(taskList)
+                                                    !taskList.length ? null : this.getTasksInDay(taskList)
                                                 }
                                             </div>
                                         </td>
