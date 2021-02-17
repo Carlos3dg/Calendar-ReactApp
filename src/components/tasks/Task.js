@@ -1,35 +1,27 @@
 import React from 'react';
-
-let repeatValues = [
-    'Does not repeat',
-    'Daily',
-    'Weekly',
-    'Monthly',
-    'Anually',
-    'Weekends',
-    'Every weekday (Monday to Friday)'
-
-];
+import RadioOption from './RadioOption';
 
 class Task extends React.Component {
     state = {
         _repeatValue: 'Does not repeat',
-        _openOptionBox: false,
-        clickedButton: null,
+        _openRadio: null,
+        clickedButton: '',
+    }
+
+    onEditIconClick = () => {
+        this.setState({
+            _openRadio: true,
+            clickedButton: 'edit',
+        })
     }
 
     onRemoveIconClick = () => {
-        const {repeat} = this.props.task;
-        if(repeat === this.state._repeatValue) {
-            const taskDate = {
-                day: this.props.day,
-                month: this.props.month,
-                year: this.props.year,
-            }
-            this.props.removeCurrentTask(taskDate, this.props.task)
+        const { repeat } = this.props.task;
+        if (repeat === this.state._repeatValue) {
+            this.props.removeCurrentTask(this.props.task);
         } else {
             this.setState({
-                _openOptionBox: true,
+                _openRadio: true,
                 clickedButton: 'delete'
             });
         }
@@ -39,13 +31,13 @@ class Task extends React.Component {
         return (
             <div className='task-description-container'>
                 <div className='dot-container'>
-                    <span className='dot-icon' style={this.props.dotLightColor ? {backgroundColor: 'var(--lightblue)'} : null}></span>
+                    <span className='dot-icon' style={this.props.dotLightColor ? { backgroundColor: 'var(--lightblue)' } : null}></span>
                 </div>
                 <div className='task-details-container'>
                     <h5>{this.props.task.title}</h5>
                     <span>{this.props.task.startTime.time} - {this.props.task.endTime.time}</span>
                     <div className="edit-delete-buttons">
-                        <span className="material-icons edit-button">
+                        <span className="material-icons edit-button" onClick={this.onEditIconClick}>
                             edit
                         </span>
                         <span className="material-icons delete-button" onClick={this.onRemoveIconClick}>
@@ -54,7 +46,13 @@ class Task extends React.Component {
                     </div>
                 </div>
                 {
-                    this.state._openOptionBox ? console.log('display Radio Options') : null
+                    this.state._openRadio ? (
+                        this.state.clickedButton === 'delete' ? (
+                            <RadioOption/>
+                        ) : (
+                            console.log('edit radio')
+                        )
+                    ) : null
                 }
             </div>
         )

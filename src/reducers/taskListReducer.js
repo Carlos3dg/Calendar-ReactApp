@@ -34,7 +34,7 @@ export default function taskListReducer(
         }
         case 'REMOVE_CURRENT_TASK': {
             const oldState = [...state];
-            const newState = updateTaskList(oldState, action);
+            const newState = removeCurrentTask(oldState, action.task);
             return newState;
         }
         default: {
@@ -210,55 +210,35 @@ function addNewItem(newTask, id, oldState) {
     }
 }
 
-
-function updateTaskList(oldState, {taskDate, task}) {
-    const getIndexYear = oldState.findIndex((task) => (
-        task.year === taskDate.year
+function removeCurrentTask(oldState, selectedtask) {
+    const task = oldState.find((task) => (
+        task.id === selectedtask.id
     ));
 
-    const updatedYear = updateYear(oldState[getIndexYear], taskDate, task);
+    const {items} = task;
 
-    return [
-        ...oldState.slice(0, getIndexYear),
-        updatedYear,
-        ...oldState.slice(getIndexYear+1, oldState.length)
-    ];
-}
-
-function updateYear(yearObject, taskDate, task) {
-    return {
-        ...yearObject,
-        months: yearObject.months.map((month) => {
-            if(month.month === taskDate.month) {
-                const taskMonth = updateMonth(month, taskDate, task)
-                return taskMonth;
-            } else {
-                return month;
+    if(items.length>1) {
+        const newState = oldState.map((task) => {
+            if(task.id === selectedtask.id) {
+                return {
+                    ...task,
+                    items: task.items.filter((item) => (
+                        (item.year !== selectedtask.year) && (item.month !== selectedtask.month) && (item.day !== selectedtask.day)
+                    ))
+                };
             }
-        })
-    }
-}
+            return task;
+        });
 
-function updateMonth(monthObject, taskDate, task) {
-    return {
-        ...monthObject,
-        days: monthObject.days.map((day) => {
-            if(day.day === taskDate.day) {
-                const dayTask = updateDayInRemoveTask(day, task);
-                return dayTask;
-            } else {
-                return day;
-            }
-        })
-    }
-}
+        return newState;
 
-function updateDayInRemoveTask(dayObject, task) {
-    const id = task.id;
-    return {
-        ...dayObject,
-        tasks: dayObject.tasks.filter((task) => (task.id !== id))
-    };
+    } else {
+        const newState = oldState.filter((task) => (
+            task.id !== selectedtask.id
+        ));
+
+        return newState
+    }
 }
 
 

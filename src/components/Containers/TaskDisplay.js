@@ -20,9 +20,7 @@ const mapStateToTasksProps = (state) => {
 
             taskList = [...taskList, itemWithId];
         }
-        //console.log(taskList)
     });
-    //console.log(taskList)
 
     if (taskList.length) {
         //Order tasks by hour
@@ -36,7 +34,6 @@ const mapStateToTasksProps = (state) => {
                 }
             }
         }
-        console.log(taskList);
     }
 
     return {

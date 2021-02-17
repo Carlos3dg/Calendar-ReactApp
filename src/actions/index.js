@@ -36,10 +36,9 @@ export function addTask(task, fullMonth) {
     }
 };
 
-export function removeCurrentTask(taskDate, task) {
+export function removeCurrentTask(task) {
     return {
         type: 'REMOVE_CURRENT_TASK',
-        taskDate,
         task,
     }
 }
