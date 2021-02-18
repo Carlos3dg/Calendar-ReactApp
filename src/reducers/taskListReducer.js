@@ -37,6 +37,17 @@ export default function taskListReducer(
             const newState = removeCurrentTask(oldState, action.task);
             return newState;
         }
+        case 'REMOVE_FOLLOW_TASKS': {
+            const oldState = [...state];
+            const newState = removeFollowTasks(oldState, action.task);
+            return newState;
+        }
+        case 'REMOVE_ALL_TASKS': {
+            const oldState = [...state];
+            console.log('all')
+            const newState = removeAllTasks(oldState, action.task);
+            return newState;
+        }
         default: {
             return state
         }
@@ -210,20 +221,23 @@ function addNewItem(newTask, id, oldState) {
     }
 }
 
-function removeCurrentTask(oldState, selectedtask) {
+function removeCurrentTask(oldState, selectedTask) {
     const task = oldState.find((task) => (
-        task.id === selectedtask.id
+        task.id === selectedTask.id
     ));
 
-    const {items} = task;
-
+    const {items} = task;    
     if(items.length>1) {
+        const itemIndex = items.findIndex((item) => (
+            (item.year === selectedTask.year) && (item.month === selectedTask.month) && (item.day === selectedTask.day)
+        ));
+
         const newState = oldState.map((task) => {
-            if(task.id === selectedtask.id) {
+            if(task.id === selectedTask.id) {
                 return {
                     ...task,
-                    items: task.items.filter((item) => (
-                        (item.year !== selectedtask.year) && (item.month !== selectedtask.month) && (item.day !== selectedtask.day)
+                    items: task.items.filter((item, index) => (
+                        index !== itemIndex
                     ))
                 };
             }
@@ -233,12 +247,47 @@ function removeCurrentTask(oldState, selectedtask) {
         return newState;
 
     } else {
-        const newState = oldState.filter((task) => (
-            task.id !== selectedtask.id
-        ));
-
+        const newState = removeAllTasks(oldState, selectedTask);
         return newState
     }
+}
+
+function removeFollowTasks(oldState, selectedTask) {
+    const task = oldState.find((task) => (
+        task.id === selectedTask.id
+    ));
+
+    const {items} = task;    
+    if(items.length>1) {
+        const itemIndex = items.findIndex((item) => (
+            (item.year === selectedTask.year) && (item.month === selectedTask.month) && (item.day === selectedTask.day)
+        ));
+
+        const newState = oldState.map((task) => {
+            if(task.id === selectedTask.id) {
+                return {
+                    ...task,
+                    items: task.items.filter((item, index) => (
+                        index < itemIndex
+                    ))
+                };
+            }
+            return task;
+        });
+
+        return newState;
+
+    } else {
+        const newState = removeAllTasks(oldState, selectedTask);
+        return newState
+    }
+}
+
+function removeAllTasks(oldState, selectedTask) {
+    const newState = oldState.filter((task) => (
+        task.id !== selectedTask.id
+    ));
+    return newState
 }
 
 

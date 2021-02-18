@@ -4,8 +4,15 @@ import RadioOption from './RadioOption';
 class Task extends React.Component {
     state = {
         _repeatValue: 'Does not repeat',
-        _openRadio: null,
+        _openRadio: false,
         clickedButton: '',
+    }
+
+    closeRadioOption = () => {
+        this.setState({
+            _openRadio: false,
+            clickedButton: ''
+        })
     }
 
     onEditIconClick = () => {
@@ -15,7 +22,32 @@ class Task extends React.Component {
         })
     }
 
-    onRemoveIconClick = () => {
+    onDeleteFormSubmit = (remove) => {
+        switch(remove) {
+            case 'thisTask': {
+                this.props.removeCurrentTask(this.props.task);
+                break;
+            }
+            case 'followTasks': {
+                this.props.removeFollowTasks(this.props.task);
+                break;
+            }
+            case 'allTasks': {
+                this.props.removeAllTasks(this.props.task)
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        //Close radio option
+        this.setState({
+            _openRadio: false,
+            clickedButton: ''
+        });
+    }
+
+    onDeleteIconClick = () => {
         const { repeat } = this.props.task;
         if (repeat === this.state._repeatValue) {
             this.props.removeCurrentTask(this.props.task);
@@ -40,7 +72,7 @@ class Task extends React.Component {
                         <span className="material-icons edit-button" onClick={this.onEditIconClick}>
                             edit
                         </span>
-                        <span className="material-icons delete-button" onClick={this.onRemoveIconClick}>
+                        <span className="material-icons delete-button" onClick={this.onDeleteIconClick}>
                             delete
                         </span>
                     </div>
@@ -48,7 +80,10 @@ class Task extends React.Component {
                 {
                     this.state._openRadio ? (
                         this.state.clickedButton === 'delete' ? (
-                            <RadioOption/>
+                            <RadioOption
+                                onFormSubmit={this.onDeleteFormSubmit}
+                                closeForm={this.closeRadioOption}
+                            />
                         ) : (
                             console.log('edit radio')
                         )

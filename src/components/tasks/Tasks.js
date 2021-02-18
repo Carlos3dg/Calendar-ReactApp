@@ -17,6 +17,8 @@ const Tasks = (props) => (
             taskList={props.taskList}
             saveTask={props.saveTask}
             removeCurrentTask={props.removeCurrentTask}
+            removeFollowTasks={props.removeFollowTasks}
+            removeAllTasks={props.removeAllTasks}
             taskStatus={props.taskStatus}
         />
     </aside>

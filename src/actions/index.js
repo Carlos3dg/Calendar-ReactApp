@@ -43,6 +43,20 @@ export function removeCurrentTask(task) {
     }
 }
 
+export function removeFollowTasks(task) {
+    return {
+        type: 'REMOVE_FOLLOW_TASKS',
+        task
+    }
+}
+
+export function removeAllTasks(task) {
+    return {
+        type: 'REMOVE_ALL_TASKS',
+        task
+    }
+}
+
 //FETCH TASK ACTIONS (used by an async action)
   //Actions used to get the tasks from the server and to know the actual status of that request
 export function fetchTaskPending(status) {

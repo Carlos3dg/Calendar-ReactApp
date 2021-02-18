@@ -56,7 +56,9 @@ class TaskList extends React.Component {
                                     day={this.props.day} 
                                     task={task} 
                                     key={task.id}
-                                    removeCurrentTask={this.props.removeCurrentTask} 
+                                    removeCurrentTask={this.props.removeCurrentTask}
+                                    removeFollowTasks={this.props.removeFollowTasks}
+                                    removeAllTasks={this.props.removeAllTasks} 
                                     dotLightColor={true} 
                                 />
                                 ) : (
@@ -65,7 +67,9 @@ class TaskList extends React.Component {
                                         year={this.props.year}
                                         day={this.props.day} 
                                         task={task}
-                                        removeCurrentTask={this.props.removeCurrentTask}  
+                                        removeCurrentTask={this.props.removeCurrentTask} 
+                                        removeFollowTasks={this.props.removeFollowTasks}
+                                        removeAllTasks={this.props.removeAllTasks}  
                                         key={task.id} 
                                     />
                                 )
