@@ -130,6 +130,69 @@ export function saveTaskRequest(newTask, fullMonth) {
     }
 }
 
+//DELETE TASK ACTIONS (used by an async action)
+  //Actions used to delete tasks and to know the status of a task when is being saved by the server
+export function removeTaskPending(status) {
+    return {
+        type: 'REMOVE_TASK_PENDING',
+        taskStatus: status
+    }
+}
+
+export function removeTaskSuccess(status) {
+    return {
+        type: 'REMOVE_TASK_SUCCESS',
+        taskStatus: status
+    }
+}
+
+export function removeTaskFailure(taskList) {
+    return {
+        type: 'REMOVE_TASK_FAILURE',
+        taskStatus: 'FAILURE',
+        taskList: taskList
+    }
+}
+
+export function removeCurrentTaskRequest(task) {
+    return async function(dispatch, getState) {
+        dispatch(removeTaskPending('PENDING'));
+
+        await dispatch(removeCurrentTask(task));
+        const newState = getState().taskList;
+        
+        apiClient.deleteTask(newState)
+            .then((resp) => dispatch(removeTaskSuccess(resp)))
+            .catch((resp) => dispatch(removeTaskFailure(resp)))
+    }
+}
+
+export function removeFollowTasksRequest(task) {
+    return async function(dispatch, getState) {
+        dispatch(removeTaskPending('PENDING'));
+
+        await dispatch(removeFollowTasks(task));
+        const newState = getState().taskList;
+        
+        apiClient.deleteTask(newState)
+            .then((resp) => dispatch(removeTaskSuccess(resp)))
+            .catch((resp) => dispatch(removeTaskFailure(resp)))
+    }
+}
+
+export function removeAllTasksRequest(task) {
+    return async function(dispatch, getState) {
+        dispatch(removeTaskPending('PENDING'));
+
+        await dispatch(removeAllTasks(task));
+        const newState = getState().taskList;
+        
+        apiClient.deleteTask(newState)
+            .then((resp) => dispatch(removeTaskSuccess(resp)))
+            .catch((resp) => dispatch(removeTaskFailure(resp)))
+    }
+}
+
 //FETCH TOKEN ACTIONS (used by an async action)
   //Actions used to get the token from local storage and compare it with the real token from the server and also know the actual status of that request
 export function fetchTokenPending(status) {

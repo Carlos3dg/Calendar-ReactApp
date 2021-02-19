@@ -44,8 +44,11 @@ export default function taskListReducer(
         }
         case 'REMOVE_ALL_TASKS': {
             const oldState = [...state];
-            console.log('all')
             const newState = removeAllTasks(oldState, action.task);
+            return newState;
+        }
+        case 'REMOVE_TASK_FAILURE': {
+            const newState = action.taskList;
             return newState;
         }
         default: {

@@ -2,9 +2,9 @@ import Tasks from '../tasks/Tasks';
 import {connect} from 'react-redux';
 import {saveTaskRequest} from '../../actions/index';
 import {
-    removeCurrentTask,
-    removeFollowTasks,
-    removeAllTasks,
+    removeCurrentTaskRequest,
+    removeFollowTasksRequest,
+    removeAllTasksRequest,
 } from '../../actions/index';
 
 const mapStateToTasksProps = (state) => {
@@ -47,15 +47,16 @@ const mapStateToTasksProps = (state) => {
         fullMonth: state.date.fullMonth,
         taskList: taskList,
         taskStatus: state.appStatus.saveTask,
+        removeStatus: state.appStatus.removeTask,
     }
 };
 
 const mapDispatchToTaskProps = (dispatch) => {
     return {
         saveTask: (task, fullMonth) => dispatch(saveTaskRequest(task, fullMonth)),
-        removeCurrentTask: (task) => dispatch(removeCurrentTask(task)),
-        removeFollowTasks: (task) => dispatch(removeFollowTasks(task)),
-        removeAllTasks: (task) => dispatch(removeAllTasks(task)),
+        removeCurrentTask: (task) => dispatch(removeCurrentTaskRequest(task)),
+        removeFollowTasks: (task) => dispatch(removeFollowTasksRequest(task)),
+        removeAllTasks: (task) => dispatch(removeAllTasksRequest(task)),
     }
 };
 

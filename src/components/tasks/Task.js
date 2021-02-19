@@ -43,8 +43,10 @@ class Task extends React.Component {
         //Close radio option
         this.setState({
             _openRadio: false,
-            clickedButton: ''
+            clickedButton: '',
         });
+        //To change the error message state to true in TaskList component
+        this.props.onDeleteSubmit();
     }
 
     onDeleteIconClick = () => {

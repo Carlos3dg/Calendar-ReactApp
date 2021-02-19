@@ -19,6 +19,7 @@ const Tasks = (props) => (
             removeCurrentTask={props.removeCurrentTask}
             removeFollowTasks={props.removeFollowTasks}
             removeAllTasks={props.removeAllTasks}
+            removeStatus={props.removeStatus}
             taskStatus={props.taskStatus}
         />
     </aside>

@@ -319,7 +319,7 @@ class TaskForm extends React.Component {
                                 /> 
                             : null
                         }
-                        <div className='repeat-select' className='input-container'>
+                        <div className='repeat-select input-container'>
                             <span className="material-icons input-icons">
                                     repeat
                             </span>

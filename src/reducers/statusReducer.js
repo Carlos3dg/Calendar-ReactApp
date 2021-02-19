@@ -2,6 +2,7 @@ export default function statusReducer(
     state={
         loadTasks: null,
         saveTask: null,
+        removeTask: null,
         loadToken: null,
         setToken: null,
     }, action) {
@@ -40,6 +41,24 @@ export default function statusReducer(
             return {
                 ...state,
                 saveTask: action.taskStatus
+            }
+        }
+        case 'REMOVE_TASK_PENDING': {
+            return {
+                ...state,
+                removeTask: action.taskStatus
+            }
+        }
+        case 'REMOVE_TASK_SUCCESS': {
+            return {
+                ...state,
+                removeTask: action.taskStatus
+            }
+        }
+        case 'REMOVE_TASK_FAILURE': {
+            return {
+                ...state,
+                removeTask: action.taskStatus
             }
         }
         case 'FETCH_TOKEN_PENDING': {
