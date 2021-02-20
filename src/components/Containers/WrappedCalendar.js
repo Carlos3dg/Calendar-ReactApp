@@ -10,7 +10,7 @@ const mapStateToCalendarProps = (state, ownProps) => {
             const items = task.items.filter((item) => (
                 (item.year === state.date.currentYear) && (item.month === state.date.currentMonth)
             ));
-            //console.log(items)
+
             if(items.length) {
                 const newTask = {
                     ...task,

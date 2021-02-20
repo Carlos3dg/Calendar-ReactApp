@@ -789,6 +789,54 @@ td.active-day {
     color: white;
 }
 
+/* EDIT - DELETE RADIO OPTIONS */
+.radio-option-container {
+    position: absolute;
+    width: 350px;
+    height: 230px;
+    top: calc(50% - (230px * 0.5));
+    left: calc(50% - (350px * 0.5));
+    background-color: white;
+    padding: 25px 15px 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.radio-option-header {
+    height: 25%;
+}
+
+.radio-option-container h3 {
+    font-size: 23px;
+}
+
+.radio-option-container label {
+    font-size: 18px;
+}
+
+.radio-option-container div:last-child input {
+    border: none;
+    font-size: 15px;
+}
+
+.radio-option-form {
+    height: 75%; 
+}
+
+.radio-option-form div {
+    margin-bottom: 5px;
+}
+
+.radio-option-form div:last-child {
+    margin-bottom: 0;
+}
+
+.radio-option-form .save-button {
+    margin-right: 5px;
+}
+
 /* TASK FORM */
 .popup-container {
     position: fixed;

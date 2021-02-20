@@ -104,7 +104,6 @@ class MonthTable extends React.Component {
                             {
                                 week.week.map((day, index) => {
                                     let taskList = []; //tasks in a day
-                                    let orderTasks = []
                                     //If we have tasks in the month, we proceed to get the tasks of the day that we are iterating
                                     if(this.props.tasksInMonth.length) {
                                         this.props.tasksInMonth.forEach((task) => {

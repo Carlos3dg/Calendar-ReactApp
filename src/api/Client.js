@@ -24,6 +24,20 @@ const apiClient = {
             }, 1500);
         })
     },
+
+    deleteTask: function(newState) {
+        const success = true;
+        return new Promise(function(resolve, reject) {
+            setTimeout(()=>{
+                if(!success) {
+                    return reject(JSON.parse(localStorage.taskList || '[]'));
+                }
+                localStorage.taskList = JSON.stringify(newState);
+                resolve('SUCCESS');
+            }, 1500);
+        })
+    },
+
     //Get the token at the beggining of the app mount
     loadToken: async function() {
         //See if we have the token save in storage ()
