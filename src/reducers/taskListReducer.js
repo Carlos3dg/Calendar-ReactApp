@@ -51,6 +51,36 @@ export default function taskListReducer(
             const newState = action.taskList;
             return newState;
         }
+        case 'EDIT_CURRENT_TASK': {
+            const olderState = [...state];
+            const {editedTask, oldTask} = action; //Both objects has an id, and are the same, but one has the edited values and the other one the values before edited.
+            delete editedTask.id; //Remove id from editedTask object, due to this object represent an item.
+
+            if(editedTask.repeat !== oldTask.repeat) {
+                //Remove the task (before being edited)
+                const oldState = removeCurrentTask(olderState, oldTask);
+
+                //Add the task (after being edited)
+                /*const {id} = editedTask;
+                const newTask = {};
+                for(let key in editedTask) {
+                    if(key !== 'id') {
+                        newTask[key] = editedTask[key];
+                    }
+                };*/
+                //Remember to delete this action object later (We need to refactor getNewTask)
+                const action = {
+                    fullMonth: getMonth(editedTask.month, editedTask.year)
+                };
+                const newId = uuidv4()
+                const newState = getNewTask(editedTask, oldState, action, newId);
+                return newState;
+
+            } else {
+                const newState = editCurrentTask(editedTask, oldTask, olderState);
+                return newState;
+            }
+        }
         default: {
             return state
         }
@@ -60,13 +90,13 @@ export default function taskListReducer(
 function getNewTask(newTask, oldState, action, id) {
     let newState = [...oldState];
 
-    switch(action.task.repeat) {
+    switch(newTask.repeat) {
         case 'Does not repeat': {
             const newState = addNewItem(newTask, id, oldState);
             return newState;
         }
         case 'Daily': {
-            const dayPosition = getIndexWeekAndDay(action.fullMonth, action.task.day);
+            const dayPosition = getIndexWeekAndDay(action.fullMonth, newTask.day);
             let days = []
             action.fullMonth.forEach((element, index) => {
                 if(index >= dayPosition.week) {
@@ -85,7 +115,7 @@ function getNewTask(newTask, oldState, action, id) {
             return newState;
         } 
         case 'Weekly': {
-            const dayPosition = getIndexWeekAndDay(action.fullMonth, action.task.day);
+            const dayPosition = getIndexWeekAndDay(action.fullMonth, newTask.day);
 
             let weeklyDay = newTask.day;
             let days = [];
@@ -144,7 +174,7 @@ function getNewTask(newTask, oldState, action, id) {
             return newState
         }
         case 'Weekends': {
-            const dayPosition = getIndexWeekAndDay(action.fullMonth, action.task.day);
+            const dayPosition = getIndexWeekAndDay(action.fullMonth, newTask.day);
             let days = [];
             action.fullMonth.forEach((element, index) => {
                 if(index >= dayPosition.week) {
@@ -165,7 +195,7 @@ function getNewTask(newTask, oldState, action, id) {
             return newState;
         }
         case 'Every weekday (Monday to Friday)': {
-            const dayPosition = getIndexWeekAndDay(action.fullMonth, action.task.day);
+            const dayPosition = getIndexWeekAndDay(action.fullMonth, newTask.day);
             let days = [];
             action.fullMonth.forEach(function(element, index) {
                 if(index >= dayPosition.week) {
@@ -293,4 +323,30 @@ function removeAllTasks(oldState, selectedTask) {
     return newState
 }
 
+function editCurrentTask(editedItem, oldTask, oldState) {
+    const task = oldState.find((task) => (
+        task.id === oldTask.id
+    ));
 
+    const itemIndex = task.items.findIndex((item) => (
+        (item.year === oldTask.year) && (item.month === oldTask.month) && (item.day === oldTask.day)
+    ));
+
+    const newState = oldState.map((task) => {
+        if(task.id === oldTask.id) {
+            return {
+                ...task,
+                items: task.items.map((item, index) => {
+                    if(index === itemIndex) {
+                        return Object.assign({}, item, editedItem)
+                    }
+                    return item;
+                })
+            }
+        }
+
+        return task;
+    });
+
+    return newState;
+}

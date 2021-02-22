@@ -1,11 +1,6 @@
 import Tasks from '../tasks/Tasks';
 import {connect} from 'react-redux';
 import {saveTaskRequest} from '../../actions/index';
-import {
-    removeCurrentTaskRequest,
-    removeFollowTasksRequest,
-    removeAllTasksRequest,
-} from '../../actions/index';
 
 const mapStateToTasksProps = (state) => {
     let taskList = []; //Variable to store the tasks inside the current day
@@ -54,9 +49,6 @@ const mapStateToTasksProps = (state) => {
 const mapDispatchToTaskProps = (dispatch) => {
     return {
         saveTask: (task, fullMonth) => dispatch(saveTaskRequest(task, fullMonth)),
-        removeCurrentTask: (task) => dispatch(removeCurrentTaskRequest(task)),
-        removeFollowTasks: (task) => dispatch(removeFollowTasksRequest(task)),
-        removeAllTasks: (task) => dispatch(removeAllTasksRequest(task)),
     }
 };
 

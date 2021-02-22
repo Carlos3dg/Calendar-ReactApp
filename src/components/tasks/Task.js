@@ -1,11 +1,21 @@
 import React from 'react';
 import RadioOption from './RadioOption';
+import TaskForm from './TaskForm';
+import {connect} from 'react-redux';
+import {
+    removeCurrentTaskRequest,
+    removeFollowTasksRequest,
+    removeAllTasksRequest,
+    editCurrentTask,
+} from '../../actions/index';
 
 class Task extends React.Component {
     state = {
         _repeatValue: 'Does not repeat',
         _openRadio: false,
         clickedButton: '',
+        _openTaskForm: false,
+        editedTask: null,
     }
 
     closeRadioOption = () => {
@@ -15,14 +25,57 @@ class Task extends React.Component {
         })
     }
 
-    onEditIconClick = () => {
+    closeTaskForm = () => {
         this.setState({
-            _openRadio: true,
-            clickedButton: 'edit',
+            _openTaskForm: false
         })
     }
 
-    onDeleteFormSubmit = (remove) => {
+    onEditOptionSubmit = (edit) => {
+        switch(edit) {
+            case 'thisTask': {
+                this.props.editCurrentTask(this.state.editedTask, this.props.task);
+                break;
+            }
+            case 'followTasks': {
+                console.log('follow Tasks')
+                break;
+            }
+            case 'allTasks': {
+                console.log('All Tasks')
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+        //Close radio option
+        this.setState({
+            _openRadio: false,
+            clickedButton: '',
+        });
+    }
+
+    onEditFormSubmit = (editedTask) => {
+        const { repeat } = this.props.task;
+        if (repeat === this.state._repeatValue) {
+            this.props.editCurrentTask(editedTask, this.props.task);
+        } else {
+            this.setState({
+                _openRadio: true,
+                clickedButton: 'edit',
+                editedTask,
+            });
+        }  
+    }
+
+    onEditIconClick = () => {
+        this.setState({
+            _openTaskForm: true,
+        })
+    }
+
+    onDeleteOptionSubmit = (remove) => {
         switch(remove) {
             case 'thisTask': {
                 this.props.removeCurrentTask(this.props.task);
@@ -83,12 +136,30 @@ class Task extends React.Component {
                     this.state._openRadio ? (
                         this.state.clickedButton === 'delete' ? (
                             <RadioOption
-                                onFormSubmit={this.onDeleteFormSubmit}
+                                onFormSubmit={this.onDeleteOptionSubmit}
                                 closeForm={this.closeRadioOption}
+                                action={this.state.clickedButton}
                             />
                         ) : (
-                            console.log('edit radio')
+                            <RadioOption
+                                onFormSubmit={this.onEditOptionSubmit}
+                                closeForm={this.closeRadioOption}
+                                action={this.state.clickedButton}
+                            />
                         )
+                    ) : null
+                }
+                {
+                    this.state._openTaskForm ? (
+                        <TaskForm
+                            month={this.props.month}
+                            year={this.props.year}
+                            day={this.props.day}
+                            fullMonth={this.props.fullMonth} 
+                            task={this.props.task}
+                            closeTaskForm={this.closeTaskForm}
+                            editTask={this.onEditFormSubmit}
+                        />
                     ) : null
                 }
             </div>
@@ -96,4 +167,26 @@ class Task extends React.Component {
     }
 }
 
-export default Task;
+const mapStateToTaskProps = (state, ownProps) => {
+    return {
+        ...ownProps,
+        day: state.date.currentDay,
+        month: state.date.currentMonth,
+        year: state.date.currentYear,
+        fullMonth: state.date.fullMonth,
+    }
+}
+
+const mapDispatchToTaskProps = (dispatch) => {
+    return {
+        removeCurrentTask: (task) => dispatch(removeCurrentTaskRequest(task)),
+        removeFollowTasks: (task) => dispatch(removeFollowTasksRequest(task)),
+        removeAllTasks: (task) => dispatch(removeAllTasksRequest(task)),
+        editCurrentTask: (editedTask, oldTask) => dispatch(editCurrentTask(editedTask, oldTask)),
+    }
+};
+
+export default connect(
+    mapStateToTaskProps,
+    mapDispatchToTaskProps,
+)(Task);

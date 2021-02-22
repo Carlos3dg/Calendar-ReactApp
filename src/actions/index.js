@@ -57,6 +57,14 @@ export function removeAllTasks(task) {
     }
 }
 
+export function editCurrentTask(editedTask, oldTask) {
+    return {
+        type: 'EDIT_CURRENT_TASK',
+        editedTask,
+        oldTask,
+    }
+}
+
 //FETCH TASK ACTIONS (used by an async action)
   //Actions used to get the tasks from the server and to know the actual status of that request
 export function fetchTaskPending(status) {

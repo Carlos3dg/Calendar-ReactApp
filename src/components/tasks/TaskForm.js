@@ -16,12 +16,13 @@ class TaskForm extends React.Component {
         fieldErrors: {},
         task: {
             title: !this.props.task ? '' : this.props.task.title, 
-            month: this.props.month,
-            day: this.props.day,
-            year: this.props.year,
+            month: !this.props.task ? this.props.month : this.props.task.month,
+            day: !this.props.task ? this.props.day : this.props.task.day,
+            year: !this.props.task ? this.props.year : this.props.task.year,
             startTime: !this.props.task ? {jsTime: '', time: '' } : this.props.task.startTime,
             endTime: !this.props.task ? {jsTime: '', time: ''} : this.props.task.endTime,
-            repeat: !this.props.task ? 'Does not repeat' : this.props.task.repeat
+            repeat: !this.props.task ? 'Does not repeat' : this.props.task.repeat,
+            id: !this.props.task ? (undefined) : (!this.props.task.id ? undefined : this.props.task.id)
         }
     }
 
@@ -44,10 +45,15 @@ class TaskForm extends React.Component {
         this.setState({fieldErrors});
         //If there's any error, stop the submition
         if(Object.keys(fieldErrors).length) return;
-        //If not then execute the addTask prop function
-        this.props.saveTask(this.state.task, this.props.fullMonth); //Call action
-        const {title, startTime, endTime, repeat} = task;
-        this.props.closeTaskForm({title, startTime, endTime, repeat});
+        //If not then execute the addTask or editTask prop function
+        if(!this.state.task.id) {
+            this.props.saveTask(this.state.task, this.props.fullMonth); //Call action
+            const {title, startTime, endTime, repeat} = task;
+            this.props.closeTaskForm({title, startTime, endTime, repeat});
+        } else {
+            this.props.editTask(this.state.task);
+            this.props.closeTaskForm();
+        }
     }
 
     validateForm = (task) => {
@@ -337,7 +343,7 @@ class TaskForm extends React.Component {
                             </div>
                         </div>
                         <div className='button-container'>
-                            <input type='submit' value='Save' className='taskform-input save-button button'/>
+                            <input type='submit' value={!this.state.task.id ? 'Save' : 'Edit'} className='taskform-input save-button button'/>
                             <input type='button' value='Cancel' className='taskform-input cancel-button button close-taskform'/>
                         </div>
                     </form>
