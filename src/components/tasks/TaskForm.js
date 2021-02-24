@@ -16,9 +16,9 @@ class TaskForm extends React.Component {
         fieldErrors: {},
         task: {
             title: !this.props.task ? '' : this.props.task.title, 
-            month: !this.props.task ? this.props.month : this.props.task.month,
-            day: !this.props.task ? this.props.day : this.props.task.day,
-            year: !this.props.task ? this.props.year : this.props.task.year,
+            month: this.props.month,
+            day: this.props.day,
+            year: this.props.year,
             startTime: !this.props.task ? {jsTime: '', time: '' } : this.props.task.startTime,
             endTime: !this.props.task ? {jsTime: '', time: ''} : this.props.task.endTime,
             repeat: !this.props.task ? 'Does not repeat' : this.props.task.repeat,
@@ -54,6 +54,8 @@ class TaskForm extends React.Component {
             this.props.editTask(this.state.task);
             this.props.closeTaskForm();
         }
+        //Update our main calendar with the selected dates values
+        this.props.jumpDate(task.month, task.year, task.day); //Call action
     }
 
     validateForm = (task) => {

@@ -7,6 +7,7 @@ const MonthHeader = (props) => {
             <DateSelect
                 month={props.month}
                 year={props.year}
+                day={props.day}
                 jumpDate={props.jumpDate}
                 mincalendar={props.mincalendar}
            />

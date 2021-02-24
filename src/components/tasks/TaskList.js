@@ -66,6 +66,8 @@ class TaskList extends React.Component {
     }
 
     render() {
+        //Variables used in TaskForm component
+        const {currentYear, currentMonth, currentDay, fullMonth} = this.props.smallCalendar
         return(
             <div className='task-list-container container-short'>
                 <div className='task-list-overflow'>
@@ -74,9 +76,6 @@ class TaskList extends React.Component {
                             //Determine if the task has a mod different from 0 to add a different dot color
                             index%2 !== 0 ? (
                                 <Task
-                                    month={this.props.month}
-                                    year={this.props.year}
-                                    day={this.props.day} 
                                     task={task} 
                                     key={task.id}
                                     onDeleteSubmit={this.onDeleteSubmit}
@@ -84,9 +83,6 @@ class TaskList extends React.Component {
                                 />
                             ) : (
                                     <Task
-                                        month={this.props.month}
-                                        year={this.props.year}
-                                        day={this.props.day}
                                         task={task}
                                         onDeleteSubmit={this.onDeleteSubmit}
                                         key={task.id}
@@ -105,12 +101,13 @@ class TaskList extends React.Component {
                 </div>
                 {
                     this.state.openTaskForm ? <TaskForm
-                                                month={this.props.month}
-                                                year={this.props.year}
-                                                day={this.props.day}
-                                                fullMonth={this.props.fullMonth}
+                                                month={currentMonth}
+                                                year={currentYear}
+                                                day={currentDay}
+                                                fullMonth={fullMonth}
                                                 closeTaskForm={this.closeTaskForm}
                                                 saveTask={this.props.saveTask}
+                                                jumpDate={this.props.jumpDate}
                                                 task= {this.state.task}
                                               /> : null
                 }
