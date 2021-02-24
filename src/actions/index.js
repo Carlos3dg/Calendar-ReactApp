@@ -12,17 +12,46 @@ export function nextMonth() {
     }
 }
 
-export function jumpDate(month, year) {
+export function jumpDate(month, year, day) {
     return {
         type: 'JUMP_DATE',
-        month: month,
-        year: year
+        month,
+        year,
+        day,
     }
 };
 
 export function selectDay(day) {
     return {
         type: 'SELECT_DAY',
+        day: day
+    }
+};
+//Actions only used for small calendar
+export function prevSmallMonth() {
+    return {
+        type: 'PREV_SMALL_MONTH'
+    }
+};
+
+export function nextSmallMonth() {
+    return {
+        type: 'NEXT_SMALL_MONTH'
+    }
+}
+
+export function jumpSmallDate(month, year, day) {
+    return {
+        type: 'JUMP_SMALL_DATE',
+        month,
+        year,
+        day,
+    }
+};
+
+export function selectSmallDay(day) {
+    return {
+        type: 'SELECT_SMALL_DAY',
         day: day
     }
 };
