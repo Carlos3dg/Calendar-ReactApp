@@ -49,13 +49,13 @@ class TaskForm extends React.Component {
         if(!this.state.task.id) {
             this.props.saveTask(this.state.task, this.props.fullMonth); //Call action
             const {title, startTime, endTime, repeat} = task;
+            //Update our main calendar with the selected dates values
+            this.props.jumpDate(task.month, task.year, task.day); //Call action
             this.props.closeTaskForm({title, startTime, endTime, repeat});
         } else {
             this.props.editTask(this.state.task);
             this.props.closeTaskForm();
         }
-        //Update our main calendar with the selected dates values
-        this.props.jumpDate(task.month, task.year, task.day); //Call action
     }
 
     validateForm = (task) => {

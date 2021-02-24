@@ -36,6 +36,8 @@ class Task extends React.Component {
         switch(edit) {
             case 'thisTask': {
                 this.props.editCurrentTask(this.state.editedTask, this.props.task);
+                //Update our main calendar with the selected dates values
+                this.props.jumpDate(this.props.month, this.props.year, this.props.day);
                 break;
             }
             case 'followTasks': {
@@ -160,7 +162,6 @@ class Task extends React.Component {
                             task={this.props.task}
                             closeTaskForm={this.closeTaskForm}
                             editTask={this.onEditFormSubmit}
-                            jumpDate={this.props.jumpDate}
                         />
                     ) : null
                 }
