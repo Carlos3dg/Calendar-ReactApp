@@ -41,7 +41,7 @@ function calendarReducer(
     state = {
         currentMonth: new Date().getMonth(),
         currentYear: new Date().getFullYear(),
-        currentDay: null,
+        currentDay: new Date().getDate(),
         fullMonth: null,    
     }, action) {
     switch(action.type) {

@@ -22,6 +22,7 @@ class TaskForm extends React.Component {
             startTime: !this.props.task ? {jsTime: '', time: '' } : this.props.task.startTime,
             endTime: !this.props.task ? {jsTime: '', time: ''} : this.props.task.endTime,
             repeat: !this.props.task ? 'Does not repeat' : this.props.task.repeat,
+            //Remember, when TaskForm is called from  TaskList, it could be with the task property equal to null or equal to an object with all the present properties here except id. And when it's called from Task, it receives a task property with id included.
             id: !this.props.task ? (undefined) : (!this.props.task.id ? undefined : this.props.task.id)
         }
     }
@@ -54,6 +55,9 @@ class TaskForm extends React.Component {
             this.props.closeTaskForm({title, startTime, endTime, repeat});
         } else {
             this.props.editTask(this.state.task);
+            if (this.props.task.repeat === 'Does not repeat') {
+                this.props.jumpDate(task.month, task.year, task.day);
+            } 
             this.props.closeTaskForm();
         }
     }

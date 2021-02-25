@@ -23,6 +23,7 @@ class Calendar extends React.Component {
                 <MonthTable
                     month={this.props.month}
                     year={this.props.year}
+                    day={this.props.day}
                     fullMonth={this.props.fullMonth}
                     tasksInMonth={this.props.tasksInMonth}
                     selectDay={this.props.selectDay}

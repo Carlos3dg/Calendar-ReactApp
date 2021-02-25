@@ -52,34 +52,10 @@ export default function taskListReducer(
             return newState;
         }
         case 'EDIT_CURRENT_TASK': {
-            const olderState = [...state];
-            const {editedTask, oldTask} = action; //Both objects has an id, and are the same, but one has the edited values and the other one the values before edited.
-            delete editedTask.id; //Remove id from editedTask object, due to this object represent an item.
-
-            if(editedTask.repeat !== oldTask.repeat) {
-                //Remove the task (before being edited)
-                const oldState = removeCurrentTask(olderState, oldTask);
-
-                //Add the task (after being edited)
-                /*const {id} = editedTask;
-                const newTask = {};
-                for(let key in editedTask) {
-                    if(key !== 'id') {
-                        newTask[key] = editedTask[key];
-                    }
-                };*/
-                //Remember to delete this action object later (We need to refactor getNewTask)
-                const action = {
-                    fullMonth: getMonth(editedTask.month, editedTask.year)
-                };
-                const newId = uuidv4()
-                const newState = getNewTask(editedTask, oldState, action, newId);
-                return newState;
-
-            } else {
-                const newState = editCurrentTask(editedTask, oldTask, olderState);
-                return newState;
-            }
+            return getEditedState(state, action, removeCurrentTask, editCurrentTask);
+        }
+        case 'EDIT_FOLLOW_TASKS': {
+            return getEditedState(state, action, removeFollowTasks, editFollowTasks);
         }
         default: {
             return state
@@ -323,7 +299,28 @@ function removeAllTasks(oldState, selectedTask) {
     return newState
 }
 
+function getEditedState(state, action, removeTask, editTask) {
+    const olderState = [...state];
+    const {editedTask, oldTask} = action; //Both objects has an id, and are the same, but one has the edited values and the other one the values before edited.
+    delete editedTask.id; //Remove id from editedTask object, due to this object represent an item.
+    if(editedTask.repeat !== oldTask.repeat) {
+        //Remove the task (before being edited)
+        const oldState = removeTask(olderState, oldTask);
+        //Remember to delete this action object later (We need to refactor getNewTask)
+        const newAction = {
+            fullMonth: getMonth(editedTask.month, editedTask.year)
+        }
+        const newId = uuidv4()
+        const newState = getNewTask(editedTask, oldState, newAction, newId);
+        return newState;
+    } else {
+        const newState = editTask(editedTask, oldTask, olderState);
+        return newState;
+    }
+}
+
 function editCurrentTask(editedItem, oldTask, oldState) {
+    console.log('edit current')
     const task = oldState.find((task) => (
         task.id === oldTask.id
     ));
@@ -343,6 +340,41 @@ function editCurrentTask(editedItem, oldTask, oldState) {
                     return item;
                 })
             }
+        }
+
+        return task;
+    });
+
+    return newState;
+}
+
+function editFollowTasks(editedItem, oldTask, oldState) {
+    //1.Find task that has been edited
+    const task = oldState.find((task) => (
+        task.id === oldTask.id
+    ));
+    //2.Find the Date position    
+    const itemIndex = task.items.findIndex((item) => (
+        (item.year === oldTask.year) && (item.month === oldTask.month) && (item.day === oldTask.day)
+    ));
+    //3.Create a new Task based on the edited one    
+    const action = {
+        fullMonth: getMonth(editedItem.month, editedItem.year) 
+    }    
+    const editedTask = getNewTask(editedItem, [], action, oldTask.id);
+
+    const length = task.items.length - itemIndex; //3.1 Get number of tasks that are followed (tasks that are going to be edited)
+    const editedItems = editedTask[0].items.slice(0, length); //3.2 From the new Task, get elements until that number
+
+    const newState = oldState.map((task) => {
+        if(task.id === oldTask.id) {
+            return {
+                ...task,
+                items: [
+                    ...task.items.slice(0, itemIndex), //Get tasks that were not edited
+                    ...editedItems // Get edited tasks
+                ]
+            };
         }
 
         return task;
