@@ -8,6 +8,7 @@ import {
     removeAllTasksRequest,
     editCurrentTask,
     editFollowTasks,
+    editAllTasks,
     jumpDate,
 } from '../../actions/index';
 
@@ -43,12 +44,12 @@ class Task extends React.Component {
             }
             case 'followTasks': {
                 this.props.editFollowTasks(this.state.editedTask, this.props.task);
-                //Update our main calendar with the selected dates values
                 this.props.jumpDate(this.props.month, this.props.year, this.props.day);
                 break;
             }
             case 'allTasks': {
-                console.log('All Tasks')
+                this.props.editAllTasks(this.state.editedTask, this.props.task);
+                this.props.jumpDate(this.props.month, this.props.year, this.props.day);
                 break;
             }
             default: {
@@ -193,6 +194,7 @@ const mapDispatchToTaskProps = (dispatch) => {
         removeAllTasks: (task) => dispatch(removeAllTasksRequest(task)),
         editCurrentTask: (editedTask, oldTask) => dispatch(editCurrentTask(editedTask, oldTask)),
         editFollowTasks: (editedTask, oldTask) => dispatch(editFollowTasks(editedTask, oldTask)),
+        editAllTasks: (editedTask, oldTask) => dispatch(editAllTasks(editedTask, oldTask)),
         jumpDate: (month, year, day)=>dispatch(jumpDate(month, year, day)),
     }
 };

@@ -102,6 +102,14 @@ export function editFollowTasks(editedTask, oldTask) {
     }
 }
 
+export function editAllTasks(editedTask, oldTask) {
+    return {
+        type: 'EDIT_ALL_TASKS',
+        editedTask,
+        oldTask,
+    }
+}
+
 //FETCH TASK ACTIONS (used by an async action)
   //Actions used to get the tasks from the server and to know the actual status of that request
 export function fetchTaskPending(status) {
