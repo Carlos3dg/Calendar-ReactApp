@@ -3,8 +3,9 @@ import MonthHeader from './MonthHeader';
 import MonthTable from './MonthTable';
 
 class Calendar extends React.Component {
+
     componentDidMount() {
-        this.props.jumpDate(this.props.month, this.props.year);
+        this.props.jumpDate(this.props.month, this.props.year, this.props.day);
     }
 
     render() {
@@ -13,6 +14,7 @@ class Calendar extends React.Component {
                 <MonthHeader
                     month={this.props.month}
                     year={this.props.year}
+                    day={this.props.day}
                     prevMonth={this.props.prevMonth}
                     nextMonth={this.props.nextMonth}
                     jumpDate={this.props.jumpDate}
@@ -21,6 +23,7 @@ class Calendar extends React.Component {
                 <MonthTable
                     month={this.props.month}
                     year={this.props.year}
+                    day={this.props.day}
                     fullMonth={this.props.fullMonth}
                     tasksInMonth={this.props.tasksInMonth}
                     selectDay={this.props.selectDay}

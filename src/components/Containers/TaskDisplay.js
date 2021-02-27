@@ -1,19 +1,18 @@
 import Tasks from '../tasks/Tasks';
 import {connect} from 'react-redux';
-import {saveTaskRequest} from '../../actions/index';
 import {
-    removeCurrentTaskRequest,
-    removeFollowTasksRequest,
-    removeAllTasksRequest,
+    saveTaskRequest,
+    jumpDate,
 } from '../../actions/index';
 
 const mapStateToTasksProps = (state) => {
     let taskList = []; //Variable to store the tasks inside the current day
 
+    const {currentYear, currentMonth, currentDay} = state.date.mainCalendar;
     state.taskList.forEach((task) => {
         //Get item task if the codition fullfil
         const item = task.items.find((item) => (
-            (item.year === state.date.currentYear) && (item.month === state.date.currentMonth) && (item.day === state.date.currentDay)
+            (item.year === currentYear) && (item.month === currentMonth) && (item.day === currentDay)
         ));
 
         if (item) {
@@ -41,22 +40,21 @@ const mapStateToTasksProps = (state) => {
     }
 
     return {
-        day: state.date.currentDay,
-        month: state.date.currentMonth,
-        year: state.date.currentYear,
-        fullMonth: state.date.fullMonth,
+        day: currentDay,
+        month: currentMonth,
+        year: currentYear,
+        smallCalendar: state.date.smallCalendar,
         taskList: taskList,
         taskStatus: state.appStatus.saveTask,
         removeStatus: state.appStatus.removeTask,
+        editStatus: state.appStatus.editTask,
     }
 };
 
 const mapDispatchToTaskProps = (dispatch) => {
     return {
         saveTask: (task, fullMonth) => dispatch(saveTaskRequest(task, fullMonth)),
-        removeCurrentTask: (task) => dispatch(removeCurrentTaskRequest(task)),
-        removeFollowTasks: (task) => dispatch(removeFollowTasksRequest(task)),
-        removeAllTasks: (task) => dispatch(removeAllTasksRequest(task)),
+        jumpDate: (month, year, day)=>dispatch(jumpDate(month, year, day)),
     }
 };
 

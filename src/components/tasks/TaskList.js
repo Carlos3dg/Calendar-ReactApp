@@ -16,7 +16,7 @@ class TaskList extends React.Component {
         errorMessage: {
             saveTask: 'Failed to save task: server is not working. Please save again or try it later.',
             removeTask: 'Failed to delete task: server is not working. Please delete again or try it later.',
-            editTask: 'Failed to update task: server is not working. Please update again or try it later.',
+            editTask: 'Failed to edit task: server is not working. Please edit again or try it later.',
         }
     }
     
@@ -64,8 +64,27 @@ class TaskList extends React.Component {
             }
         }); 
     }
-
+    //When a task is edited:
+    onEditSubmit = () => {
+        this.setState({
+            showErrorMessage: {
+                ...this.state.showErrorMessage,
+                editTask: true, //Show error just in case that the edit status fail
+            }
+        });
+    }
+    //When the errorWarning is closed inside TaskStatus component:
+    closeEditErrorWarning = () => {
+        this.setState({
+            showErrorMessage: {
+                ...this.state.showErrorMessage,
+                editTask: false, //Close error message to avoid show it.
+            }
+        }); 
+    }
     render() {
+        //Variables used in TaskForm component
+        const {currentYear, currentMonth, currentDay, fullMonth} = this.props.smallCalendar
         return(
             <div className='task-list-container container-short'>
                 <div className='task-list-overflow'>
@@ -74,27 +93,17 @@ class TaskList extends React.Component {
                             //Determine if the task has a mod different from 0 to add a different dot color
                             index%2 !== 0 ? (
                                 <Task
-                                    month={this.props.month}
-                                    year={this.props.year}
-                                    day={this.props.day} 
                                     task={task} 
                                     key={task.id}
-                                    removeCurrentTask={this.props.removeCurrentTask}
-                                    removeFollowTasks={this.props.removeFollowTasks}
-                                    removeAllTasks={this.props.removeAllTasks}
                                     onDeleteSubmit={this.onDeleteSubmit}
+                                    onEditSubmit={this.onEditSubmit}
                                     dotLightColor={true}
                                 />
                             ) : (
                                     <Task
-                                        month={this.props.month}
-                                        year={this.props.year}
-                                        day={this.props.day}
                                         task={task}
-                                        removeCurrentTask={this.props.removeCurrentTask}
-                                        removeFollowTasks={this.props.removeFollowTasks}
-                                        removeAllTasks={this.props.removeAllTasks}
                                         onDeleteSubmit={this.onDeleteSubmit}
+                                        onEditSubmit={this.onEditSubmit}
                                         key={task.id}
                                     />
                                 )
@@ -111,12 +120,13 @@ class TaskList extends React.Component {
                 </div>
                 {
                     this.state.openTaskForm ? <TaskForm
-                                                month={this.props.month}
-                                                year={this.props.year}
-                                                day={this.props.day}
-                                                fullMonth={this.props.fullMonth}
+                                                month={currentMonth}
+                                                year={currentYear}
+                                                day={currentDay}
+                                                fullMonth={fullMonth}
                                                 closeTaskForm={this.closeTaskForm}
                                                 saveTask={this.props.saveTask}
+                                                jumpDate={this.props.jumpDate}
                                                 task= {this.state.task}
                                               /> : null
                 }
@@ -134,6 +144,14 @@ class TaskList extends React.Component {
                     closeError={this.closeRemoveErrorWarning}
                     errorMessage={this.state.errorMessage.removeTask}
                     status={this.props.removeStatus}
+                />
+
+                {/* When task is edited */}
+                <TaskStatus
+                    showError={this.state.showErrorMessage.editTask}
+                    closeError={this.closeEditErrorWarning}
+                    errorMessage={this.state.errorMessage.editTask}
+                    status={this.props.editStatus}
                 />
             </div>
         );

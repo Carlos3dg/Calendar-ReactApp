@@ -31,7 +31,7 @@ class RadioOption extends React.Component {
                             close
                     </span>
                     <div className='radio-option-header'>
-                        <h3>Do you want to delete?</h3>
+                        <h3>Do you want to {this.props.action}?</h3>
                     </div>
                     <form className='radio-option-form' onSubmit={this.onFormSubmit}>
                         <div>
@@ -65,7 +65,7 @@ class RadioOption extends React.Component {
                             <label htmlFor="allTasks">All tasks</label>
                         </div>
                         <div className='button-container'>
-                            <input className='button save-button' type="submit" value='Delete'/>
+                            <input className='button save-button' type="submit" value={this.props.action === 'edit' ? 'Edit' : 'Delete'}/>
                             <input className='close-form button cancel-button' type="button" value='Cancel'/>
                         </div>
                     </form>

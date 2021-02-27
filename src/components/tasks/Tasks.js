@@ -10,16 +10,12 @@ const Tasks = (props) => (
             day={props.day}
         />
         <TaskList
-            month={props.month}
-            year={props.year}
-            day={props.day}
-            fullMonth={props.fullMonth}
+            smallCalendar={props.smallCalendar}
             taskList={props.taskList}
             saveTask={props.saveTask}
-            removeCurrentTask={props.removeCurrentTask}
-            removeFollowTasks={props.removeFollowTasks}
-            removeAllTasks={props.removeAllTasks}
+            jumpDate={props.jumpDate}
             removeStatus={props.removeStatus}
+            editStatus={props.editStatus}
             taskStatus={props.taskStatus}
         />
     </aside>

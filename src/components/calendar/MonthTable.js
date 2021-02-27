@@ -3,8 +3,15 @@ import MonthDayTask from './MonthDayTask';
 
 class MonthTable extends React.Component {
     state = {
-        selectedDay: null,
+        selectedDay: `${this.props.year}-${this.props.month}-${this.props.day}`,
     }
+
+    static getDerivedStateFromProps(nextProps) {
+        return {
+            selectedDay: `${nextProps.year}-${nextProps.month}-${nextProps.day}`,
+        }
+    }
+
     //Select a day in the month and change the state value according with that day
     onClickDay = (day) => {
         if(day) {
@@ -56,21 +63,6 @@ class MonthTable extends React.Component {
                 ]
             )
             
-        }
-    }
-
-    componentDidMount() {
-        const actualDay = this.getActualDay();
-        //Condition to open the mini calendar with the selected day active and not with the actual day as Calendar component does
-        if(!this.props.mincalendar) {
-            this.props.selectDay(this.props.date.getDate());
-            this.setState({
-                selectedDay: actualDay
-            });
-        } else {
-            this.setState({
-                selectedDay: `${this.props.year}-${this.props.month}-${this.props.selectedDay}`
-            })
         }
     }
 

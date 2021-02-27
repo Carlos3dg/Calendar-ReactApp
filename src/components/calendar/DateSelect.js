@@ -18,13 +18,13 @@ class DateSelect extends React.Component {
     onMonthChange = (e) => {
         const month = parseInt(e.target.value);
         this.setState({month: month});
-        this.props.jumpDate(month, this.state.year);
+        this.props.jumpDate(month, this.state.year, this.props.day);
     }
 
     onYearChange = (e) => {
         const year = parseInt(e.target.value);
         this.setState({year: year});
-        this.props.jumpDate(this.state.month, year);
+        this.props.jumpDate(this.state.month, year, this.props.day);
     }
 
     renderMonthSelect = () => {

@@ -21,7 +21,9 @@ class TaskForm extends React.Component {
             year: this.props.year,
             startTime: !this.props.task ? {jsTime: '', time: '' } : this.props.task.startTime,
             endTime: !this.props.task ? {jsTime: '', time: ''} : this.props.task.endTime,
-            repeat: !this.props.task ? 'Does not repeat' : this.props.task.repeat
+            repeat: !this.props.task ? 'Does not repeat' : this.props.task.repeat,
+            //Remember, when TaskForm is called from  TaskList, it could be with the task property equal to null or equal to an object with all the present properties here except id. And when it's called from Task, it receives a task property with id included.
+            id: !this.props.task ? (undefined) : (!this.props.task.id ? undefined : this.props.task.id)
         }
     }
 
@@ -44,10 +46,20 @@ class TaskForm extends React.Component {
         this.setState({fieldErrors});
         //If there's any error, stop the submition
         if(Object.keys(fieldErrors).length) return;
-        //If not then execute the addTask prop function
-        this.props.saveTask(this.state.task, this.props.fullMonth); //Call action
-        const {title, startTime, endTime, repeat} = task;
-        this.props.closeTaskForm({title, startTime, endTime, repeat});
+        //If not then execute the addTask or editTask prop function
+        if(!this.state.task.id) {
+            this.props.saveTask(this.state.task, this.props.fullMonth); //Call action
+            const {title, startTime, endTime, repeat} = task;
+            //Update our main calendar with the selected dates values
+            this.props.jumpDate(task.month, task.year, task.day); //Call action
+            this.props.closeTaskForm({title, startTime, endTime, repeat});
+        } else {
+            this.props.editTask(this.state.task);
+            if (this.props.task.repeat === 'Does not repeat') {
+                this.props.jumpDate(task.month, task.year, task.day);
+            } 
+            this.props.closeTaskForm();
+        }
     }
 
     validateForm = (task) => {
@@ -337,7 +349,7 @@ class TaskForm extends React.Component {
                             </div>
                         </div>
                         <div className='button-container'>
-                            <input type='submit' value='Save' className='taskform-input save-button button'/>
+                            <input type='submit' value={!this.state.task.id ? 'Save' : 'Edit'} className='taskform-input save-button button'/>
                             <input type='button' value='Cancel' className='taskform-input cancel-button button close-taskform'/>
                         </div>
                     </form>

@@ -12,17 +12,46 @@ export function nextMonth() {
     }
 }
 
-export function jumpDate(month, year) {
+export function jumpDate(month, year, day) {
     return {
         type: 'JUMP_DATE',
-        month: month,
-        year: year
+        month,
+        year,
+        day,
     }
 };
 
 export function selectDay(day) {
     return {
         type: 'SELECT_DAY',
+        day: day
+    }
+};
+//Actions only used for small calendar
+export function prevSmallMonth() {
+    return {
+        type: 'PREV_SMALL_MONTH'
+    }
+};
+
+export function nextSmallMonth() {
+    return {
+        type: 'NEXT_SMALL_MONTH'
+    }
+}
+
+export function jumpSmallDate(month, year, day) {
+    return {
+        type: 'JUMP_SMALL_DATE',
+        month,
+        year,
+        day,
+    }
+};
+
+export function selectSmallDay(day) {
+    return {
+        type: 'SELECT_SMALL_DAY',
         day: day
     }
 };
@@ -54,6 +83,30 @@ export function removeAllTasks(task) {
     return {
         type: 'REMOVE_ALL_TASKS',
         task
+    }
+}
+
+export function editCurrentTask(editedTask, oldTask) {
+    return {
+        type: 'EDIT_CURRENT_TASK',
+        editedTask,
+        oldTask,
+    }
+}
+
+export function editFollowTasks(editedTask, oldTask) {
+    return {
+        type: 'EDIT_FOLLOW_TASKS',
+        editedTask,
+        oldTask,
+    }
+}
+
+export function editAllTasks(editedTask, oldTask) {
+    return {
+        type: 'EDIT_ALL_TASKS',
+        editedTask,
+        oldTask,
     }
 }
 
@@ -190,6 +243,69 @@ export function removeAllTasksRequest(task) {
         apiClient.deleteTask(newState)
             .then((resp) => dispatch(removeTaskSuccess(resp)))
             .catch((resp) => dispatch(removeTaskFailure(resp)))
+    }
+}
+
+//EDIT TASK ACTIONS (used by an async action)
+  //Actions used to edit tasks and to know the status of a task when is being edited by the server
+  export function editTaskPending(status) {
+    return {
+        type: 'EDIT_TASK_PENDING',
+        taskStatus: status
+    }
+}
+
+export function editTaskSuccess(status) {
+    return {
+        type: 'EDIT_TASK_SUCCESS',
+        taskStatus: status
+    }
+}
+
+export function editTaskFailure(taskList) {
+    return {
+        type: 'EDIT_TASK_FAILURE',
+        taskStatus: 'FAILURE',
+        taskList: taskList
+    }
+}
+
+export function editCurrentTaskRequest(editedTask, oldTask) {
+    return async function(dispatch, getState) {
+        dispatch(editTaskPending('PENDING'));
+
+        await dispatch(editCurrentTask(editedTask, oldTask));
+        const newTask = getState().taskList;
+
+        apiClient.editTask(newTask)
+            .then((resp) => dispatch(editTaskSuccess(resp)))
+            .catch((resp) => dispatch(editTaskFailure(resp)))
+    }
+}
+
+export function editFollowTasksRequest(editedTask, oldTask) {
+    return async function(dispatch, getState) {
+        dispatch(editTaskPending('PENDING'));
+
+        await dispatch(editFollowTasks(editedTask, oldTask));
+        const newTask = getState().taskList;
+
+        apiClient.editTask(newTask)
+            .then((resp) => dispatch(editTaskSuccess(resp)))
+            .catch((resp) => dispatch(editTaskFailure(resp)))
+    }
+}
+
+export function editAllTasksRequest(editedTask, oldTask) {
+    return async function(dispatch, getState) {
+        dispatch(editTaskPending('PENDING'));
+
+        await dispatch(editAllTasks(editedTask, oldTask));
+        const newTask = getState().taskList;
+
+        apiClient.editTask(newTask)
+            .then((resp) => dispatch(editTaskSuccess(resp)))
+            .catch((resp) => dispatch(editTaskFailure(resp)))
     }
 }
 
