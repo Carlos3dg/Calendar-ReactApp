@@ -246,6 +246,69 @@ export function removeAllTasksRequest(task) {
     }
 }
 
+//EDIT TASK ACTIONS (used by an async action)
+  //Actions used to edit tasks and to know the status of a task when is being edited by the server
+  export function editTaskPending(status) {
+    return {
+        type: 'EDIT_TASK_PENDING',
+        taskStatus: status
+    }
+}
+
+export function editTaskSuccess(status) {
+    return {
+        type: 'EDIT_TASK_SUCCESS',
+        taskStatus: status
+    }
+}
+
+export function editTaskFailure(taskList) {
+    return {
+        type: 'EDIT_TASK_FAILURE',
+        taskStatus: 'FAILURE',
+        taskList: taskList
+    }
+}
+
+export function editCurrentTaskRequest(editedTask, oldTask) {
+    return async function(dispatch, getState) {
+        dispatch(editTaskPending('PENDING'));
+
+        await dispatch(editCurrentTask(editedTask, oldTask));
+        const newTask = getState().taskList;
+
+        apiClient.editTask(newTask)
+            .then((resp) => dispatch(editTaskSuccess(resp)))
+            .catch((resp) => dispatch(editTaskFailure(resp)))
+    }
+}
+
+export function editFollowTasksRequest(editedTask, oldTask) {
+    return async function(dispatch, getState) {
+        dispatch(editTaskPending('PENDING'));
+
+        await dispatch(editFollowTasks(editedTask, oldTask));
+        const newTask = getState().taskList;
+
+        apiClient.editTask(newTask)
+            .then((resp) => dispatch(editTaskSuccess(resp)))
+            .catch((resp) => dispatch(editTaskFailure(resp)))
+    }
+}
+
+export function editAllTasksRequest(editedTask, oldTask) {
+    return async function(dispatch, getState) {
+        dispatch(editTaskPending('PENDING'));
+
+        await dispatch(editAllTasks(editedTask, oldTask));
+        const newTask = getState().taskList;
+
+        apiClient.editTask(newTask)
+            .then((resp) => dispatch(editTaskSuccess(resp)))
+            .catch((resp) => dispatch(editTaskFailure(resp)))
+    }
+}
+
 //FETCH TOKEN ACTIONS (used by an async action)
   //Actions used to get the token from local storage and compare it with the real token from the server and also know the actual status of that request
 export function fetchTokenPending(status) {

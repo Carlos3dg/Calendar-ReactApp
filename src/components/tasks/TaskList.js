@@ -16,7 +16,7 @@ class TaskList extends React.Component {
         errorMessage: {
             saveTask: 'Failed to save task: server is not working. Please save again or try it later.',
             removeTask: 'Failed to delete task: server is not working. Please delete again or try it later.',
-            editTask: 'Failed to update task: server is not working. Please update again or try it later.',
+            editTask: 'Failed to edit task: server is not working. Please edit again or try it later.',
         }
     }
     
@@ -64,7 +64,24 @@ class TaskList extends React.Component {
             }
         }); 
     }
-
+    //When a task is edited:
+    onEditSubmit = () => {
+        this.setState({
+            showErrorMessage: {
+                ...this.state.showErrorMessage,
+                editTask: true, //Show error just in case that the edit status fail
+            }
+        });
+    }
+    //When the errorWarning is closed inside TaskStatus component:
+    closeEditErrorWarning = () => {
+        this.setState({
+            showErrorMessage: {
+                ...this.state.showErrorMessage,
+                editTask: false, //Close error message to avoid show it.
+            }
+        }); 
+    }
     render() {
         //Variables used in TaskForm component
         const {currentYear, currentMonth, currentDay, fullMonth} = this.props.smallCalendar
@@ -79,12 +96,14 @@ class TaskList extends React.Component {
                                     task={task} 
                                     key={task.id}
                                     onDeleteSubmit={this.onDeleteSubmit}
+                                    onEditSubmit={this.onEditSubmit}
                                     dotLightColor={true}
                                 />
                             ) : (
                                     <Task
                                         task={task}
                                         onDeleteSubmit={this.onDeleteSubmit}
+                                        onEditSubmit={this.onEditSubmit}
                                         key={task.id}
                                     />
                                 )
@@ -125,6 +144,14 @@ class TaskList extends React.Component {
                     closeError={this.closeRemoveErrorWarning}
                     errorMessage={this.state.errorMessage.removeTask}
                     status={this.props.removeStatus}
+                />
+
+                {/* When task is edited */}
+                <TaskStatus
+                    showError={this.state.showErrorMessage.editTask}
+                    closeError={this.closeEditErrorWarning}
+                    errorMessage={this.state.errorMessage.editTask}
+                    status={this.props.editStatus}
                 />
             </div>
         );

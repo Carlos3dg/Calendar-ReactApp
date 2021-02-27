@@ -6,9 +6,9 @@ import {
     removeCurrentTaskRequest,
     removeFollowTasksRequest,
     removeAllTasksRequest,
-    editCurrentTask,
-    editFollowTasks,
-    editAllTasks,
+    editCurrentTaskRequest,
+    editFollowTasksRequest,
+    editAllTasksRequest,
     jumpDate,
 } from '../../actions/index';
 
@@ -61,6 +61,8 @@ class Task extends React.Component {
             _openRadio: false,
             clickedButton: '',
         });
+        //To change the error message state to true in TaskList component
+        this.props.onEditSubmit();
     }
 
     onEditFormSubmit = (editedTask) => {
@@ -192,9 +194,9 @@ const mapDispatchToTaskProps = (dispatch) => {
         removeCurrentTask: (task) => dispatch(removeCurrentTaskRequest(task)),
         removeFollowTasks: (task) => dispatch(removeFollowTasksRequest(task)),
         removeAllTasks: (task) => dispatch(removeAllTasksRequest(task)),
-        editCurrentTask: (editedTask, oldTask) => dispatch(editCurrentTask(editedTask, oldTask)),
-        editFollowTasks: (editedTask, oldTask) => dispatch(editFollowTasks(editedTask, oldTask)),
-        editAllTasks: (editedTask, oldTask) => dispatch(editAllTasks(editedTask, oldTask)),
+        editCurrentTask: (editedTask, oldTask) => dispatch(editCurrentTaskRequest(editedTask, oldTask)),
+        editFollowTasks: (editedTask, oldTask) => dispatch(editFollowTasksRequest(editedTask, oldTask)),
+        editAllTasks: (editedTask, oldTask) => dispatch(editAllTasksRequest(editedTask, oldTask)),
         jumpDate: (month, year, day)=>dispatch(jumpDate(month, year, day)),
     }
 };

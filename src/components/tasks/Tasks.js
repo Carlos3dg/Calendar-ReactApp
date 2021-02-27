@@ -15,6 +15,7 @@ const Tasks = (props) => (
             saveTask={props.saveTask}
             jumpDate={props.jumpDate}
             removeStatus={props.removeStatus}
+            editStatus={props.editStatus}
             taskStatus={props.taskStatus}
         />
     </aside>

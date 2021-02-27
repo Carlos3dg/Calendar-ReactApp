@@ -60,6 +60,10 @@ export default function taskListReducer(
         case 'EDIT_ALL_TASKS': {
             return getEditedState(state, action, removeAllTasks, editAllTasks);
         }
+        case 'EDIT_TASK_FAILURE': {
+            const newState = action.taskList;
+            return newState;
+        }
         default: {
             return state
         }

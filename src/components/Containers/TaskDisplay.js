@@ -47,6 +47,7 @@ const mapStateToTasksProps = (state) => {
         taskList: taskList,
         taskStatus: state.appStatus.saveTask,
         removeStatus: state.appStatus.removeTask,
+        editStatus: state.appStatus.editTask,
     }
 };
 
