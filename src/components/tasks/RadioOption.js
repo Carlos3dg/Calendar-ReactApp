@@ -2,6 +2,11 @@ import React from 'react';
 
 class RadioOption extends React.Component {
     state = {
+        radioValues: {
+            option1: 'thisTask',
+            option2: 'followTasks',
+            option3: 'allTasks',
+        },
         selectedOption: 'thisTask',
     }
 
@@ -23,7 +28,15 @@ class RadioOption extends React.Component {
         });
     }
 
+    onClickCustomRadio = (e) => {
+        const selectedOption = e.target.getAttribute('name');
+        this.setState({
+            selectedOption
+        });
+    }
+
     render() {
+        const {option1, option2, option3} = this.state.radioValues;
         return (
             <div className='close-form popup-container' onClick={this.closeForm}>
                 <div className='radio-option-container'>
@@ -34,35 +47,53 @@ class RadioOption extends React.Component {
                         <h3>Do you want to {this.props.action}?</h3>
                     </div>
                     <form className='radio-option-form' onSubmit={this.onFormSubmit}>
-                        <div>
+                        <div className='input-radio-container'>           
                             <input 
                                 type="radio" 
-                                id='thisTask' 
-                                value='thisTask' 
-                                checked={this.state.selectedOption === 'thisTask'}
+                                id={option1} 
+                                value={option1}
+                                checked={this.state.selectedOption === option1}
                                 onChange={this.onChangeRadio}
+                                className='input-radio'
                             />
-                            <label htmlFor="thisTask">This task</label>
+                            <span 
+                                className='custom-radio' 
+                                name={option1} 
+                                onClick={this.onClickCustomRadio}>
+                            </span>
+                            <label htmlFor={option1}>This task</label>
                         </div>
-                        <div>
+                        <div className='input-radio-container'>
                             <input 
                                 type="radio" 
-                                id='followTasks'
-                                value='followTasks' 
-                                checked={this.state.selectedOption==='followTasks'}
+                                id={option2}
+                                value={option2}
+                                checked={this.state.selectedOption===option2}
                                 onChange={this.onChangeRadio}
+                                className='input-radio'
                             />
-                            <label htmlFor="followTasks">This and following tasks</label>
+                            <span 
+                                className='custom-radio' 
+                                name={option2} 
+                                onClick={this.onClickCustomRadio}>
+                            </span>
+                            <label htmlFor={option2}>This and following tasks</label>
                         </div>
-                        <div>
+                        <div className='input-radio-container'>
                             <input 
                                 type="radio" 
-                                id='allTasks'
-                                value='allTasks' 
-                                checked={this.state.selectedOption==='allTasks'}
+                                id={option3}
+                                value={option3}
+                                checked={this.state.selectedOption===option3}
                                 onChange={this.onChangeRadio}
+                                className='input-radio'
                             />
-                            <label htmlFor="allTasks">All tasks</label>
+                            <span 
+                                className='custom-radio' 
+                                name={option3} 
+                                onClick={this.onClickCustomRadio}>
+                            </span>
+                            <label htmlFor={option3}>All tasks</label>
                         </div>
                         <div className='button-container'>
                             <input className='button save-button' type="submit" value={this.props.action === 'edit' ? 'Edit' : 'Delete'}/>

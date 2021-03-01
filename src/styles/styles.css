@@ -826,7 +826,52 @@ td.active-day {
 }
 
 .radio-option-form div {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+}
+
+.input-radio-container {
+    cursor: pointer;
+    display: flex;
+}
+
+.custom-radio {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--mediumGray);
+    border-radius: 100%;
+    margin-right: 10px;
+}
+
+.custom-radio::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: var(--alphaNeonBlue);
+    transform: scale(0);
+    transition: all .2s ease-in;
+}
+
+.input-radio-container:hover .custom-radio::after {
+    transform: scale(3.5);
+}
+
+.input-radio:checked ~ .custom-radio {
+    border-color: var(--neonBlue);
+}
+
+input[type='radio']:checked ~ .custom-radio::after {
+    background-color: var(--neonBlue);
+    transform: scale(1);
+    transition: all .2s cubic-bezier(.35,.9,.4,.9);
+}
+
+.input-radio {
+    display: none;
 }
 
 .radio-option-form div:last-child {
