@@ -1,6 +1,3 @@
-/* FONTS */
-@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;600&display=swap');
-
 /* RESET BROWSER STYLE */
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, 
@@ -74,6 +71,7 @@ html, body {
     --hardGray: #676767;
     --blue: #02a7fa;
     --lightblue: #00c4cc;
+    --headerHeight: 70px
 } 
 
 .container {
@@ -158,7 +156,7 @@ span.close-icon {
 /* HEADER */
 header {
     width: 100%;
-    height: 70px;
+    height: var(--headerHeight);
     text-align: center;
     padding: 0 2.5%; /*Padding equal to the main margin container*/
     display: flex;
@@ -183,7 +181,7 @@ header {
 }
 
 header h2 {
-    line-height: 70px;
+    line-height: var(--headerHeight);
 }
 
 .container-log-button {
@@ -197,7 +195,7 @@ header h2 {
     width: 100%;
     display: inline-block;
     position: absolute;
-    top: calc((70px - 2em)/2);
+    top: calc((var(--headerHeight) - 2em)/2);
     left: 0;
     line-height: 2em;
     color: var(--neonBlue);
@@ -227,10 +225,68 @@ header h2 {
     color: white;
 }
 
+.menu-icon-container {
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    right: 0;
+    top: calc((100% - 28px)/2);
+    cursor: pointer;
+}
+
+.menu-icon-container span {
+    font-size: 28px;
+    color: white;
+}
+
+/* SIDE BAR ACCOUNT */
+.sidebar-container {
+    width: 170px;
+    position: absolute;
+    right: 0;
+    top: 30px;
+    background: white;
+    box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.4);
+    padding: 0 8px;
+    border-radius: 6px;
+}
+
+.sidebar-header, .sidebar-option {
+    border-bottom: 1px solid var(--neonBlue);
+    text-align: center;
+}
+
+.sidebar-header {
+    padding: 8px 0;
+}
+
+.sidebar-header span {
+    font-size: 25px;
+    width: 35px;
+    height: 35px;
+    margin: 0 auto 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: var(--neonBlue);
+    border-radius: 35px;
+}
+
+.sidebar-option-container .sidebar-option:last-child {
+    border-bottom: none;
+}
+
+.sidebar-option a {
+    display: inline-block;
+    padding: 8px 0;
+    width: 100%;
+    color: var(--neonBlue);
+}
 
 /* SPINNER */
 .spinner {
-    height: calc(100vh - 70px);
+    height: calc(100vh - var(--headerHeight));
     display: flex;
     align-items: center;
     margin: 0 auto;
@@ -403,7 +459,7 @@ header h2 {
 .landing-container {
     max-width: 1700px;
     width: 95%;
-    height: calc(100vh - 70px);
+    height: calc(100vh - var(--headerHeight));
     max-height: 900px;
     margin: 0 auto;
     display: flex;
@@ -456,7 +512,7 @@ header h2 {
   /* LOGIN CONTAINER */
   .login-container {
       width: 100%;
-      height: calc(100vh - 70px);
+      height: calc(100vh - var(--headerHeight));
       padding-top: 35px;
   }
 
@@ -464,7 +520,7 @@ header h2 {
       width: 390px;
       height: 280px;
       margin: 0 auto;
-      margin-bottom: calc(100vh - 70px - 280px - 35px); /* all height screen - header - login height - padding */
+      margin-bottom: calc(100vh - var(--headerHeight) - 280px - 35px); /* all height screen - header - login height - padding */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -521,24 +577,10 @@ header h2 {
 .main-container {
     max-width: 1700px;
     width: 95%;
-    height: calc(100vh - 70px - 70px);
+    height: calc(100vh - var(--headerHeight) - 70px); /* screen heigh - header height - margin-top-bottom */
     margin: 35px auto;
     display: flex;
     max-height: 829px;
-}
-@media (max-width: 1020px) {
-    header {
-        padding: 0 35px;
-    }
-
-    .landing-container {
-        width: calc(100% - (35px*2));
-    }
-
-    .main-container {
-        width: calc(100% - (35px*2));
-        margin: 35px 35px;
- }
 }
 
 /* CALENDAR CONTAINER */
@@ -787,6 +829,23 @@ td.active-day {
 
 .button-task span {
     color: white;
+}
+
+/* Plus icon button */
+.task-button-container .plus-icon-task-button {
+    font-size: 25px;
+    color: white;
+    background-color: var(--neonBlue);
+    padding: 5px;
+    border-radius: 100%;
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease-out 0s; 
+    cursor: pointer;
+    display: none;
+}
+
+.task-button-container .plus-icon-task-button:hover {
+    transform: translateY(-3px);
 }
 
 /* EDIT - DELETE RADIO OPTIONS */
@@ -1102,4 +1161,159 @@ div.mincalendar-container {
 
 .cancel-button {
     background-color: var(--lightblue);
+}
+
+/* Most used laptop resolution */
+@media screen and (max-width: 1366px) {
+    .edit-delete-buttons span {
+        font-size: 16px;
+    }
+
+    /* Smaller screens in landscape mode */
+    @media screen and (max-width: 1280px) {
+        /* FONT SIZES */
+        .container {
+            font-size: 0.95rem;
+        }
+        
+        .container-medium {
+            font-size: 0.85rem;
+        }
+        
+        .container-short {
+            font-size: 0.80rem;
+        }
+
+        /* CALENDAR AND TASK CONTAINERS */
+        .calendar-container {
+            width: 74%;
+        }
+        
+        .task-container {
+            width: 26%;
+        }
+
+        /* EDIT AND DELETE BUTTONS */
+        .edit-delete-buttons span {
+            font-size: 13px;
+        }
+    }
+
+    @media screen and (max-width: 1024px) {
+        /* FONT SIZES */
+        .container {
+            font-size: 1.05rem;
+        }
+        
+        .container-medium {
+            font-size: 0.95rem;
+        }
+        
+        .container-short {
+            font-size: 0.90rem;
+        }
+    
+        /* margin and padding in the both sides of the web page */
+        header {
+            padding: 0 35px;
+        }
+    
+        .landing-container {
+            width: calc(100% - (35px*2));
+        }
+    
+        .main-container {
+            width: calc(100% - (35px*2));
+            margin: 35px 35px;
+        }
+
+        .button-task {
+            display: none;
+        }
+    
+        .task-button-container {
+            position: fixed;
+            margin: 0;
+            width: auto;
+            height: auto;
+            right: 35px;
+            bottom: 35px;
+        }
+
+        .task-button-container .plus-icon-task-button {
+            display: block;
+        }
+    }
+
+    @media screen and (max-width: 1024px) and (orientation: landscape) {
+        /* LANDING TEXT */
+        .landing-entry-text-container>div {
+            width: 90%;
+        }
+            
+        /* CALENDAR AND TASK CONTAINERS */
+        .calendar-container {
+            width: 70%;
+        }
+            
+        .task-container {
+            width: 30%;
+        }
+            
+        /* TASKS DISPLAY IN CALENDAR */
+        .day-task-container {
+            width: calc(100% - 2px - 2px);
+            height: 1.1em;
+        }
+            
+        .day-task-title {
+            display: none;
+        }
+    }
+
+    @media screen and (max-width: 965px) {
+        .home-link img {
+            height: 52%;
+        }
+
+        /* LOGIN FONT SIZES */
+        .login-form {
+            width: 330px;
+        }
+
+        .title-login-form {
+            font-size: 33px;
+        }
+
+        .login-input-container > span:first-child {
+            font-size: 17px;
+        }
+
+        .login-input-container input {
+            font-size: 17px;
+        }
+    }
+
+    @media screen and (max-width: 896px) and (orientation: landscape) {
+        :root {
+            --headerHeight: 55px;
+        }
+
+        .main-container {
+            width: calc(100% - (10px*2));
+            margin: 10px 10px;
+            height: calc(100vh - var(--headerHeight) - 20px);
+        }
+
+        .container-log-button {
+            width: 12%;
+        }
+    }
+}
+
+/* Most used tablets resolutions in portrait mode */
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+    body {
+        background: #171D1C;
+    }
 }
