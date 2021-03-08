@@ -1,14 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SideBarAccount from './SideBarAccount'
+import {matchMedia} from '../../helpers/mediaQueries';
 import logo from '../../img/app-icon/icon-70x70.png';
-
-function matchMedia(e) {
-    if (e.matches) {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 class Header extends React.Component {
     mediaQuery = window.matchMedia('(max-width: 896px)');
@@ -53,14 +47,15 @@ class Header extends React.Component {
                                             Log out
                                         </Link>
                                     ) : (
-                                            <div className='menu-icon-container' onClick={this.onClickMenuIcon}>
-                                                <span className="material-icons">
+                                            <div className='menu-icon-container'>
+                                                <span className="material-icons menu-icon" onClick={this.onClickMenuIcon}>
                                                     menu
                                                 </span>
                                                 {
                                                     this.state.openSideBar ? (
                                                         <SideBarAccount
                                                             user={this.props.user}
+                                                            closeSideBar={this.onClickMenuIcon}
                                                         />
                                                     ) : (
                                                         null
@@ -86,30 +81,5 @@ class Header extends React.Component {
         )
     }
 };
-
-const SideBarAccount = (props) => {
-    const firstLetter = props.user.charAt(0);
-    return (
-        <div className='sidebar-container'>
-            <div className='sidebar-header'>
-                <span>
-                    {firstLetter.toUpperCase()}
-                </span>
-                <p>{props.user}</p>
-            </div>
-            <div className='sidebar-option-container'>
-                <ul>
-                    <li className='sidebar-option'>
-                        <Link
-                            to='/logout'
-                        >
-                            Log out
-                        </Link>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    )
-}
 
 export default Header;

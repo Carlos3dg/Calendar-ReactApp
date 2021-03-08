@@ -1,6 +1,7 @@
 import React from 'react';
 import RadioOption from './RadioOption';
 import TaskForm from './TaskForm';
+import { matchMedia } from '../../helpers/mediaQueries';
 import {connect} from 'react-redux';
 import {
     removeCurrentTaskRequest,
@@ -13,12 +14,35 @@ import {
 } from '../../actions/index';
 
 class Task extends React.Component {
+    mediaQuery = window.matchMedia('(max-width: 896px) and (orientation: landscape)');
+    _isMounted = false;
     state = {
         _repeatValue: 'Does not repeat',
         _openRadio: false,
         clickedButton: '',
         _openTaskForm: false,
         editedTask: null,
+        mobileTaskForm: {
+            classToOpen: 'open-mobile-form',
+            validateMedia: matchMedia(this.mediaQuery),
+        }
+    }
+
+    onChangeMedia = (e) => {
+        const mobileTaskForm = Object.assign({}, this.state.mobileTaskForm);
+        mobileTaskForm.validateMedia = matchMedia(e);
+        if(this._isMounted) {
+            this.setState({
+                mobileTaskForm,
+            })
+        }
+    }
+
+    onTaskContainerClick = (e) => {
+        const {classToOpen, validateMedia} = this.state.mobileTaskForm;
+        if(validateMedia && e.target.className.match(classToOpen)) {
+            this.onEditIconClick();
+        }
     }
 
     closeRadioOption = () => {
@@ -123,15 +147,25 @@ class Task extends React.Component {
         }
     }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
+    componentDidMount() {
+        this._isMounted = true;
+        this.mediaQuery.addEventListener('change', this.onChangeMedia);
+    }
+
     render() {
+        const {classToOpen, validateMedia} = this.state.mobileTaskForm;
         return (
-            <div className='task-description-container'>
-                <div className='dot-container'>
+            <div className={`task-description-container ${classToOpen}`} onClick={this.onTaskContainerClick}>
+                <div className={`dot-container ${classToOpen}`}>
                     <span className='dot-icon' style={this.props.dotLightColor ? { backgroundColor: 'var(--lightblue)' } : null}></span>
                 </div>
-                <div className='task-details-container'>
-                    <h5>{this.props.task.title}</h5>
-                    <span>{this.props.task.startTime.time} - {this.props.task.endTime.time}</span>
+                <div className={`task-details-container ${classToOpen}`}>
+                    <h5 className={classToOpen}>{this.props.task.title}</h5>
+                    <span className={classToOpen}>{this.props.task.startTime.time} - {this.props.task.endTime.time}</span>
                     <div className="edit-delete-buttons">
                         <span className="material-icons edit-button" onClick={this.onEditIconClick}>
                             edit
@@ -169,6 +203,8 @@ class Task extends React.Component {
                             closeTaskForm={this.closeTaskForm}
                             editTask={this.onEditFormSubmit}
                             jumpDate={this.props.jumpDate}
+                            onDeleteClick={this.onDeleteIconClick}
+                            mobileTaskForm={validateMedia}
                         />
                     ) : null
                 }
