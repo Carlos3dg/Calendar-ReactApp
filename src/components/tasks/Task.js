@@ -14,7 +14,7 @@ import {
 } from '../../actions/index';
 
 class Task extends React.Component {
-    mediaQuery = window.matchMedia('(max-width: 896px) and (orientation: landscape)');
+    mediaQuery = window.matchMedia('(max-width: 896px)');
     _isMounted = false;
     state = {
         _repeatValue: 'Does not repeat',
