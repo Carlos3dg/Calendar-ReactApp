@@ -23,6 +23,7 @@ const SideBarAccount = (props) => {
                         <li className='sidebar-option'>
                             <Link
                                 to='/logout'
+                                className='close-sidebar'
                             >
                                 Log out
                             </Link>

@@ -1416,6 +1416,83 @@ div.mincalendar-container {
             bottom: auto;
         }
     }
+
+    @media screen and (max-width: 812px) {
+        /* FONT SIZES */
+        .container {
+            font-size: 1.20rem;
+        }
+        
+        .container-medium {
+            font-size: 1.10rem;
+        }
+        
+        .container-short {
+            font-size: 1.05rem;
+        }
+
+        /* HEADER MONTH TABLE PADDING */
+        .calendar-table th {
+            padding: 8px 0;
+        }
+    }
+
+    @media screen and (max-width: 812px) and (orientation: landscape) {
+        /* CALENDAR AND TASK CONTAINERS */
+        .calendar-container {
+            width: 60%;
+        }
+            
+        .task-container {
+            width: 40%;
+        }
+
+        .arrow-month-container {
+            width: 12%;
+        }
+
+        .month-arrow-icon {
+            font-size: 1.9em;
+        }
+
+        /* STYLE TO HAVE A EXTENDED BACKGROUND COLOR IN "TODAY" */
+        .day-num {
+            width: 30%;
+            margin-right: 70%;
+        }
+
+        /* TO HAVE A BACKGROUND TASK LESS HIGH IN CALENDAR */
+        .day-task-container {
+            height: 0.5em;
+        }
+
+        .task-details-container span {
+            font-size: 12px;
+        }
+    }
+
+    @media screen and (max-width: 667px) and (orientation: landscape) {
+        .calendar-header {
+            height: 12%;
+        }
+
+        .calendar-table {
+            height: 88%
+        }
+
+        /* FONT SIZES */
+        .container {
+            font-size: 1.25rem;
+        }
+        
+        .container-medium {
+            font-size: 1.15rem;
+        }
+        
+        .container-short {
+            font-size: 1.10rem;
+        }
+    }
 }
 
 /* Most used tablets resolutions in portrait mode */
