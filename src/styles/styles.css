@@ -1329,6 +1329,10 @@ div.mincalendar-container {
 
     @media screen and (max-width: 896px) and (orientation: landscape) {
         /* HIDE EDIT AND DELETE ICON BUTTONS AND INCREASE THE PADDING OF TASK CONTAINER TO MAKE IT HIGHER */
+        .task-list-container {
+            padding: 0 8px;
+        }
+
         .task-description-container {
             padding: 10px 0 18px;
             cursor: pointer;
@@ -1384,15 +1388,31 @@ div.mincalendar-container {
         }
 
         .min-calendar-header .month-arrow-icon {
-            font-size: 28px;
+            font-size: calc((((var(--miniCalendarHeight)) -10px) * 0.14)/(1 + 0.3 + 0.3));;
+        }
+
+        .time-select, 
+        .repeat-select-options, 
+        #end-select {
+            text-align: center;
+            width: 46%;
+            max-height: 56%;
+            left: 27%;
+            top: 23%;
+        }
+
+        .start-time-option, .repeat-option-value {
+            padding: 7px 0;
+            border-bottom: 1px dotted var(--mediumGray);
+        }
+
+        .start-time-option span,
+        .repeat-option-value span {
+            font-size: 22px;
         }
 
         .taskform .button-container {
             top: 5px;
-            bottom: auto;
-        }
-
-        .repeat-select-options {
             bottom: auto;
         }
     }
