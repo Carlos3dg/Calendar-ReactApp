@@ -50,6 +50,11 @@ html, body {
         font-size: 30px;
     }
 }
+@media (max-width: 350px) {
+    html, body {
+        font-size: 12.5px;
+    }
+}
 
 * {
     box-sizing: border-box;
@@ -61,6 +66,7 @@ html, body {
 }
 
 :root {
+    /* COLORS */
     --neonBlue: #5863f8;
     --hardNeon: #373eac;
     --alphaNeonBlue: rgba(88, 99, 248, 0.2);
@@ -71,7 +77,12 @@ html, body {
     --hardGray: #676767;
     --blue: #02a7fa;
     --lightblue: #00c4cc;
-    --headerHeight: 70px
+    /* MEASURES */
+    --headerHeight: 70px;
+    --taskformHeight: 415px;
+    --taskformWidth: 450px;
+    --miniCalendarHeight: calc(var(--taskformHeight) * 0.57);
+    --miniCalendarWidth: calc(var(--taskformWidth) * 0.63);
 } 
 
 .container {
@@ -251,7 +262,6 @@ header h2 {
     top: calc(var(--headerHeight) - ((var(--headerHeight) - 28px)/2));
     background: white;
     box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.4);
-    padding: 0 8px;
     border-radius: 6px;
 }
 
@@ -260,8 +270,8 @@ header h2 {
     text-align: center;
 }
 
-.sidebar-header {
-    padding: 8px 0;
+.sidebar-header, .sidebar-option a {
+    padding: 8px 8px;
 }
 
 .sidebar-header span {
@@ -283,7 +293,6 @@ header h2 {
 
 .sidebar-option a {
     display: inline-block;
-    padding: 8px 0;
     width: 100%;
     color: var(--neonBlue);
     cursor: pointer;
@@ -960,10 +969,10 @@ input[type='radio']:checked ~ .custom-radio::after {
 
 .taskform-container {
     position: absolute;
-    left: calc(50% - (450px * .5));
-    top: calc(50% - (415px * .5));
-    width: 450px;
-    height: 415px;
+    left: calc(50% - (var(--taskformWidth) * .5));
+    top: calc(50% - (var(--taskformHeight) * .5));
+    width: var(--taskformWidth);
+    height: var(--taskformHeight);
     background-color: white;
     border-radius: 10px;
     padding: 45px 0 15px 0;
@@ -975,7 +984,7 @@ input[type='radio']:checked ~ .custom-radio::after {
     border-radius: 45px;
     position: absolute;
     top: -45px;
-    left: calc((450px - 90px)/2);
+    left: calc((var(--taskformWidth) - 90px)/2);
     
     /*background-image: url(../img/calendar-icon3.png),
                       linear-gradient(135deg, var(--lightblue), var(--neonBlue));
@@ -1051,8 +1060,8 @@ input[type='radio']:checked ~ .custom-radio::after {
 }
 
 .min-calendar-container {
-    width: 63%;
-    height: 57%;
+    width: var(--miniCalendarWidth);
+    height: var(--miniCalendarHeight);
     background-color: white;
     padding: 5px 5px;
     position: absolute;
@@ -1349,6 +1358,61 @@ div.mincalendar-container {
         .calendar-table th {
             padding: 8px 0;
         }
+
+        /* HOUR IN TASK LIST */
+        .task-details-container span {
+            font-size: 12px;
+        }
+    }
+
+    @media screen and (max-width: 667px) {
+        /* FONT SIZES */
+        .container {
+            font-size: 1.25rem;
+        }
+            
+        .container-medium {
+            font-size: 1.15rem;
+        }
+            
+        .container-short {
+            font-size: 1.10rem;
+        }
+    }
+
+    @media screen and (max-width: 610px) {
+        /* FONT SIZES */
+        .container {
+            font-size: 1.35rem;
+        }
+        
+        .container-medium {
+            font-size: 1.25rem;
+        }
+        
+        .container-short {
+            font-size: 1.20rem;
+        }
+
+        /* HEADER */
+        .container-log-button {
+            width: 15%;
+        }
+    }
+
+    @media screen and (max-width: 450px) {
+        /* FONT SIZES */
+        .container {
+            font-size: 1.50rem;
+        }
+        
+        .container-medium {
+            font-size: 1.40rem;
+        }
+        
+        .container-short {
+            font-size: 1.35rem;
+        }
     }
 
     /* PORTRAIT MODE */
@@ -1400,19 +1464,59 @@ div.mincalendar-container {
             height: 45%;
         }
 
-        @media screen and (max-width: 810px) {
+        @media screen and (max-width: 812px) {
+            /* TASKS DISPLAY IN CALENDAR */
+            .day-task-container {
+                width: calc(100% - 2px - 2px);
+                height: 0.5em;
+            }
+                
+            .day-task-title {
+                display: none;
+            }
+
+            .plus-remaining-tasks {
+                font-size: 1.1em;
+            }
+
             /* Hide the task header to just display the tasks */
             .task-header {
                 display: none;
             }
 
             /* TASKFORM */
-            .min-calendar-container {
-                width: 94%;
-                height: 74%;
-                top: 13%;
-                left: 3%;
+            :root {
+                --miniCalendarHeight: calc(var(--taskformHeight) * 0.74);
+                --miniCalendarWidth: calc(var(--taskformWidth) * 0.94);
             }
+
+            .min-calendar-container {
+                top: calc(((100%) - var(--miniCalendarHeight))/2);
+                left: calc(((100%) - var(--miniCalendarWidth))/2);
+            }
+
+            .min-calendar-select select {
+                font-size: calc((((var(--miniCalendarHeight)) -10px) * 0.14)/(1 + 0.7 + 0.7)); /*
+                    ((minicalendarHeight - padding-top-bottom) * miniCalendarHeaderHeightPorcentage) / (font-size + topSpaceInSelect + bottomSpaceInSelect) 
+                */
+            }
+
+            .min-calendar-header .month-arrow-icon {
+                font-size: calc((((var(--miniCalendarHeight)) -10px) * 0.14)/(1 + 0.1 + 0.1));;
+            }
+
+            .start-time-option, .repeat-option-value {
+                border-bottom: 1px dotted var(--mediumGray);
+            }
+
+            .start-time-option span,
+            .repeat-option-value span {
+                font-size: 20px;
+            }
+        }
+
+        @media screen and (max-width: 610px) {
+
         }
     }
 
@@ -1477,8 +1581,6 @@ div.mincalendar-container {
             }
 
             .min-calendar-container {
-                width: var(--miniCalendarWidth);
-                height: var(--miniCalendarHeight);
                 top: calc(((100%) - var(--miniCalendarHeight))/2);
                 left: calc(((100%) - var(--miniCalendarWidth))/2);
             }
@@ -1562,17 +1664,17 @@ div.mincalendar-container {
                 height: 88%
             }
 
-            /* FONT SIZES */
-            .container {
-                font-size: 1.25rem;
+            .task-header {
+                height: 12%;
             }
-            
-            .container-medium {
-                font-size: 1.15rem;
+
+            .task-list-container {
+                height: 88%;
             }
-            
-            .container-short {
-                font-size: 1.10rem;
+
+            .day-num {
+                width: 45%;
+                margin-right: 65%;
             }
         }
     }
