@@ -501,8 +501,9 @@ header h2 {
 .landing-entry-button {
     display: inline-block;
     line-height: 2em;
-    width: 35%;
+    /*width: 35%;*/
     text-align: center;
+    padding: 0 10%;
 }
 
 .isometric-landing-container {
@@ -626,7 +627,7 @@ header h2 {
     align-items: center;
 }
 
-.arrow-min-month-container {
+div.arrow-min-month-container {
     width: auto;
 }
 
@@ -1169,8 +1170,9 @@ div.mincalendar-container {
     background-color: var(--lightblue);
 }
 
-/* Most used laptop resolution */
+/* FROM HERE TO LESS */
 @media screen and (max-width: 1366px) {
+    /* GENERAL MEDIAS */
     .edit-delete-buttons span {
         font-size: 16px;
     }
@@ -1251,87 +1253,14 @@ div.mincalendar-container {
         }
     }
 
-    /* Most used tablets resolutions in portrait mode */
-    @media screen and (max-width: 1024px) and (orientation: portrait) {
-        /* LANDING */
-        .landing-container {
-            flex-direction: column;
-            margin-top: 35px;
-            max-height: calc(100vh - var(--headerHeight) - 35px);
-        }
-
-        .landing-container>div {
-            flex: none;
-            height: auto;
-            width: 100%;
-        }
-
-        .landing-container .landing-entry-text-container {
-            margin-bottom: -50px;
-            z-index: 1;
-            display: block;
-        }
-
-        .landing-entry-text-container>div {
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .isometric-landing-container {
-            justify-content: center;
-        }
-
-        .isometric-landing-image {
-            width: 100%;
-            height: auto;
-        }
-
-        /* MAIN CONTAINER */
-        .main-container {
-            max-height: calc(100vh - var(--headerHeight));
-            display: block;
-        }
-
-        .calendar-container {
-            width: 100%;
-            height: 50%;
-        }
-
-        .task-container {
-            width: 100%;
-            height: 50%;
-        }
-    }
-
-    @media screen and (max-width: 1024px) and (orientation: landscape) {
-        /* LANDING TEXT */
-        .landing-entry-text-container>div {
-            width: 90%;
-        }
-            
-        /* CALENDAR AND TASK CONTAINERS */
-        .calendar-container {
-            width: 70%;
-        }
-            
-        .task-container {
-            width: 30%;
-        }
-            
-        /* TASKS DISPLAY IN CALENDAR */
-        .day-task-container {
-            width: calc(100% - 2px - 2px);
-            height: 1.1em;
-        }
-            
-        .day-task-title {
-            display: none;
-        }
-    }
-
     @media screen and (max-width: 965px) {
+        /* HEADER */
         .home-link img {
             height: 52%;
+        }
+
+        .container-log-button {
+            width: 11%;
         }
 
         /* LOGIN FONT SIZES */
@@ -1368,6 +1297,29 @@ div.mincalendar-container {
             width: 12%;
         }
 
+        /* HIDE EDIT AND DELETE ICON BUTTONS AND INCREASE THE PADDING OF TASK CONTAINER TO MAKE IT HIGHER */
+        .task-list-container {
+            padding: 0;
+        }
+
+        .task-description-container {
+            padding: 10px 8px 18px;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .task-description-container:hover {
+            background-color: var(--alphaNeonBlue);
+        }
+
+        .task-description-container:hover .task-details-container span {
+            color: var(--hardGray);
+        }
+
+        .edit-delete-buttons {
+            display: none;
+        }
+
         /* POSITION AND FONT-SIZE OF ADD TASK PLUS BUTTON */
         .task-button-container {
             right: 10px;
@@ -1376,96 +1328,6 @@ div.mincalendar-container {
 
         .task-button-container .plus-icon-task-button {
             font-size: 28px;
-        }
-    }
-
-    @media screen and (max-width: 896px) and (orientation: landscape) {
-        /* HIDE EDIT AND DELETE ICON BUTTONS AND INCREASE THE PADDING OF TASK CONTAINER TO MAKE IT HIGHER */
-        .task-list-container {
-            padding: 0 8px;
-        }
-
-        .task-description-container {
-            padding: 10px 0 18px;
-            cursor: pointer;
-        }
-
-        .edit-delete-buttons {
-            display: none;
-        }
-
-        /* TASKFORM */
-        :root {
-            --taskformHeight: 90vh;
-            --taskformWidth: 90vw;
-            --miniCalendarHeight: calc(var(--taskformHeight) * 0.85);
-            --miniCalendarWidth: calc(var(--taskformWidth) * 0.80);
-        }
-
-        .taskform-container {
-            width: var(--taskformWidth);
-            height: var(--taskformHeight);
-            left: 5%;
-            top: 5%;
-            padding: 40px 0 15px;
-        }
-
-        .app-icon {
-            display: none;
-        }
-
-        .taskform {
-            overflow: auto;
-        }
-
-        .taskform .close-icon {
-            display: none;
-        }
-
-        .taskform .input-container {
-            margin: 20px 0;
-        }
-
-        .min-calendar-container {
-            width: var(--miniCalendarWidth);
-            height: var(--miniCalendarHeight);
-            top: calc(((100%) - var(--miniCalendarHeight))/2);
-            left: calc(((100%) - var(--miniCalendarWidth))/2);
-        }
-
-        .min-calendar-select select {
-            font-size: calc((((var(--miniCalendarHeight)) -10px) * 0.14)/(1 + 0.7 + 0.7)); /*
-                ((minicalendarHeight - padding-top-bottom) * miniCalendarHeaderHeight) / (font-size + topSpaceInSelect + bottomSpaceInSelect) 
-            */
-        }
-
-        .min-calendar-header .month-arrow-icon {
-            font-size: calc((((var(--miniCalendarHeight)) -10px) * 0.14)/(1 + 0.3 + 0.3));;
-        }
-
-        .time-select, 
-        .repeat-select-options, 
-        #end-select {
-            text-align: center;
-            width: 46%;
-            max-height: 56%;
-            left: 27%;
-            top: 23%;
-        }
-
-        .start-time-option, .repeat-option-value {
-            padding: 7px 0;
-            border-bottom: 1px dotted var(--mediumGray);
-        }
-
-        .start-time-option span,
-        .repeat-option-value span {
-            font-size: 22px;
-        }
-
-        .taskform .button-container {
-            top: 5px;
-            bottom: auto;
         }
     }
 
@@ -1489,60 +1351,229 @@ div.mincalendar-container {
         }
     }
 
-    @media screen and (max-width: 812px) and (orientation: landscape) {
-        /* CALENDAR AND TASK CONTAINERS */
+    /* PORTRAIT MODE */
+    @media screen and (max-width: 1024px) and (orientation: portrait) {
+        /* LANDING */
+        .landing-container {
+            flex-direction: column;
+            margin-top: 35px;
+            max-height: calc(100vh - var(--headerHeight) - 35px);
+        }
+
+        .landing-container>div {
+            flex: none;
+            height: auto;
+            width: 100%;
+        }
+
+        .landing-container .landing-entry-text-container {
+            display: block;
+        }
+
+        .landing-entry-text-container>div {
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .isometric-landing-container {
+            justify-content: center;
+        }
+
+        .isometric-landing-image {
+            width: 100%;
+            height: auto;
+        }
+
+        /* MAIN CONTAINER */
+        .main-container {
+            max-height: calc(100vh - var(--headerHeight));
+            display: block;
+        }
+
         .calendar-container {
-            width: 60%;
+            width: 100%;
+            height: 55%;
         }
-            
+
         .task-container {
-            width: 40%;
+            width: 100%;
+            height: 45%;
         }
 
-        .arrow-month-container {
-            width: 12%;
-        }
+        @media screen and (max-width: 810px) {
+            /* Hide the task header to just display the tasks */
+            .task-header {
+                display: none;
+            }
 
-        .month-arrow-icon {
-            font-size: 1.9em;
-        }
-
-        /* STYLE TO HAVE A EXTENDED BACKGROUND COLOR IN "TODAY" */
-        .day-num {
-            width: 30%;
-            margin-right: 70%;
-        }
-
-        /* TO HAVE A BACKGROUND TASK LESS HIGH IN CALENDAR */
-        .day-task-container {
-            height: 0.5em;
-        }
-
-        .task-details-container span {
-            font-size: 12px;
+            /* TASKFORM */
+            .min-calendar-container {
+                width: 94%;
+                height: 74%;
+                top: 13%;
+                left: 3%;
+            }
         }
     }
 
-    @media screen and (max-width: 667px) and (orientation: landscape) {
-        .calendar-header {
-            height: 12%;
+
+    /* LANDSCAPE MODE */
+    @media screen and (max-width: 1024px) and (orientation: landscape) {
+        /* LANDING TEXT */
+        .landing-entry-text-container>div {
+            width: 90%;
+        }
+            
+        /* CALENDAR AND TASK CONTAINERS */
+        .calendar-container {
+            width: 70%;
+        }
+            
+        .task-container {
+            width: 30%;
+        }
+            
+        /* TASKS DISPLAY IN CALENDAR */
+        .day-task-container {
+            width: calc(100% - 2px - 2px);
+            height: 1.1em;
+        }
+            
+        .day-task-title {
+            display: none;
         }
 
-        .calendar-table {
-            height: 88%
+        @media screen and (max-width: 896px) {
+            /* TASKFORM */
+            :root {
+                --taskformHeight: 90vh;
+                --taskformWidth: 90vw;
+                --miniCalendarHeight: calc(var(--taskformHeight) * 0.85);
+                --miniCalendarWidth: calc(var(--taskformWidth) * 0.80);
+            }
+
+            .taskform-container {
+                width: var(--taskformWidth);
+                height: var(--taskformHeight);
+                left: 5%;
+                top: 5%;
+                padding: 40px 0 15px;
+            }
+
+            .app-icon {
+                display: none;
+            }
+
+            .taskform {
+                overflow: auto;
+            }
+
+            .taskform .close-icon {
+                display: none;
+            }
+
+            .taskform .input-container {
+                margin: 20px 0;
+            }
+
+            .min-calendar-container {
+                width: var(--miniCalendarWidth);
+                height: var(--miniCalendarHeight);
+                top: calc(((100%) - var(--miniCalendarHeight))/2);
+                left: calc(((100%) - var(--miniCalendarWidth))/2);
+            }
+
+            .min-calendar-select select {
+                font-size: calc((((var(--miniCalendarHeight)) -10px) * 0.14)/(1 + 0.7 + 0.7)); /*
+                    ((minicalendarHeight - padding-top-bottom) * miniCalendarHeaderHeightPorcentage) / (font-size + topSpaceInSelect + bottomSpaceInSelect) 
+                */
+            }
+
+            .min-calendar-header .month-arrow-icon {
+                font-size: calc((((var(--miniCalendarHeight)) -10px) * 0.14)/(1 + 0.3 + 0.3));;
+            }
+
+            .time-select, 
+            .repeat-select-options, 
+            #end-select {
+                text-align: center;
+                width: 46%;
+                max-height: 56%;
+                left: 27%;
+                top: 23%;
+            }
+
+            .start-time-option, .repeat-option-value {
+                padding: 7px 0;
+                border-bottom: 1px dotted var(--mediumGray);
+            }
+
+            .start-time-option span,
+            .repeat-option-value span {
+                font-size: 22px;
+            }
+
+            .taskform .button-container {
+                top: 5px;
+                bottom: auto;
+            }
         }
 
-        /* FONT SIZES */
-        .container {
-            font-size: 1.25rem;
+        @media screen and (max-width: 812px) {
+            /* CALENDAR AND TASK CONTAINERS */
+            .calendar-container {
+                width: 60%;
+            }
+                
+            .task-container {
+                width: 40%;
+            }
+
+            .arrow-month-container {
+                width: 13%;
+            }
+
+            .month-arrow-icon {
+                font-size: 1.9em;
+            }
+
+            /* STYLE TO HAVE A EXTENDED BACKGROUND COLOR IN "TODAY" */
+            .day-num {
+                width: 30%;
+                margin-right: 70%;
+            }
+
+            /* TO HAVE A BACKGROUND TASK LESS HIGH IN CALENDAR */
+            .day-task-container {
+                height: 0.5em;
+            }
+
+            .task-details-container span {
+                font-size: 12px;
+            }
         }
-        
-        .container-medium {
-            font-size: 1.15rem;
-        }
-        
-        .container-short {
-            font-size: 1.10rem;
+
+        @media screen and (max-width: 667px) {
+            .calendar-header {
+                height: 12%;
+            }
+
+            .calendar-table {
+                height: 88%
+            }
+
+            /* FONT SIZES */
+            .container {
+                font-size: 1.25rem;
+            }
+            
+            .container-medium {
+                font-size: 1.15rem;
+            }
+            
+            .container-short {
+                font-size: 1.10rem;
+            }
         }
     }
 }
