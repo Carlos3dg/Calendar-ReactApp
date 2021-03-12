@@ -52,7 +52,7 @@ html, body {
 }
 @media (max-width: 350px) {
     html, body {
-        font-size: 12.5px;
+        font-size: 7px;
     }
 }
 
@@ -1368,50 +1368,58 @@ div.mincalendar-container {
     @media screen and (max-width: 667px) {
         /* FONT SIZES */
         .container {
-            font-size: 1.25rem;
+            font-size: 1.35rem;
         }
             
         .container-medium {
-            font-size: 1.15rem;
+            font-size: 1.25rem;
         }
             
         .container-short {
-            font-size: 1.10rem;
+            font-size: 1.20rem;
         }
     }
 
     @media screen and (max-width: 610px) {
         /* FONT SIZES */
         .container {
-            font-size: 1.35rem;
+            font-size: 1.45rem;
         }
         
         .container-medium {
-            font-size: 1.25rem;
+            font-size: 1.35rem;
         }
         
         .container-short {
-            font-size: 1.20rem;
+            font-size: 1.30rem;
         }
 
         /* HEADER */
         .container-log-button {
             width: 15%;
         }
+
+        .home-link img {
+            height: 43%;
+        }
     }
 
     @media screen and (max-width: 450px) {
         /* FONT SIZES */
+        html, body {
+            font-size: 1.7vw;
+        }
+
         .container {
-            font-size: 1.50rem;
+            font-size: 1.65rem;
         }
         
         .container-medium {
-            font-size: 1.40rem;
+            font-size: 1.55rem;
         }
         
         .container-short {
-            font-size: 1.35rem;
+            font-size: 1.50rem;
         }
     }
 
@@ -1516,7 +1524,14 @@ div.mincalendar-container {
         }
 
         @media screen and (max-width: 610px) {
+            /* CALENDAR HEADER */
+            .arrow-month-container {
+                width: 13%;
+            }
 
+            .month-arrow-icon {
+                font-size: 2em;
+            }
         }
     }
 
@@ -1660,10 +1675,21 @@ div.mincalendar-container {
                 height: 12%;
             }
 
+            .arrow-month-container{
+                width: 15%;
+            }
+
             .calendar-table {
                 height: 88%
             }
 
+            /* TO HAVE A BACKGROUND TASK LESS HIGH IN CALENDAR */
+            .day-task-container {
+                height: 3.5px;
+                margin: 2px 2px;
+            }
+
+            /* TASK HEADER AND TASKLIST */
             .task-header {
                 height: 12%;
             }
@@ -1674,7 +1700,13 @@ div.mincalendar-container {
 
             .day-num {
                 width: 45%;
-                margin-right: 65%;
+                margin-right: 55%;
+            }
+        }
+
+        @media screen and (max-width: 610px) {
+            .plus-remaining-tasks {
+                bottom: 0%;
             }
         }
     }
