@@ -52,7 +52,7 @@ html, body {
 }
 @media (max-width: 350px) {
     html, body {
-        font-size: 7px;
+        font-size: 17px;
     }
 }
 
@@ -1396,35 +1396,35 @@ div.mincalendar-container {
 
         /* HEADER */
         .container-log-button {
-            width: 15%;
+            width: 17%;
         }
 
         .home-link img {
-            height: 43%;
+            height: 47%;
         }
     }
 
     @media screen and (max-width: 450px) {
         /* FONT SIZES */
         html, body {
-            font-size: 1.7vw;
+            font-size: 19px;
         }
 
         .container {
-            font-size: 1.65rem;
+            font-size: 0.85rem;
         }
         
         .container-medium {
-            font-size: 1.55rem;
+            font-size: 0.75rem;
         }
         
         .container-short {
-            font-size: 1.50rem;
+            font-size: 0.70rem;
         }
     }
 
     /* PORTRAIT MODE */
-    @media screen and (max-width: 1024px) and (orientation: portrait) {
+    @media screen and (max-width: 1024px) and (orientation: portrait), screen and (max-width: 609px) and (orientation: landscape) {
         /* LANDING */
         .landing-container {
             flex-direction: column;
@@ -1532,12 +1532,62 @@ div.mincalendar-container {
             .month-arrow-icon {
                 font-size: 2em;
             }
+
+            .day-num {
+                width: 30%;
+                margin-right: 70%;
+            }
+        }
+
+        @media screen and (max-width: 450px) {
+            /* HEADER */
+            header {
+                padding: 0 20px;
+            }
+
+            .home-link img {
+                height: 65%;
+            }
+
+            .white-header  h2 {
+                display: none;
+            }
+
+            .gradient-header h2 {
+                font-size: 1.6em;
+            }
+
+            .container-log-button {
+                width: 4.5rem;
+            }
+
+            .sidebar-container {
+                right: 20px;
+            }
+
+            /* lANDING */
+            .landing-container {
+                width: calc(100% - (20px * 2));
+            }
+
+            .landing-entry-text-container>div {
+                width: 100%;
+            }
+
+            /* MAIN CALENDAR */
+            .calendar-header {
+                align-items: flex-start;
+            }
+
+            .arrow-month-container {
+                width: 3.5rem;
+            }
         }
     }
 
 
     /* LANDSCAPE MODE */
-    @media screen and (max-width: 1024px) and (orientation: landscape) {
+    @media screen and (max-width: 1024px) and (min-width: 610px) and (orientation: landscape) {
         /* LANDING TEXT */
         .landing-entry-text-container>div {
             width: 90%;
