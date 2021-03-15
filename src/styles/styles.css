@@ -1172,11 +1172,13 @@ div.mincalendar-container {
 }
 
 .save-button {
-    margin-right: 10px;
+    order: 2;
 }
 
 .cancel-button {
     background-color: var(--lightblue);
+    margin-right: 10px;
+    order: 1;
 }
 
 /* FROM HERE TO LESS */
@@ -1539,6 +1541,7 @@ div.mincalendar-container {
             }
         }
 
+        /* MOBILES */
         @media screen and (max-width: 450px) {
             /* HEADER */
             header {
@@ -1581,6 +1584,55 @@ div.mincalendar-container {
 
             .arrow-month-container {
                 width: 3.5rem;
+            }
+
+            .day-task-container {
+                height: 3px;
+                margin: 2px 2px;
+            }
+
+            .day-num {
+                width: 1.1rem;
+                margin-right: calc(100% - 1.1rem);
+            }
+
+            /* TASKLIST */
+            .task-container {
+                padding: 0;
+            }
+
+            .task-details-container span {
+                font-size: 13px;
+            }
+
+            .task-button-container {
+                right: 15px;
+                bottom: 15px;
+            }
+
+            .task-button-container .plus-icon-task-button {
+                font-size: 32px;
+            }
+
+            /* TASKFORM STYLES  */
+            :root {
+                --taskformHeight: calc(100vh * 0.53);
+                --taskformWidth: calc(100vw * 0.9);
+            }
+
+            .taskform {
+                overflow: auto;
+                margin-bottom: 2em;
+                height: calc(100% - 2em);
+            }
+
+            .app-icon {
+                display: none;
+            }
+
+            .repeat-select-options {
+                bottom: auto;
+                margin-top: 12px;
             }
         }
     }
