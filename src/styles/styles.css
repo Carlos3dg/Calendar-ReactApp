@@ -79,10 +79,15 @@ html, body {
     --lightblue: #00c4cc;
     /* MEASURES */
     --headerHeight: 70px;
+    --landingTopMargin: 0px;
+    --landingRightLeftMargin: 35px;
     --taskformHeight: 415px;
     --taskformWidth: 450px;
     --miniCalendarHeight: calc(var(--taskformHeight) * 0.57);
     --miniCalendarWidth: calc(var(--taskformWidth) * 0.63);
+    /* MIN-WIDTH, MIN-HEIGHT IN PORTRAIT MODE */
+    --minWidth: 350px;
+    --minHeight: 610px;
 } 
 
 .container {
@@ -167,6 +172,7 @@ span.close-icon {
 /* HEADER */
 header {
     width: 100%;
+    min-width: var(--minWidth);
     height: var(--headerHeight);
     text-align: center;
     padding: 0 2.5%; /*Padding equal to the main margin container*/
@@ -436,7 +442,7 @@ header h2 {
 .error404-container {
     max-width: 650px;
     width: 70%;
-    min-width: 390px;
+    min-width: 350px;
     /*margin: 100px auto 0;*/
 }
 
@@ -474,6 +480,8 @@ header h2 {
     max-width: 1700px;
     width: 95%;
     height: calc(100vh - var(--headerHeight));
+    min-width: calc(var(--minWidth) - (20px * 2));
+    min-height: calc(var(--minHeight) - var(--headerHeight) - var(--landingTopMargin));
     max-height: 900px;
     margin: 0 auto;
     display: flex;
@@ -593,6 +601,8 @@ header h2 {
     max-width: 1700px;
     width: 95%;
     height: calc(100vh - var(--headerHeight) - 70px); /* screen heigh - header height - margin-top-bottom */
+    min-height: calc(var(--minHeight) - var(--headerHeight) - (10px * 2));
+    min-width: calc(var(--minWidth) - (10px * 2));
     margin: 35px auto;
     display: flex;
     max-height: 829px;
@@ -1428,9 +1438,13 @@ div.mincalendar-container {
     /* PORTRAIT MODE */
     @media screen and (max-width: 1024px) and (orientation: portrait), screen and (max-width: 609px) and (orientation: landscape) {
         /* LANDING */
+        :root {
+            --landingTopMargin: 35px
+        }
+
         .landing-container {
             flex-direction: column;
-            margin-top: 35px;
+            margin-top: var(--landingTopMargin);
             max-height: calc(100vh - var(--headerHeight) - 35px);
         }
 
@@ -1640,6 +1654,10 @@ div.mincalendar-container {
 
     /* LANDSCAPE MODE */
     @media screen and (max-width: 1024px) and (min-width: 610px) and (orientation: landscape) {
+        :root {
+            --minHeight: 350px;
+        }
+
         /* LANDING TEXT */
         .landing-entry-text-container>div {
             width: 90%;
