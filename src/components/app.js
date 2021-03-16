@@ -23,9 +23,10 @@ class App extends React.Component {
         }
     }
 
-    getHeader = (token) => (
+    getHeader = (token, user) => (
         <Header
             token={token}
+            user={user}
         />
     )
 
@@ -68,7 +69,7 @@ class App extends React.Component {
     }
 
     render() {
-        const {token} = this.props;
+        const {token, user} = this.props;
         return(((tokenStatus) => {
             if(tokenStatus === 'PENDING') {
                 return (
@@ -87,14 +88,14 @@ class App extends React.Component {
                                 null
                             )
                         }
-                        {this.getHeader(token)}
+                        {this.getHeader(token, user)}
                         {this.getRoutes(token)}
                     </div> 
                 )
             } else if(tokenStatus === 'SUCCESS') {
                 return (
                     <div className='container'>
-                        {this.getHeader(token)}
+                        {this.getHeader(token, user)}
                         {this.getRoutes(token)}
                     </div> 
                 )
@@ -109,6 +110,7 @@ class App extends React.Component {
 const mapStateToAppProps = (state) => {
     return {
         token: state.fakeToken,
+        user: state.user,
         tokenStatus: state.appStatus.loadToken,
         setTokenStatus : state.appStatus.setToken
     }

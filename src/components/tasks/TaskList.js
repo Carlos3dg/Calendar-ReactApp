@@ -117,6 +117,9 @@ class TaskList extends React.Component {
                         </span>
                         Add Task
                     </span>
+                    <span className="material-icons icon plus-icon-task-button">
+                        add
+                    </span>
                 </div>
                 {
                     this.state.openTaskForm ? <TaskForm

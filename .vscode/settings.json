@@ -2,5 +2,7 @@
     "emmet.triggerExpansionOnTab": true,
     "emmet.includeLanguages": {
         "javascript": "javascriptreact"
-    }
+    },
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
 }

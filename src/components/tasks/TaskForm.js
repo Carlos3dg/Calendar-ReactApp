@@ -158,6 +158,11 @@ class TaskForm extends React.Component {
             this.props.closeTaskForm();
         }
     }
+    /* Function only used if the Delete button is displayed */
+    onDeleteTaskClick = () => {
+        this.props.onDeleteClick();
+        this.props.closeTaskForm();
+    }
 
     onChangeInputTitle = (e) => {
         const task = Object.assign({}, this.state.task);
@@ -179,7 +184,7 @@ class TaskForm extends React.Component {
 
     getEndTimes = () => {
         const startTimeIndex = time.findIndex((time) => (
-            time === this.state.task.startTime
+            time.jsTime === this.state.task.startTime.jsTime
         ));
         
         const times = time.filter((time, index) => {
@@ -350,7 +355,13 @@ class TaskForm extends React.Component {
                         </div>
                         <div className='button-container'>
                             <input type='submit' value={!this.state.task.id ? 'Save' : 'Edit'} className='taskform-input save-button button'/>
-                            <input type='button' value='Cancel' className='taskform-input cancel-button button close-taskform'/>
+                            {   //mobileTaskForm is just passed by Task component, and only it's true when we're in mobile version
+                                !this.props.mobileTaskForm ? (
+                                    <input type='button' value='Cancel' className='taskform-input cancel-button button close-taskform'/>
+                                ) : (
+                                    <input type='button' value='Delete' className='taskform-input cancel-button button' onClick={this.onDeleteTaskClick}/>
+                                )
+                            }
                         </div>
                     </form>
                 </div>
