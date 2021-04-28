@@ -1520,13 +1520,13 @@ div.mincalendar-container {
             }
 
             .min-calendar-select select {
-                font-size: calc((((var(--miniCalendarHeight)) -10px) * 0.14)/(1 + 0.7 + 0.7)); /*
+                font-size: calc((((var(--miniCalendarHeight)) - 10px) * 0.14)/(1 + 0.7 + 0.7)); /*
                     ((minicalendarHeight - padding-top-bottom) * miniCalendarHeaderHeightPorcentage) / (font-size + topSpaceInSelect + bottomSpaceInSelect) 
                 */
             }
 
             .min-calendar-header .month-arrow-icon {
-                font-size: calc((((var(--miniCalendarHeight)) -10px) * 0.14)/(1 + 0.1 + 0.1));;
+                font-size: calc((((var(--miniCalendarHeight)) - 10px) * 0.14)/(1 + 0.1 + 0.1));;
             }
 
             .start-time-option, .repeat-option-value {
@@ -1721,13 +1721,13 @@ div.mincalendar-container {
             }
 
             .min-calendar-select select {
-                font-size: calc((((var(--miniCalendarHeight)) -10px) * 0.14)/(1 + 0.7 + 0.7)); /*
+                font-size: calc((((var(--miniCalendarHeight)) - 10px) * 0.14)/(1 + 0.7 + 0.7)); /*
                     ((minicalendarHeight - padding-top-bottom) * miniCalendarHeaderHeightPorcentage) / (font-size + topSpaceInSelect + bottomSpaceInSelect) 
                 */
             }
 
             .min-calendar-header .month-arrow-icon {
-                font-size: calc((((var(--miniCalendarHeight)) -10px) * 0.14)/(1 + 0.3 + 0.3));;
+                font-size: calc((((var(--miniCalendarHeight)) - 10px) * 0.14)/(1 + 0.3 + 0.3));
             }
 
             .time-select, 
