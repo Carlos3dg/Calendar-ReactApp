@@ -2,7 +2,7 @@
 
 A project inspired in Google Calendar. Calendar App helps us to manage tasks or events in a detailed way, selecting the start time and end time of these and the frequency that we want to repeat them. This project was built with React, React Router, and Redux.
 
-![Calendar App](/src/img/posters/calendar-screen.jpg)
+![Calendar App](src/img/posters/calendar-screen.jpg)
 
 <h2 align='center'><a href='https://calendar.carlosortiz.dev/'>Check it live here</a></h2>
 
